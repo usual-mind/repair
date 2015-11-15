@@ -3,6 +3,7 @@ $("[data-href]").click(function(){
 	ajaxJump($(this).attr("data-href"));
 	return false;
 });
+
 /**
 *ajax跳转
 *href:要跳转的链接
@@ -51,6 +52,7 @@ function dialogBox(mess,fnOk,fnCancel){
 *time:显示时间
 */
 function tipBox(tip,time){
+	if(!time) time = 3000;
 	$("#tipBox>.cue-text").html(tip);
 	$("#tipBox").slideDown("fast");
 	setTimeout('$("#tipBox").slideUp("fast")',time);
