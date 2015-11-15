@@ -1,0 +1,50 @@
+<include file= './application/Home/View/Common/header.html' />
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/step1.css">
+    	<section class="login-body">
+        	<div class="logo">
+            	<span><img src="{$APP_PUBLIC_URL}pic/logo.gif" /></span>
+                <p>E8阳光维修服务</p>
+            </div>
+            <div class="ID" id="studentIdBox">
+            	<input type="number" id="studentID" placeholder="输入你的学号"/>
+            </div>
+            <div class="nextstep">
+            	<button disabled id="nextBtn">下一步</button>
+            </div>
+        </section>
+<include file= './application/Home/View/Common/footer.html' />
+<script type="text/javascript">
+
+    var JstudentIdInput = $("#studentID");//学号输入框
+    var JnextBtn = $("#nextBtn");//下一步按钮
+    var JstudentIdBox = $('#studentIdBox');//输入框外面的DIV
+
+    $(function(){
+        {$showTip}
+        JstudentIdInput.keyup( function() {
+            if(checkStudentID(JstudentIdInput.val())){
+                JstudentIdBox.append('<i class="succ"></i>');
+                JnextBtn.attr('disabled',false);
+            }else{
+                JstudentIdBox.children('i').remove();
+                JnextBtn.attr('disabled','disabled');
+            }
+        });
+        JstudentIdInput.focusout(function () {
+            if(!checkStudentID(JstudentIdInput.val())){
+                //学号有误
+                tipBox('学号有误，请检查',1000);
+                JnextBtn.attr('disabled','disabled');
+            }else{
+                JnextBtn.attr('disabled',false);
+            }
+        });
+        JnextBtn.click(function () {
+            location.href = "{$nextUrl}?studentId="+JstudentIdInput.val();
+        });
+    });
+    function checkStudentID(studentID){
+        var student_id_reg = /\d{10}/;
+        return student_id_reg.test(studentID);
+    }
+</script>

@@ -132,7 +132,7 @@ class ClassesModel extends Model
      * @return array|String
      */
     public function getAllDepartment(){
-        return $this->getClassById(0);
+        return $this->getChildByPid(0);
     }
 
     /**添加班级信息

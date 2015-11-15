@@ -1,0 +1,13 @@
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/comm.css">
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/selectclass.css">
+<!--header开始-->
+<header class="header-top bs2">
+    <a href="#" class="hidden-text" title="后退">后退</a>
+    <h1>登陆维修记录</h1>
+</header>
+<section class="secelt-body">
+    <label class="label">计算机学院/15网络工程2班</label>
+    <ul>
+        {:W('SetClass/classesInfo',$arg)}
+    </ul>
+</section>

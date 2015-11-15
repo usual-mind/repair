@@ -4,6 +4,16 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 .bs{-webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.3);-moz-box-shadow: 1px 1px 5px rgba(0,0,0,0.3);box-shadow: 1px 1px 5px rgba(0,0,0,0.3)!important;}
 .bs1{-webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.1);-moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.1);box-shadow: 0px 3px 5px rgba(0,0,0,0.1)!important;}
 .bs2{-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.1);-moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.1);box-shadow: 0px 1px 2px rgba(0,0,0,0.1)!important;}
+/*输入成功，失败的小图标*/
+.succ,.fail{
+	display:block;
+	width:25px;
+	height:25px;
+	background:url('../img/icon.png') no-repeat -549px 0;
+}
+.fail{
+	background:url('../img/icon.png') no-repeat -575px 0;
+}
 /*向左的三角形*/
 .triangle-left:before{
 	content:"";

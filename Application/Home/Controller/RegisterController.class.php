@@ -5,7 +5,7 @@ use Common\Controller\BaseController;
 
 class RegisterController extends BaseController{
     private $images = array();
-    public function register(){
+    public function index(){
         $this->setTitle("登记维修记录");
         $this->setHeader("登记维修记录");
 
