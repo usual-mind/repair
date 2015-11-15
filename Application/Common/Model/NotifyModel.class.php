@@ -43,12 +43,12 @@ class NotifyModel extends Model
             return $list;
         }
         if(($list = $this->cacheObj->get('notify_node')) == false) {
-            $list = $this->select();
+            $data = $this->select();
             //将node字段变成数组的索引
-            $return = array();
-            foreach($list as $v){
-                $return[$v['node']] = $v;
-                unset($return[$v['node']]['node']);
+            $list = array();
+            foreach($data as $v){
+                $list[$v['node']] = $v;
+                unset($list[$v['node']]['node']);
             }
             $this->cacheObj->set('notify_node', $list);
         }

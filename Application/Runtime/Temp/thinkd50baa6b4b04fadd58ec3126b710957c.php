@@ -1,3 +1,0 @@
-<?php
-//000000000600a:12:{s:2:"id";s:1:"3";s:6:"weixin";s:14:"taowei19970313";s:10:"student_id";s:10:"1508220228";s:4:"name";s:6:"陶炜";s:10:"classes_id";s:1:"7";s:12:"classes_name";s:40:"计算机学院/15级/网络工程(3)班";s:7:"tel_num";s:10:"4294967295";s:5:"ctime";s:10:"1447246429";s:15:"last_login_time";s:1:"0";s:7:"reg_ ip";s:1:"0";s:10:"user_group";a:4:{s:2:"id";s:1:"2";s:5:"title";s:8:"e8成员";s:6:"weight";s:3:"100";s:5:"ctime";s:10:"1446986604";}s:8:"computer";N;}
-?>

@@ -15,12 +15,14 @@ use Think\Model;
 
 class RepairStateModel extends Model
 {
-    protected $tableName = 'repair_state';
+    protected $tableName = 'repair_state_node';
     //缓存对象
     private $cacheObj = null;
+    private $_repair_state = null;//repair_state表model
     public function _initialize(){
         //初始化缓存对象
         $this->cacheObj = S(array('type'=>'file','prefix'=>'think','length'=>100));
+        $this->_repair_state = M('repair_state');
     }
     /**
      * 添加维修记录状态信息
@@ -36,7 +38,7 @@ class RepairStateModel extends Model
     public function addStatue($stateInfo){
         if(empty($stateInfo) || !is_array($stateInfo)) E('参数错误');
         $stateInfo['ctime'] = time();
-        if(!$id = $this->add($stateInfo)) E('添加维修记录状态信息失败');
+        if(!$id = $this->_repair_state->add($stateInfo)) E('添加维修记录状态信息失败');
         return $id;
     }
 
@@ -49,7 +51,7 @@ class RepairStateModel extends Model
         is_array($recordIds) || $recordIds = explode(',',$recordIds);
         $recordIds = array_unique(array_filter($recordIds));//删除数组中为空的值和重复的值
         $map['repair_record_id'] = array('IN',$recordIds);
-        $res = $this->field('id',true)->where($map)->select();
+        $res = $this->_repair_state->field('id',true)->where($map)->select();
 
         //组装要返回的数据
         $return =array();
@@ -70,12 +72,12 @@ class RepairStateModel extends Model
             return $list;
         }
         if(($list = $this->cacheObj->get('state_node')) == false) {
-            $list = $this->select();
+            $data = $this->select();
             //将node字段变成数组的索引
-            $return = array();
-            foreach($list as $v){
-                $return[$v['node']] = $v;
-                unset($return[$v['node']]['node']);
+            $list = array();
+            foreach($data as $v){
+                $list[$v['node']] = $v;
+                unset($list[$v['node']]['node']);
             }
             $this->cacheObj->set('state_node', $list);
         }
