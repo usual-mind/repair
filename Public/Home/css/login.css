@@ -1,0 +1,24 @@
+body{
+	background-color:#FFF;
+}
+.login-body>.logo{
+	margin:30px auto;
+	width:143px;
+}
+.login-body>.logo>p{
+	font-size:18px;
+	color:#797772;
+}
+.login-body>.ID{
+	width:300px;
+	margin:0 auto;
+}
+.login-body>.ID>input{
+	border:none;
+	border-bottom:1px solid #CCC;
+	width:300px;
+	outline: none;
+	font-size:14px;
+	color:#666;
+	padding:10px;
+}

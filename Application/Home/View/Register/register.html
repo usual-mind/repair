@@ -1,0 +1,71 @@
+    <include file= './application/Home/View/Common/header.html' />
+    <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/regisiter.css">
+        <label class="label">问题描述</label>
+        <section class="repair-body">
+            <aside class="text">
+            	<textarea placeholder="说点什么吧..."></textarea>
+                <div class="upload">
+
+                    <form action="{:U('Home/Register/upLoadPic')}" enctype="multipart/form-data" id="upLoadForm" method="post" target="hidden_frame">
+                        <span></span>
+                        <a href="">
+                            <input type="file" name="pic" id="uploadPic" accept="image/*"/>
+                        </a>
+                        <iframe style="display: none;" name="hidden_frame" scrolling="no"></iframe>
+                    </form>
+                </div>
+            </aside>
+            <aside class="form">
+        		<label class="label">添加/选择电脑型号</label>
+                <ul class="model">
+                	<li>联想/E30C</li>
+                    <li class="selected">东芝/E30C</li>
+                    
+                    <div><a href="#">添加</a></div> 
+                </ul>
+            </aside>
+        </section>
+       	<div class="submit"><a href="#" disabled >提交</a></div>
+        <footer class="foot-nav">
+        	<ul>
+            	<li>
+                	<a href="#" data-href="record.html"><i></i><span>维修</span></a>
+                </li>
+            	<li>
+                	<a href="#"><i></i><span>首页</span></a>
+                </li>
+            	<li>
+                	<a href="#"><i></i><span>我</span></a>
+                </li>
+            </ul>
+        </footer>
+    <include file= './application/Home/View/Common/footer.html' />
+    <script type="text/javascript">
+        var jUploadForm = $('#upLoadForm');
+        var jImageSpan = jUploadForm.children('span');
+    	$(function (){
+            $("#uploadPic").bind("change",function(){
+                jUploadForm.children('span').append('<img src="{$APP_PUBLIC_URL}img/uploadLoad.gif"/>');
+                jUploadForm.submit();
+            });
+
+			$(".foot-nav li>a").click(function (){
+				var parent = $(this).parent();
+				if(parent.hasClass("selected")){
+					parent.removeClass("selected");
+				}else{
+					parent.addClass("selected");
+				}
+			});
+		});
+        function callbackImageDisplay(url,errorMsg){
+            if(arguments[1]){
+                //出错 先删除img标签
+                jImageSpan.children('img:last-child').remove();
+                //显示错误信息
+                tipBox(errorMsg,2000);
+                return;
+            }
+            jImageSpan.children('img:last-child').attr('src',url);
+        }
+    </script>

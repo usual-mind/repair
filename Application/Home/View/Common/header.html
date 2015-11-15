@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><neq name= '_title' value=''>{$_title} - {$site['site_name']}<else />{$site.site_name}</neq></title>
+    <meta content="<neq name= '_keywords' value=''>{$_keywords}<else />{$site['keywords']}</neq>" name="keywords" />
+    <meta content="<neq name= '_description' value=''>{$_description}<else />{$site['description']}</neq>" name="description" />
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1,maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/comm.css">
+</head>
+<body>
+    <!--header开始-->
+    <notempty name="headTitle">
+        <header class="header-top bs2">
+            <a href="#" data-href="details.html"  class="hidden-text" title="后退">后退</a>
+            <h1>{$headTitle}</h1>
+        </header>
+    </notempty>
+    <!--header开始-->
+<!--提示框-->
+<div class="messageBox" id="messageBox">
+    <div class="mask">
+    </div>
+    <section class="bs1">
+        <p id="messageBoxText">测试</p>
+        <ul>
+            <li id="messageBoxOkBtn">确定</li>
+            <li id="messageBoxCancelBtn">取消</li>
+        </ul>
+    </section>
+</div>
+<!--消息框-->
+<div id="tipBox" class="cue-box">
+    <div class="cue-text bs1">显示一个消息</div>
+</div>

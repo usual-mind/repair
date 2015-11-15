@@ -1,0 +1,47 @@
+.tip{
+	background-color:#FCF8E3;
+	padding:10px;
+	margin:10px;
+	color:#8a6d3b;
+	font-size:14px;
+	border-radius: 4px;
+}
+/*个人信息输入框开始*/
+.personal-info{
+	background-color:#fff;
+	padding: 0 15px	
+}
+.personal-info input{
+	border:none;
+	border-bottom:1px solid #F6F6F6;
+	box-sizing:border-box;
+	line-height:40px;
+	width:100%;
+	outline:none;
+	color:#666;
+}
+/*个人信息输入框结束*/
+
+.sel-class p{
+	box-sizing:border-box;
+	line-height:40px;
+	width:100%;
+	background-color:#FFF;
+	color:#666;
+	font-size:14px;
+	
+}
+.sel-class{
+	position:relative;
+	background-color:#FFF;
+	padding:0 15px;
+}
+.sel-class .right-icon{
+	position:absolute;
+	top:13px;
+	right:10px;
+	display:block;
+	width:9px;
+	height:15px;
+	background:url(../img/icon.png)  no-repeat -112px 0;
+}

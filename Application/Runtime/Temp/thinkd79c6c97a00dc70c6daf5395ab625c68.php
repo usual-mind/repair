@@ -1,0 +1,3 @@
+<?php
+//000000000600a:12:{s:2:"id";s:1:"1";s:6:"weixin";s:11:"tao888666yu";s:10:"student_id";s:10:"1508220227";s:4:"name";s:6:"陶煜";s:10:"classes_id";s:1:"8";s:12:"classes_name";s:40:"计算机学院/15级/网络工程(3)班";s:7:"tel_num";s:10:"4294967295";s:5:"ctime";s:10:"1446987122";s:15:"last_login_time";s:10:"1447403179";s:7:"reg_ ip";s:1:"0";s:10:"user_group";a:4:{s:2:"id";s:1:"2";s:5:"title";s:8:"e8成员";s:6:"weight";s:3:"100";s:5:"ctime";s:10:"1446986604";}s:8:"computer";a:2:{i:0;a:2:{s:2:"id";s:1:"2";s:13:"computer_name";s:11:"东芝 L800";}i:1;a:2:{s:2:"id";s:1:"4";s:13:"computer_name";s:13:"ThankPad E431";}}}
+?>

@@ -1,0 +1,13 @@
+.secelt-body>.label{
+	font-size:15px;
+}
+.secelt-body>ul>.option{
+	border-top:1px solid #DFDFDF;
+}
+.secelt-body>ul>.option:last-child{
+	border-bottom:1px solid #DFDFDF;
+}
+.secelt-body>ul>.option>p{
+	color:#919191;
+	font-family:'宋体';
+}

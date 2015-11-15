@@ -1,0 +1,115 @@
+.evaluation-body>.prompt{
+	background-color:#3EBB2B;
+	height:80px;
+	padding:25px 0;
+}
+.evaluation-body>.prompt>div{
+	font-size:18px;
+	color:#FFF;
+	margin:0 auto;
+	width:138px;
+}
+.evaluation-body>.prompt>div>i{
+	display:block;
+	float:left;
+	width:30px;
+	height:24px;
+	background:url(../img/icon.png) no-repeat -122px 0;
+}
+.evaluation-body>.receive{
+	padding:20px 10px 10px;
+	background-color:#FFF;
+	position:relative;
+}
+.evaluation-body>.receive>i{
+	width:25px;
+	margin:0 20px 0 10px;
+	float:left;
+	height:34px;
+	background:url(../img/icon.png) no-repeat -370px 0;
+}
+.evaluation-body>.receive>p{
+	font-size:14px;
+	color:#666;
+	margin-bottom:5px;
+	font-family:'宋体';
+}
+.evaluation-body>.receive>p:last-child{
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+.evaluation-body>.time{
+	background-color:#FFF;
+	padding:5px 0 10px 10px;
+	margin-bottom:10px;
+}
+.evaluation-body>.time>ul>li{
+	color:#999;
+	font-size:12px;
+	margin-top:5px;
+	
+}
+.evaluation-body>.evaluation{
+	background-color:#FFF;
+	padding:10px 20px;
+	color:#666;
+	font-size:14px;
+	margin-bottom:100px;
+}
+.evaluation-body>.evaluation>ul{
+	overflow:hidden;
+	margin:10px 0 20px 0;
+	position:relative;
+}
+.evaluation-body>.evaluation>ul>li{
+	background:url(../img/icon.png) no-repeat -395px 0;
+	width:30px;
+	height:28px;
+	float:left;
+	margin-right:10px;
+}
+.star1>li:nth-child(1),.star2>li:nth-child(1),.star2>li:nth-child(2),.star3>li:nth-child(1),.star3>li:nth-child(2),.star3>li:nth-child(3),.star4>li:nth-child(1),.star4>li:nth-child(2),.star4>li:nth-child(3),.star4>li:nth-child(4),.star5>li:nth-child(1),.star5>li:nth-child(2),.star5>li:nth-child(3),.star5>li:nth-child(4),.star5>li:nth-child(5)
+{
+	background:url(../img/icon.png) no-repeat -425px 0!important;
+}
+.star1:after,.star2:after,.star3:after,.star4:after,.star5:after{
+	float:right;
+	margin-top:5px;
+}
+.star1:after{
+	content:"失望";
+	color:#999;
+}
+.star2:after{
+	content:"不满";
+	color:#999;
+}
+.star3:after{
+	content:"一般";
+	color:#FAB54D;
+}
+.star4:after{
+	content:"满意";
+	color:#FAB54D;
+}
+.star5:after{
+	content:"惊喜";
+	color:#DD2727;
+}
+.evaluation-body>.evaluation>input{
+	height:40px;
+	background-color:#F5F5F5;
+	width:100%;
+	border:none;
+	outline:none;
+	padding-left:10px;
+}
+.evaluation-body>.evaluation>a{
+	display:block;
+	margin:20px auto 10px;
+	text-align:center;
+	font-family:'宋体';
+	color:#666;
+	font-size:14px;
+}

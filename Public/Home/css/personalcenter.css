@@ -1,0 +1,22 @@
+.personal-body{
+	margin-top:10px;
+}
+.entry-description{
+	background-color:#FFF;
+	position:relative;
+	font-size:14px;
+	color:#999;
+	padding:15px 0 15px 10px;
+	margin-bottom:20px;
+}
+.entry-description>i{
+	position:absolute;
+	right:10px;
+	bottom:12px;
+	width:30px;
+	height:24px;
+	background:url(../img/icon.png)  no-repeat -340px 0;
+}
+
+
+

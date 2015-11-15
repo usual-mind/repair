@@ -1,0 +1,78 @@
+<?php
+namespace Common\Controller;
+use Think\Controller;
+
+class BaseController extends Controller {
+    protected $site = array();
+    protected $mid;//当前登录的用户的id
+    protected $user;//当前登录的用户的信息
+
+    /**
+     * 控制器初始化
+     * @return void
+     */
+    protected function _initialize(){
+        session_start();
+        $this->initSite();
+        $this->initModule();
+        $this->initUser();
+    }
+    /**
+     * 站点信息初始化
+     * @access private
+     * @return void
+     */
+    private function initSite() {
+        $this->setTitle();
+        $this->setKeywords();
+        $this->setDescription();
+        $this->site['site_name'] = 'e8阳光维修服务';
+        $this->site['keywords'] = 'e8阳光维修服务';
+        $this->site['description'] = 'e8阳光维修服务';
+        $this->assign('site',$this->site);
+    }
+    private function initUser(){
+        // 验证登陆
+        if ( D('Passport')->needLogin()) {
+            //TODO 跳转到登录页面
+        }
+
+        //当前登录者uid
+        $GLOBALS['e8']['mid'] = $this->mid = intval($_SESSION['mid']);
+        $GLOBALS['e8']['user'] = $this->user = D('User')->getUserInfo($this->mid);
+        $this->assign('mid', $this->mid);   //登录者
+        $this->assign('user', $this->user); //当前登陆的人
+        return true;
+    }
+    /**
+     * 初始化模块(Home)
+     */
+    private function initModule() {
+        $this->assign('APP_PUBLIC_URL',__ROOT__."/Public/Home/");
+    }
+
+    /**
+     * 设置顶部
+     */
+    public function setHeader($headTitle){
+        $this->assign('headTitle',$headTitle);
+    }
+    /**
+     * 模板Title
+     */
+    public function setTitle($title = '') {
+        $this->assign('_title',$title);
+    }
+    /**
+     * 模板keywords
+     */
+    public function setKeywords($keywords = '') {
+        $this->assign('_keywords',$keywords);
+    }
+    /**
+     * 模板description
+     */
+    public function setDescription($description = '') {
+        $this->assign('_description',$description);
+    }
+}

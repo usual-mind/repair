@@ -1,0 +1,47 @@
+[ 2015-11-09T19:35:28+08:00 ] ::1 /repair/
+ERR: Think\Model:getFields方法不存在！
+
+[ 2015-11-09T19:35:28+08:00 ] ::1 /repair/
+ERR: Think\Model:getFields方法不存在！
+
+[ 2015-11-09T19:35:28+08:00 ] ::1 /repair/
+ERR: Think\Model:getFields方法不存在！
+
+[ 2015-11-09T20:09:39+08:00 ] ::1 /repair/
+ERR: Think\Model:test方法不存在！
+
+[ 2015-11-09T20:49:05+08:00 ] ::1 /repair/
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ [ SQL语句 ] : SELECT `id`,`title` FROM `classes` WHERE ( pid = 12-- ) ORDER BY sort 
+
+[ 2015-11-09T20:49:05+08:00 ] ::1 /repair/
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ [ SQL语句 ] : SELECT `id`,`title` FROM `classes` WHERE ( pid = 12-- ) ORDER BY sort 
+
+[ 2015-11-09T20:49:05+08:00 ] ::1 /repair/
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ [ SQL语句 ] : SELECT `id`,`title` FROM `classes` WHERE ( pid = 12-- ) ORDER BY sort 
+
+[ 2015-11-09T20:49:06+08:00 ] ::1 /repair/
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ [ SQL语句 ] : SELECT `id`,`title` FROM `classes` WHERE ( pid = 12-- ) ORDER BY sort 
+
+[ 2015-11-09T20:49:06+08:00 ] ::1 /repair/
+ERR: 1064:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ [ SQL语句 ] : SELECT `id`,`title` FROM `classes` WHERE ( pid = 12-- ) ORDER BY sort 
+
+[ 2015-11-09T22:05:35+08:00 ] ::1 /repair/
+ERR: 系统不支持:Xcache
+
+[ 2015-11-09T22:05:35+08:00 ] ::1 /repair/
+ERR: 系统不支持:Xcache
+
+[ 2015-11-09T22:06:03+08:00 ] ::1 /repair/
+ERR: Think\Model:getClassStrById方法不存在！
+
+[ 2015-11-09T22:06:04+08:00 ] ::1 /repair/
+ERR: Think\Model:getClassStrById方法不存在！
+
+[ 2015-11-09T22:06:04+08:00 ] ::1 /repair/
+ERR: Think\Model:getClassStrById方法不存在！
+

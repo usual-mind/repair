@@ -1,0 +1,40 @@
+[ 2015-11-11T20:42:26+08:00 ] ::1 /repair/
+ERR: 1146:Table 'repair.ts_user_group_link' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `ts_user_group_link`
+
+[ 2015-11-11T20:58:52+08:00 ] ::1 /repair/
+ERR: 1146:Table 'thinksns.user_group_link' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `user_group_link`
+
+[ 2015-11-11T20:58:53+08:00 ] ::1 /repair/
+ERR: 1146:Table 'thinksns.user_group_link' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `user_group_link`
+
+[ 2015-11-11T20:58:53+08:00 ] ::1 /repair/
+ERR: 1146:Table 'thinksns.user_group_link' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `user_group_link`
+
+[ 2015-11-11T21:24:01+08:00 ] ::1 /repair/
+ERR: Think\Model:getUserGroupByGids方法不存在！
+
+[ 2015-11-11T21:24:01+08:00 ] ::1 /repair/
+ERR: Think\Model:getUserGroupByGids方法不存在！
+
+[ 2015-11-11T21:36:29+08:00 ] ::1 /repair/
+ERR: Think\Model:getUserGroupData方法不存在！
+
+[ 2015-11-11T21:36:30+08:00 ] ::1 /repair/
+ERR: Think\Model:getUserGroupData方法不存在！
+
+[ 2015-11-11T21:36:30+08:00 ] ::1 /repair/
+ERR: Think\Model:getUserGroupData方法不存在！
+
+[ 2015-11-11T21:36:40+08:00 ] ::1 /repair/
+ERR: Think\Model:getUserGroup方法不存在！
+
+[ 2015-11-11T21:36:40+08:00 ] ::1 /repair/
+ERR: Think\Model:getUserGroup方法不存在！
+
+[ 2015-11-11T21:36:40+08:00 ] ::1 /repair/
+ERR: Think\Model:getUserGroup方法不存在！
+
