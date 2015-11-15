@@ -11,6 +11,10 @@ class RegisterController extends BaseController{
 
         $this->display();
     }
+
+    /**
+     * 处理图片上传
+     */
     public function upLoadPic(){
         $upload = new \Think\Upload();// 实例化上传类
         $upload->maxSize   =     3145728 ;// 设置附件上传大小

@@ -7,7 +7,14 @@
 </header>
 <section class="secelt-body">
     <label class="label">计算机学院/15网络工程2班</label>
-    <ul>
-        {:W('SetClass/classesInfo',$arg)}
-    </ul>
+    <ul id="classInfoBody">{:W('SetClass/classesInfo',$classInfoWidgetparam)}</ul>
 </section>
+    <include file= './application/Home/View/Common/footer.html' />
+
+<script type="text/javascript">
+    $('#classInfoBody>li').click(function(){
+        ajaxRequest($(this).attr('data-href'),function(data){
+            alert(data);
+        });
+    });
+</script>

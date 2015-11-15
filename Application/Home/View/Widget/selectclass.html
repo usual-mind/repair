@@ -1,31 +1,6 @@
-<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/comm.css">
-<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/selectclass.css">
-<!--header开始-->
-<header class="header-top bs2">
-    <a href="#" class="hidden-text" title="后退">后退</a>
-    <h1>登陆维修记录</h1>
-</header>
-<section class="secelt-body">
-    <label class="label">计算机学院/15网络工程2班</label>
-    <ul>
-        <volist name="classData" id="vo">
-            <li class="option">
-                <p></p>
-                <a class="right-icon" href="#"></a>
-            </li>
-        </volist>
-
-        <li class="option">
-            <p>计算机学院/15级网络工程/2班</p>
-            <a class="right-icon" href="#"></a>
-        </li>
-        <li class="option">
-            <p>计算机学院/15级网络工程/2班</p>
-            <a class="right-icon" href="#"></a>
-        </li>
-        <li class="option">
-            <p>计算机学院/15级网络工程/2班</p>
-            <a class="right-icon" href="#"></a>
-        </li>
-    </ul>
-</section>
+<volist name="classData" id="vo">
+    <li class="option">
+        <p data-href="{$vo.url}">{$vo.title}</p>
+        <a class="right-icon" href="#"></a>
+    </li>
+</volist>

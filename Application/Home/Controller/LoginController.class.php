@@ -5,9 +5,16 @@ use Common\Controller\BaseController;
 
 class LoginController extends BaseController{
     private $images = array();
+
     public function index(){
+        //重定向到step1
         $this->redirect('step1');
     }
+
+    /**
+     * 第一步
+     * 用户输入学号
+     */
     public function step1(){
         $this->setTitle("学号");
         if(!empty($_GET['errMes'])){
@@ -17,6 +24,11 @@ class LoginController extends BaseController{
         $this->assign('nextUrl',U('Login/step2'));
         $this->display();
     }
+
+    /**
+     * 第二步
+     * 完善信息
+     */
     public function step2(){
         $studentId = isset($_GET['studentId'])?$_GET['studentId']:NULL;
         if(!isset($_GET['studentId'])){
@@ -24,7 +36,7 @@ class LoginController extends BaseController{
             $this->redirect('step1',array('errMes'=>'学号没有传入'));
         }
         $studentId = intval($_GET['studentId']);
-
+        //TODO 对$studentId进行验证及注册
         $this->display();
     }
 }

@@ -1,9 +1,21 @@
-//将所有有data-href的元素加一个点击进行ajax跳转
-$("[data-href]").click(function(){
-	ajaxJump($(this).attr("data-href"));
-	return false;
-});
-
+/**
+ *ajax
+ */
+function ajaxRequest(href,callback){
+	$.ajax({
+		type: "GET",
+		url: href,
+		dataType: "html",
+		success:function(data){
+			callback(data);
+		},
+		error: function(jqXHR){
+			//ajax请求出错
+			alert( "错误号: " + jqXHR.status );
+			return null;
+		}
+	});
+}
 /**
 *ajax跳转
 *href:要跳转的链接
