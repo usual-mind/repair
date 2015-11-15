@@ -1,8 +1,0 @@
-[ 2015-11-12T11:21:23+08:00 ] ::1 /repair/
-ERR: 1054:Unknown column 'Array' in 'where clause'
- [ SQL语句 ] : SELECT * FROM `user_group` WHERE `id` IN (Array) 
-
-[ 2015-11-12T11:21:23+08:00 ] ::1 /repair/
-ERR: 1054:Unknown column 'Array' in 'where clause'
- [ SQL语句 ] : SELECT * FROM `user_group` WHERE `id` IN (Array) 
-
