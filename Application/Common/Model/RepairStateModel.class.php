@@ -52,12 +52,15 @@ class RepairStateModel extends Model
         $recordIds = array_unique(array_filter($recordIds));//删除数组中为空的值和重复的值
         $map['repair_record_id'] = array('IN',$recordIds);
         $res = $this->_repair_state->field('id',true)->where($map)->select();
-
+        //获取每个维修状态的node节点信息
+        foreach($res as $v){
+            print_r($this->getNode($v['state_node']));
+        }
         //组装要返回的数据
         $return =array();
         foreach($recordIds as $recordId){
             $condition['repair_record_id'] = $recordId;
-            $return[$recordId] = $this->field('state_title,state_info,ctime')->where($condition)->select();
+            $return[$recordId] = $this->_repair_state->field('state_title,state_info,ctime')->where($condition)->select();
         }
         return $return;
     }

@@ -5,28 +5,24 @@ use Common\Controller\BaseController;
 
 class SetClassController extends BaseController{
     public function index(){
-        $pid = empty($_GET['pid'])?0:$_GET['pid'];
-
-        $ClassesModel = D('Classes');
         //获取所有学院
-        $department = $ClassesModel->getChildByPid($pid);
+        $departments =D('Classes')->getAllDepartment();
         //在数组中加入一个URL
-        foreach($department as &$v){
+        foreach($departments as &$v){
             $v['url'] = U('SetClass/classInfowidget?pid='.$v['id']);
         }
-        $this->assign('classInfoWidgetparam',array($department));
+        $this->assign('classInfoWidgetparam',array($departments));
         $this->display('common/selectclass');
     }
 
     /**
-     * widget
+     * ajax返回
+     * 班级信息widget
      */
     public function classInfowidget(){
         $pid = empty($_GET['pid'])?0:$_GET['pid'];
-
-        $ClassesModel = D('Classes');
         //获取所有学院
-        $department = $ClassesModel->getChildByPid($pid);
+        $department = D('Classes')->getChildByPid($pid);
         //在数组中加入一个URL
         foreach($department as &$v){
             $v['url'] = U('SetClass/classInfowidget?pid='.$v['id']);
