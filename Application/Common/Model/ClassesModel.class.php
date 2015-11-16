@@ -122,7 +122,7 @@ class ClassesModel extends Model
      * @param $pid
      * @return bool|array 如果没有儿子节点返回false 有则返回所有儿子节点数组
      */
-    public function getChildByPid($pid)
+    private function getChildByPid($pid)
     {
         //查询缓存 缓存24小时
         return $this->cache('child_class_' . $pid)->field('id,title')->where(array('pid' => $pid))->order('sort')->select();
@@ -133,6 +133,30 @@ class ClassesModel extends Model
      */
     public function getAllDepartment(){
         return $this->getChildByPid(0);
+    }
+    /**
+     * 获取某个学院下的所有年级
+     * @param $pid 学院的id
+     * @return array|String
+     */
+    public function getGradeByPid($pid){
+        return $this->getChildByPid($pid);
+    }
+
+    /** 获取某年级下的专业
+     * @param $pid
+     * @return array|bool
+     */
+    public function getMajorByPid($pid){
+        return $this->getChildByPid($pid);
+    }
+
+    /**获取某专业下的所有班级
+     * @param $pid
+     * @return array|bool
+     */
+    public function getClassByPid($pid){
+        return $this->getChildByPid($pid);
     }
 
     /**添加班级信息
