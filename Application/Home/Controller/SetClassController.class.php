@@ -5,9 +5,9 @@ use Common\Controller\BaseController;
 
 class SetClassController extends BaseController{
     public function index(){
-        //»ñÈ¡ËùÓÐÑ§Ôº
-        $departments =D('Classes')->getAllDepartment();
-        //ÔÚÊý×éÖÐ¼ÓÈëÒ»¸öURL
+        //èŽ·å–æ‰€æœ‰å­¦é™¢
+        $departments = D('Classes')->getAllDepartment();
+        //åœ¨æ•°ç»„ä¸­åŠ å…¥ä¸€ä¸ªURL
         foreach($departments as &$v){
             $v['url'] = U('SetClass/classInfowidget',array('pid'=>$v['id'],'type'=>'department'));
         }
@@ -16,21 +16,39 @@ class SetClassController extends BaseController{
     }
 
     /**
-     * ajax·µ»Ø
-     * °à¼¶ÐÅÏ¢widget
+     * ajaxè¿”å›ž
+     * ç­çº§ä¿¡æ¯widget
      */
     public function classInfowidget(){
         $pid = empty($_GET['pid'])?0:intval($_GET['pid']);
         $type = empty($_GET['type'])?'department':trim($_GET['type']);
         switch($type){
-            case:
+            case 'department':
+                $type = 'grade';
+                $department = D('Classes')->getGradeByPid($pid);
+                break;
+            case 'grade':
+                $type = 'major';
+                $department = D('Classes')->getMajorByPid($pid);
+                break;
+            case 'major':
+                $type = 'class';
+                $department = D('Classes')->getClassByPid($pid);
+                break;
+            case 'class':
+                $department = D('Classes')->getAllDepartment();
+                $type = 'department';
+                echo '<script>callBackSelectEnd('.$pid.')</script>';
                 break;
         }
-        //»ñÈ¡ËùÓÐÑ§Ôº
-        $department = D('Classes')->getChildByPid($pid);
-        //ÔÚÊý×éÖÐ¼ÓÈëÒ»¸öURL
+        //åœ¨æ•°ç»„ä¸­åŠ å…¥ä¸€ä¸ªURLå’Œçº§ï¼Œç­
         foreach($department as &$v){
-            $v['url'] = U('SetClass/classInfowidget?pid='.$v['id']);
+            if($type == 'grade'){
+                $v['title'] .= 'çº§';
+            } else if($type == 'class'){
+                $v['title'] .= 'ç­';
+            }
+            $v['url'] = U('SetClass/classInfowidget',array('pid'=>$v['id'],'type'=>$type));
         }
         W('SetClass/classesInfo',array($department));
     }
