@@ -136,29 +136,28 @@ class UserModel extends Model
      *      'tel_num'    =>,
      * );
      * @param $group_id 用户组id
-     * @return boolean 是否添加成功
+     * @return true or throw new Exception
      */
     public function addUser(array $user,$group_id=1)
     {
-        if(empty($user['student_id'])) E('请输入学号');
-
+        if (empty($user['student_id'])) E('请输入学号');
         //判断学号是否被注册了
-        if($this->hasUser($user['student_id'])) E('该学号已存在');
+        if ($this->hasUser($user['student_id'])) E('该学号已存在');
         //判断微信是否被注册了
-        if($user['weixin'] && $this->hasUser($user['weixin'])) E('该微信号已存在!');
+        if ($user['weixin'] && $this->hasUser($user['weixin'])) E('该微信号已存在');
+
         //获取班级字符串
-        if(empty($user['classes_id'])) E('请填写班级信息');
+        if (empty($user['classes_id'])) E('请填写班级信息');
         $user['classes_name'] = D('Classes')->getClassById($user['classes_id']);
 
-        $user['ctime']        = time();             // # 注册时间
-        $user['reg_ip']       = ip2long(get_client_ip());    // # 用户客户端注册IP
+        $user['ctime'] = time();             // # 注册时间
+        $user['reg_ip'] = ip2long(get_client_ip());    // # 用户客户端注册IP
         if (($uid = $this->add($user))) {
             //  把用户添加到用户组
-            D('UserGroupLink')->domoveUserGroup($uid,$group_id);
+            D('UserGroupLink')->domoveUserGroup($uid, $group_id);
             return true;
         }
         E('添加用户失败!');
-        return false;
     }
     /**
      * 通过uid获取带连接的用户姓名
