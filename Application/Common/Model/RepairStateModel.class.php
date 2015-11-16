@@ -53,14 +53,16 @@ class RepairStateModel extends Model
         $map['repair_record_id'] = array('IN',$recordIds);
         $res = $this->_repair_state->field('id',true)->where($map)->select();
         //获取每个维修状态的node节点信息
-        foreach($res as $v){
-            print_r($this->getNode($v['state_node']));
+        foreach($res as &$v){
+            $v['node_info'] = $this->getNode($v['state_node']);
         }
+        unset($v);//因为$v是地址引用所有需要unset 否则会出现意想不到的情况
+
         //组装要返回的数据
         $return =array();
         foreach($recordIds as $recordId){
-            $condition['repair_record_id'] = $recordId;
-            $return[$recordId] = $this->_repair_state->field('state_title,state_info,ctime')->where($condition)->select();
+            
+            $return[$recordId] =;
         }
         return $return;
     }
