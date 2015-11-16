@@ -1,23 +1,23 @@
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/comm.css">
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/selectclass.css">
 <!--header开始-->
-<header class="header-top bs2">
-    <a href="#" class="hidden-text" title="后退">后退</a>
-    <h1>选择班级</h1>
-</header>
-<section class="secelt-body">
-    <label class="label" id="currClassInfo"><!----计算机学院/15网络工程2班---></label>
-    <ul id="classInfoBody">
-        {:W('SetClass/classesInfo',$classInfoWidgetparam)}
-    </ul>
-</section>
+<div id="selectClassBody">
+    <header class="header-top bs2">
+        <a href="#" class="hidden-text" title="后退">后退</a>
+        <h1>选择班级</h1>
+    </header>
+    <section class="secelt-body">
+        <label class="label" id="currClassInfo"><!----计算机学院/15网络工程2班---></label>
+        <ul id="classInfoBody">
+            {:W('SetClass/classesInfo',$classInfoWidgetparam)}
+        </ul>
+    </section>
+</div>
     <include file= './application/Home/View/Common/footer.html' />
 
 <script type="text/javascript">
     //班级信息的UL
     var JclassInfoBody = $('#classInfoBody');
-    //ajax返回班级信息
-    var classInfo;
     //当前班级
     var JcurrClassInfo = $('#currClassInfo');
     //当前Li
@@ -25,21 +25,30 @@
     $(function(){
         clickItem();
     });
+    //绑定事件li
     function clickItem(){
         $('#classInfoBody>li').click(function(){
             JcurrLi = $(this);
             ajaxRequest(JcurrLi.attr('data-href'),function(data){
-                classInfo = data;
                 //替换内容
                 JclassInfoBody.fadeOut('fast',function(){
                     JcurrClassInfo.html(JcurrClassInfo.html() + ' ' + JcurrLi.children('p').html());
                     JclassInfoBody.children().remove();
                     JclassInfoBody.fadeIn('fast');
-                    JclassInfoBody.append(classInfo);
+                    JclassInfoBody.append(data);
                     //再次绑定点击时间
                     clickItem();
                 });
             });
         });
+    }
+    //选择班级结束的回调函数
+    function callBackSelectEnd(pid){
+        $("#classIdInput").val(pid);
+        $('#selectClassBody').hide('fast');
+        $('#setp2Body').show('fast');
+        $('#selectClassBtn>p').html(JcurrClassInfo.html());
+        JcurrClassInfo.html('');
+        classID = pid;
     }
 </script>

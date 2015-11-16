@@ -22,4 +22,22 @@ return array(
     ),
 
     'SHOW_PAGE_TRACE' =>true,
+    //缩略图相关配置，根据横宽比生成缩略图，所以只要配置宽度
+    'thumbnail' => array(
+        //小图
+        'smThumbnail' => array(
+            'widht' => 200,
+            'suffix' => '_sm'
+        ),
+        //中图
+        'mdThumbnail' => array(
+            'widht' => 300,
+            'suffix' => '_md'
+        ),
+        //大图
+        'lgThumbnail' => array(
+            'widht' => 400,
+            'suffix' => '_lg'
+        )
+    )
 );
