@@ -128,25 +128,28 @@ class UserModel extends Model
      *
      * @param array $user
      *        	新用户的相关信息|新用户对象
+     * $user = array(
+     *      'student_id' =>,
+     *      'weixin'     =>, //可有可无
+     *      'name'       =>,
+     *      'classes_id' =>,
+     *      'tel_num'    =>,
+     * );
      * @param $group_id 用户组id
      * @return boolean 是否添加成功
      */
     public function addUser(array $user,$group_id=1)
     {
-        if(empty($user['student_id'])){
-            $this->error='请输入学号!';
-            return false;
-        }
+        if(empty($user['student_id'])) E('请输入学号');
+
         //判断学号是否被注册了
-        if($this->hasUser($user['student_id'])){
-            $this->error = '该学号已存在!';
-            return false;
-        }
+        if($this->hasUser($user['student_id'])) E('该学号已存在');
         //判断微信是否被注册了
-        if($user['weixin'] && $this->hasUser($user['weixin'])){
-            $this->error = '该微信号已存在!';
-            return false;
-        }
+        if($user['weixin'] && $this->hasUser($user['weixin'])) E('该微信号已存在!');
+        //获取班级字符串
+        if(empty($user['classes_id'])) E('请填写班级信息');
+        $user['classes_name'] = D('Classes')->getClassById($user['classes_id']);
+
         $user['ctime']        = time();             // # 注册时间
         $user['reg_ip']       = ip2long(get_client_ip());    // # 用户客户端注册IP
         if (($uid = $this->add($user))) {
