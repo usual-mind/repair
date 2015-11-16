@@ -1,13 +1,13 @@
 <?php
 
-namespace Common\Model;
-
-/**
+/**注册信息验证模型
  * Created by PhpStorm.
- * User: TAOYU
+ * User: TaoYu
  * Date: 2015/11/11
  * Time: 8:31
  */
+
+namespace Common\Model;
 class RegisterModel {
     private $error;
     private $_user_model;																// 用户模型对象字段

@@ -1,7 +1,7 @@
 <?php
-/**
+/**维修状态模型
  * Created by PhpStorm.
- * User: TAOYU
+ * User: TaoYu
  * Date: 2015/11/14
  * Time: 18:07
  *

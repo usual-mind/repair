@@ -1,8 +1,8 @@
 <?php
-/**
+/**电脑型号模型
  * TODO 树形结构的模型提供的方法差不过 可以抽象出一个树形结构模型的公用模型
  * Created by PhpStorm.
- * User: TAOYU
+ * User: TaoYu
  * Date: 2015/11/13
  * Time: 21:38
  */
@@ -85,7 +85,7 @@ class ComputerModel extends Model
      * @return bool
      */
     public function clearCache($computerModelIds){
-        if(empty($computerModelIds)) E('缺少参数');
+        if(empty($computerModelIds)) E('清除缓存失败');
         is_array($computerModelIds) || explode(',',$computerModelIds);
         $computerModelIds = array_unique(array_filter($computerModelIds));//删除数组中为空的值和重复的值
         foreach($computerModelIds as $v){

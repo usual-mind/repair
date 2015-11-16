@@ -1,7 +1,7 @@
 <?php
-/**
+/**用户与电脑关联模型
  * Created by PhpStorm.
- * User: Administrator
+ * User: TaoYu
  * Date: 2015/11/13
  * Time: 21:38
  */

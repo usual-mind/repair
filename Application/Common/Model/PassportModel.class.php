@@ -1,7 +1,7 @@
 <?php
-/**
+/**通行证模型
  * Created by PhpStorm.
- * User: TAOYU
+ * User: TaoYu
  * Date: 2015/11/13
  * Time: 13:07
  */

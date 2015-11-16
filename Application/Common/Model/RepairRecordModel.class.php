@@ -1,7 +1,7 @@
 <?php
-/**
+/**维修记录模型
  * Created by PhpStorm.
- * User: TAOYU
+ * User: TaoYu
  * Date: 2015/11/9
  * Time: 21:25
  */

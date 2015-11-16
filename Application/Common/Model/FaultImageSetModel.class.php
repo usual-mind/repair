@@ -1,7 +1,7 @@
 <?php
-/**
+/**电脑故障图片模型
  * Created by PhpStorm.
- * User: TAOYU
+ * User: TaoYu
  * Date: 2015/11/14
  * Time: 12:16
  */
@@ -20,7 +20,7 @@ class FaultImageSetModel extends Model
      */
     public function getImagesBySetId($setId){
         $setId = intval($setId);
-        if(!$setId) E('参数错误');
+        if(!$setId) E('获取图片失败');
         //TODO 缓存处理
         $map['id'] = $setId;
         if(!($set = $this->where($map)->find())) {

@@ -1,8 +1,8 @@
 <?php
-/**
+/**班级信息模型
  * TODO 树形结构的模型提供的方法差不过 可以抽象出一个树形结构模型的公用模型
  * Created by PhpStorm.
- * User: TAOYU
+ * User: TaoYu
  * Date: 2015/11/9
  * Time: 19:24
  */

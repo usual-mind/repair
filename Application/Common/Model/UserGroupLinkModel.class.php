@@ -1,7 +1,7 @@
 <?php
-/**
+/**用户与用户组关联模型
  * Created by PhpStorm.
- * User: Administrator
+ * User: TaoYu
  * Date: 2015/11/11
  * Time: 8:08
  */

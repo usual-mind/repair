@@ -1,7 +1,7 @@
 <?php
-/**
+/**用户模型
  * Created by PhpStorm.
- * User: PC-20150911JVQL$
+ * User: TaoYu
  * Date: 2015/11/8
  * Time: 18:58
  */
