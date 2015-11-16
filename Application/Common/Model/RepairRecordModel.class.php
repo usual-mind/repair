@@ -18,10 +18,11 @@ class RepairRecordModel extends Model
     /**获取某个用户的维修记录列表
      * //TODO 考虑分页
      * @param $uids
+     * @return array 维修记录列表数组
      */
     public function getUserRepairRecords($uid){
         //TODO 缓存处理
-        $condition['uid']=$uid;
+        $condition['uid']=intval($uid);
         $condition['is_del']=0;
         if(!$records = $this->where($condition)->select()){
             //这个用户还没有维修记录
@@ -40,23 +41,47 @@ class RepairRecordModel extends Model
             [end_time] => 0
             [is_del] => 0
              */
+            //获取图片
             if(!empty($record['image_set_id'])){
-                //TODO 获取图片集中的第一张图片
-                $record['image'] = D('FaultImageSet')->getImagesBySetId($record['image_set_id']);
+
+                $images = D('FaultImageSet')->getImagesBySetId($record['image_set_id']);
+                $record['images'] = array_shift($images);//获取第一张图片
+
             }
             //获取电脑全称
             $record['computer_name'] = D('Computer')->getComputerNameById($record['computer_id']);
             unset($record['is_del'],$record['image_set_id']);
         }
+        //因为这里的$record 是 foreach中用了引用的变量 如果不释放会发生意想不到的情况
         unset($record);
         return $records;
     }
 
     /**获取某个维修记录详情（包括所有的图片和维修状态信息）
      * @param $recordId
+     * @return array 维修记录详情数组
      */
     public function getRepairRecord($recordId){
+        //TODO 缓存处理
+        $condition['id'] = intval($recordId);
+        $condition['is_del'] = 0;
+        if(!$repairRecord = $this->where($condition)->find())
+            E('获取ID为'.$recordId.'的维修记录详情失败'.$this->getError());
+        if(!empty($repairRecord['image_set_id'])){
+            //获取图片
+            $repairRecord['images'] = D('FaultImageSet')->getImagesBySetId($repairRecord['image_set_id']);
+        }
+        //维修人员
+        $repairRecord['repairmem'] = D('user')->getLinkNameByUid($repairRecord['repairmem_id']);
+        //提交时间
+        $repairRecord['start_time'] =friendlyShowTime($repairRecord['start_time']);
+        //获取电脑全称
+        $repairRecord['computer_name'] = D('Computer')->getComputerNameById($repairRecord['computer_id']);
+        //获取维修状态
+        $repairRecord['repairState'] = D('RepairState')->getRepairState($recordId);
 
+        unset($repairRecord['is_del'],$repairRecord['image_set_id']);
+        return $repairRecord;
     }
     /**
      * 添加一条维修信息

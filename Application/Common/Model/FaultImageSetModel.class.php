@@ -14,7 +14,6 @@ use Think\Model;
 class FaultImageSetModel extends Model
 {
     protected $tableName = 'fault_image_set';
-
     /**通过图片集id获取所有的图片
      * @param $setId
      * @return array|bool
