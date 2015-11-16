@@ -84,12 +84,11 @@ class UserModel extends Model
     private function _getUserInfo(array $map, $field = '*')
     {
         $user = $this->where($map)->field($field)->find();
-
-        unset ( $user ['password'] , $user ['is_del']);
         if (! $user) {
             E('用户查询失败！');
             return false;
         } else {
+            unset ( $user ['password'] , $user ['is_del']);
             $uid = $user ['id'];
             //获取用户的用户组信息
             $userGroup = D ( 'UserGroupLink' )->getUserGroupData ( $uid );
@@ -157,6 +156,15 @@ class UserModel extends Model
         }
         E('添加用户失败!');
         return false;
+    }
+    /**
+     * 通过uid获取带连接的用户姓名
+     * @param $uid
+     * @return string name
+     */
+    public function getLinkNameByUid($uid){
+        $user = $this->getUserInfo($uid);
+        return '<a href="#'.$uid.'" class="user-name">'.$user['name'].'</a>';
     }
 
 }

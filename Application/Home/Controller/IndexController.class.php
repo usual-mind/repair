@@ -9,6 +9,6 @@ use Think\Controller;
 class IndexController extends  BaseController{
     public function index(){
         //print_r(D('RepairRecord')->addRepairRecord(array('problem_desc'=>'电脑爆炸了','computer_id'=>'3')));
-        p(D('RepairState')->getRepairState(1));
+        p(D('RepairState')->getLastNode('1'));
     }
 }

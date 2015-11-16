@@ -44,46 +44,57 @@ class RepairStateModel extends Model
 
     /**获取维修状态信息
      * @param $recordIds 维修记录ID
-     * @return array
+     * @return array 返回的数组的键就是维修记录id
      */
-    public function getRepairState($recordIds){
+    public function getRepairState($recordId){
         //TODO 缓存处理
-        is_array($recordIds) || $recordIds = explode(',',$recordIds);
-        $recordIds = array_unique(array_filter($recordIds));//删除数组中为空的值和重复的值
-        $map['repair_record_id'] = array('IN',$recordIds);
+        $map['repair_record_id'] = $recordId;
         $res = $this->_repair_state->field('id',true)->where($map)->select();
-        //获取每个维修状态的node节点信息
+
+
         foreach($res as &$v){
+            /* ty注释于2015年11月16日 09:29:23  因为RepairState不需要node信息
+            //获取每个维修状态的node节点信息
             $v['node_info'] = $this->getNode($v['state_node']);
+            //获取节点信息中的node_info文本
+            $v['node_info'] = $v['node_info']['node_info'];
+             */
+            $v['ctime']     = friendlyShowTime($v['ctime']);
         }
         unset($v);//因为$v是地址引用所有需要unset 否则会出现意想不到的情况
-
-        //组装要返回的数据
-        $return =array();
-        foreach($recordIds as $recordId){
-            
-            $return[$recordId] =;
-        }
-        return $return;
+        return $res;
     }
 
+
+    public function getLastNode($repairId){
+        //TODO 缓存处理
+        $repairId = intval($repairId);
+        if(!$repairId) E('参数错误');
+        if(!$node = $this->_repair_state->field('state_node')->where('repair_record_id='.$repairId)->order('ctime desc')->find()) E('获取维修状态节点失败');
+        return $this->getNode($node['state_node']);
+
+    }
     /**
      * 获取节点列表
      * @return array 节点列表数据
      */
-    public function getNodeList() {
-        // 缓存处理
-        if($list = static_cache('state_node')) {
-            return $list;
-        }
-        if(($list = $this->cacheObj->get('state_node')) == false) {
-            $data = $this->select();
-            //将node字段变成数组的索引
-            $list = array();
-            foreach($data as $v){
-                $list[$v['node']] = $v;
-                unset($list[$v['node']]['node']);
-            }
+            public function getNodeList() {
+                // 缓存处理
+                if($list = static_cache('state_node')) {
+                    return $list;
+                }
+                if(($list = $this->cacheObj->get('state_node')) == false) {
+                    $data = $this->select();
+                    //将node字段变成数组的索引
+                    $list = array();
+                    foreach($data as $v){
+                        //改变node_info的字体颜色
+                        $v['node_info'] = '<span style="color:'.$v['font_color'].';">'.$v['node_info'].'</span>';
+                        unset($v['font_color']);
+
+                        $list[$v['node']] = $v;
+                        unset($list[$v['node']]['node']);
+                    }
             $this->cacheObj->set('state_node', $list);
         }
         static_cache('state_node', $list);

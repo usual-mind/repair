@@ -15,16 +15,43 @@ class RepairRecordModel extends Model
 {
     protected $tableName = 'repair_record';
 
-    /**
+    /**获取某个用户的所有维修记录
      * @param $uids
      */
     public function getUserRepairRecords($uid){
         //TODO 缓存处理
         $condition['uid']=$uid;
         $condition['is_del']=0;
-
+        if(!$records = $this->where($condition)->select()){
+            //这个用户还没有维修记录
+            return null;
+        }
+        foreach($records as &$record){
+            //维修人员
+            $record['repairmem'] = D('user')->getLinkNameByUid($record['repairmem_id']);
+            //提交时间
+            $record['start_time'] = friendlyShowTime($record['start_time']);
+            /*
+            [image_set_id] =>
+            [repairmem_id] => 3
+            [computer_id] => 3
+            [start_time] => 21小时以前
+            [end_time] => 0
+            [is_del] => 0
+             */
+            if(!empty($record['image_set_id'])){
+                //TODO 获取图片集中的第一张图片
+            }
+        }
+        return $records;
     }
 
+    /**获取某个维修记录
+     * @param $recordId
+     */
+    public function getRepairRecords($recordId){
+
+    }
     /**
      * 添加一条维修信息
      * $data 中的一些键
@@ -52,7 +79,8 @@ class RepairRecordModel extends Model
         $state['repair_record_id']  =   $repairRecordId;
         $state['state_title']       =   '维修信息已经提交';
         $state['state_info']        =   '请耐心等待';
-        D('RepairState')->addStatue(array('','请耐心等待	'));
-
+        $state['state_node']        =   'commit';
+        D('RepairState')->addStatue($state);
+        return $repairRecordId;//返回插入的维修记录id
     }
 }
