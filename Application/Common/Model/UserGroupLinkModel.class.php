@@ -105,7 +105,7 @@ class UserGroupLinkModel extends Model
             $this->add($save);
         }
         //清除缓存
-        model('User')->cleanCache($uids);
+        D('User')->cleanCache($uids);
 
         return true;
     }

@@ -39,7 +39,7 @@ class LoginController extends BaseController{
         $studentId = isset($_GET['studentId'])?$_GET['studentId']:NULL;
         if(!isset($_GET['studentId'])){
             //如果没有传入studentId返回第一步
-            $this->redirect('step1',array('errMes'=>'学号没有传入'));
+            $this->redirect('step1',array('errMes'=>'学号没有输入'));
         }
         //获取从第一步传来的学号
         $studentId = intval($_GET['studentId']);
