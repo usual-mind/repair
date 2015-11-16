@@ -89,7 +89,7 @@ class RepairRecordModel extends Model
      * array(
      *      problem_desc =>,
      *      computer_id=>,
-     *      images => array(), //如果没有图片就不用有这个键
+     *      image_set_id =>//如果没有图片就不用有这个键
      * @param $data
      * @return 返回插入的id
      */
@@ -100,10 +100,10 @@ class RepairRecordModel extends Model
         $map['problem_desc']    =   $data['problem_desc'];
         $map['computer_id']     =   $data['computer_id'];
         $map['start_time']      =   time();
-        if(!empty($data['images'])){
+        /*if(!empty($data['images'])){
             //插入图片
             $map['repair_record_id'] = D('FaultImageSet')->addImages($data['images']);
-        }
+        }*/
         //插入维修信息
         if(!$repairRecordId = $this->add($map)) E('添加维修记录失败! '.$this->getError());
         //添加维修状态

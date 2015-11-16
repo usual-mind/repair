@@ -27,15 +27,17 @@ class FaultImageSetModel extends Model
             E('没有找到id为' . $setId . '的图片集');
             return false;
         }
-        $images = M('fault_images')->field('url')
+        $images = M('fault_images')->field('url,url_sm,url_mid,url_lg')
             ->where('image_set_id='.$set['id'])->limit($set['count'])->select();
         $return = array();
         foreach($images as $image){
-            $return[] = $image['url'];
+            $return[] = $image;
         }
         return $return;
     }
+    public function getDefalutImg(){
 
+    }
     /**
      * 插入一组图片
      * 返回图片集id
