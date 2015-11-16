@@ -15,7 +15,8 @@ class RepairRecordModel extends Model
 {
     protected $tableName = 'repair_record';
 
-    /**获取某个用户的所有维修记录
+    /**获取某个用户的维修记录列表
+     * //TODO 考虑分页
      * @param $uids
      */
     public function getUserRepairRecords($uid){
@@ -41,15 +42,20 @@ class RepairRecordModel extends Model
              */
             if(!empty($record['image_set_id'])){
                 //TODO 获取图片集中的第一张图片
+                $record['image'] = D('FaultImageSet')->getImagesBySetId($record['image_set_id']);
             }
+            //获取电脑全称
+            $record['computer_name'] = D('Computer')->getComputerNameById($record['computer_id']);
+            unset($record['is_del'],$record['image_set_id']);
         }
+        unset($record);
         return $records;
     }
 
-    /**获取某个维修记录
+    /**获取某个维修记录详情（包括所有的图片和维修状态信息）
      * @param $recordId
      */
-    public function getRepairRecords($recordId){
+    public function getRepairRecord($recordId){
 
     }
     /**

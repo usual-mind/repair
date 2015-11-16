@@ -16,29 +16,23 @@ class FaultImageSetModel extends Model
     protected $tableName = 'fault_image_set';
 
     /**通过图片集id获取所有的图片
-     * @param $setIds
+     * @param $setId
      * @return array|bool
      */
-    public function getImagesBySetId($setIds){
-        is_array($setIds) || $setIds = explode(',' , $setIds);
-        $setIds = array_unique(array_filter($setIds));//删除数组中为空的值和重复的值
-
+    public function getImagesBySetId($setId){
+        $setId = intval($setId);
+        if(!$setId) E('参数错误');
         //TODO 缓存处理
-        $map['id'] = array('IN',$setIds);
-        if(!($set = $this->where($map)->limit(count($setIds))->select())){
-            E('没有找到id为'.$setIds.'的图片集');
+        $map['id'] = $setId;
+        if(!($set = $this->where($map)->find())) {
+            E('没有找到id为' . $setId . '的图片集');
             return false;
         }
-
+        $images = M('fault_images')->field('url')
+            ->where('image_set_id='.$set['id'])->limit($set['count'])->select();
         $return = array();
-        foreach($set as $v){
-
-            $images = M('fault_images')->field('url')
-                ->where('image_set_id='.$v['id'])->limit($v['count'])->select();
-
-            $return[$v['id']] = array('count'=>$v['count'],
-                        'ctime'=>$v['ctime'],
-                        'path'=>$images);
+        foreach($images as $image){
+            $return[] = $image['url'];
         }
         return $return;
     }

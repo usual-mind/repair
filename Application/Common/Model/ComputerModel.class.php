@@ -46,6 +46,7 @@ class ComputerModel extends Model
      * @return String 电脑型号字符串
      */
     public function getComputerNameById($id){
+
         //从缓存中获取
         $cacheKey = 'computerNameById_'.$id;
         if($str = static_cache($cacheKey)){
@@ -65,8 +66,9 @@ class ComputerModel extends Model
         }
         $data['model'] = $res['title'];//电脑型号
         $map['id'] = $res['pid'];
+
         if(!($res = $this->where($map)->find())){
-            E('id为'.$map['id'].'的电脑型号不存在');
+            E('id为'.$map['id'].'的电脑品牌不存在');
             //$this->error = 'id为'.$map['id'].'的电脑型号不存在';
             return false;
         }
