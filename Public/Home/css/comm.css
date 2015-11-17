@@ -59,7 +59,7 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 	background:url(../img/icon.png) no-repeat 0 0;
 	display:block;
 	position:absolute;
-	top:13px;
+	top:11px;
 	left:10px;
 }
 .hidden-text{
@@ -67,8 +67,8 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 }
 .header-top>h1{
 	text-align:center;
-	line-height:50px;
-	font-size:18px;
+	line-height:45px;
+	font-size:16px;
 	color:#666;
 }
 /*header开始*/
