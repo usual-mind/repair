@@ -2,10 +2,6 @@
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/step2.css">
 <!--header开始-->
 <div id="setp2Body">
-    <header class="header-top bs2">
-        <a href="#" data-href="details.html"  class="hidden-text" title="后退">后退</a>
-        <h1>完善个人信息</h1>
-    </header>
     <div class="tip">检测到你第一次使用e8阳光维修服务，请完善你的个人信息。</div>
     <form id="InfoForm" action="{:U('Login/doRegister')}" method="post">
         <div class="personal-info">
@@ -21,6 +17,9 @@
         </div>
     </form>
     <div class="submit"><a href="#" id="next" >下一步</a></div>
+</div>
+<div id="selectClassBody">
+    {:W('SetClass/setClass',$department)}
 </div>
 <include file= './application/Home/View/Common/footer.html' />
 <script type="text/javascript">
@@ -48,4 +47,5 @@
         }
         $('#InfoForm').submit();
     });
+
 </script>

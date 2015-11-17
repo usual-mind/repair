@@ -43,10 +43,15 @@ class LoginController extends BaseController{
         //获取从第一步传来的学号
         $studentId = intval($_GET['studentId']);
         $this->assign('studentId',$studentId);
+
+        $this->setHeader('完善个人信息');
+        //分配给Widget
+        $departments = D('Classes')->getAllDepartment();
+        foreach($departments as &$v){
+            $v['url'] = U('SetClass/classInfowidget',array('pid'=>$v['id'],'type'=>'department'));
+        }
+        $this->assign('department',array($departments));
         $this->display();
-        //调用选择班级控制器
-        $SetClassController = new SetClassController();
-        $SetClassController->index();
     }
 
     /**

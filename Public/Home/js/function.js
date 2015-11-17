@@ -69,3 +69,9 @@ function tipBox(tip,time){
 	$("#tipBox").slideDown("fast");
 	setTimeout('$("#tipBox").slideUp("fast")',time);
 }
+function setHeader(title,backUrl){
+	if(backUrl==null) backUrl='javascript:;';
+	var Jheader = $("#header");
+	Jheader.children(".hidden-text").attr('href',backUrl);
+	Jheader.children("h1").html(title);
+}

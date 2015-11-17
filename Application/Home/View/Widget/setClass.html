@@ -1,19 +1,12 @@
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/comm.css">
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/selectclass.css">
-<!--header开始-->
-<div id="selectClassBody">
-    <header class="header-top bs2">
-        <a href="#" class="hidden-text" title="后退">后退</a>
-        <h1>选择班级</h1>
-    </header>
+    <include file= './application/Home/View/Common/header.html' />
     <section class="secelt-body">
         <label class="label" id="currClassInfo"><!----计算机学院/15网络工程2班---></label>
         <ul id="classInfoBody">
-            {:W('SetClass/classesInfo',$classInfoWidgetparam)}
+            {:W('SetClass/classesList',$department)}
         </ul>
     </section>
-</div>
-    <include file= './application/Home/View/Common/footer.html' />
 
 <script type="text/javascript">
     //班级信息的UL
@@ -24,6 +17,10 @@
     var JcurrLi;
     $(function(){
         clickItem();
+
+        $("#backBtn").click(function (){
+            alert(backUrl);
+        });
     });
     //绑定事件li
     function clickItem(){
@@ -50,6 +47,6 @@
         $('#selectClassBtn>p').html(JcurrClassInfo.html());
         JcurrClassInfo.html('');
         classID = pid;
-
     }
+
 </script>

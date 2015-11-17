@@ -5,17 +5,9 @@ use Common\Controller\BaseController;
 
 class SetClassController extends BaseController{
     public function index(){
-        //获取所有学院
-        $departments = D('Classes')->getAllDepartment();
-        //在数组中加入一个URL
-        foreach($departments as &$v){
-            $v['url'] = U('SetClass/classInfowidget',array('pid'=>$v['id'],'type'=>'department'));
-        }
-        $this->assign('classInfoWidgetparam',array($departments));
-        $this->display('common/selectclass');
     }
 
-    /**
+    /**TODO 加注释
      * ajax返回
      * 班级信息widget
      */
@@ -25,19 +17,27 @@ class SetClassController extends BaseController{
         switch($type){
             case 'department':
                 $type = 'grade';
+                $title = '选择年级';
+                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'department');
                 $department = D('Classes')->getGradeByPid($pid);
                 break;
             case 'grade':
                 $type = 'major';
+                $title = '选择专业';
+                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'grade');
                 $department = D('Classes')->getMajorByPid($pid);
                 break;
             case 'major':
                 $type = 'class';
+                $title = '选择班级';
+                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'major');
                 $department = D('Classes')->getClassByPid($pid);
                 break;
             case 'class':
                 $department = D('Classes')->getAllDepartment();
                 $type = 'department';
+                $title = '选择学院';
+                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'class');
                 echo '<script>callBackSelectEnd('.$pid.')</script>';
                 break;
         }
@@ -48,9 +48,13 @@ class SetClassController extends BaseController{
             } else if($type == 'class'){
                 $v['title'] .= '班';
             }
-            $v['backUrl'] = U('SetClass/classInfowidget',array('pPid'=>D('Classes')->getParentId($pid),'type'=>$type));
             $v['url'] = U('SetClass/classInfowidget',array('pid'=>$v['id'],'type'=>$type));
         }
-        W('SetClass/classesInfo',array($department));
+
+        $header['title'] = $title;
+        $header['backUrl'] = U('SetClass/classInfowidget',$backParam);
+
+        $this->assign('header',$header);
+        W('SetClass/classesList',array($department));
     }
 }
