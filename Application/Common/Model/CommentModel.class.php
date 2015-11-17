@@ -15,6 +15,6 @@ class CommentModel
      *
      */
     public function addComment(){
-        $this->where()->
+
     }
 }

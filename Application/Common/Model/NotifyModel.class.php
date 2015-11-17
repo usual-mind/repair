@@ -26,6 +26,11 @@ class NotifyModel extends Model
         $this->_config['site'] = $site['site_name'];
         $this->_config['site_url'] = $site['site_url'];
     }
+    public function getMessageList($uid){
+        $condition['uid'] = intval($uid);
+        $condition['is_read'] = 0;
+        
+    }
     /**
      * 更改指定用户的消息从未读为已读
      * @param integer $uid 用户ID
@@ -37,6 +42,16 @@ class NotifyModel extends Model
         !empty($node) && $map['node'] = $node;
         $data['is_read'] = 1;
         return M('notify_message')->where($map)->save($data);
+    }
+    /**
+     * 获取指定用户未读消息的总数
+     * @param integer $uid 用户ID
+     * @return integer 指定用户未读消息的总数
+     */
+    public function getUnreadCount($uid){
+        $condition['uid'] = intval($uid);
+        $condition['is_read'] = 0;
+        return $this->where($condition)->count();
     }
     /**
      * 获取节点列表
@@ -138,9 +153,9 @@ class NotifyModel extends Model
      * @return mix 删除失败返回false，删除成功返回删除的通知ID
      */
     public function deleteNotify($id) {
-        //$map['uid'] = $GLOBALS['ts']['mid'];		// 仅仅只能删除登录用户自己的通知
-        //$map['id'] = intval($id);
-        //return D('')->table($this->tablePrefix.'notify_message')->where($map)->delete();
+        $condition['uid'] = $GLOBALS['e8']['mid'];		// 仅仅只能删除登录用户自己的通知
+        $condition['id'] = intval($id);
+        return M('notify_message')->where($condition)->delete();
     }
     /**
      * 发送系统消息，给用户组或全站用户
