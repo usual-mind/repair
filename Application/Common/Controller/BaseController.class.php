@@ -39,14 +39,18 @@ class BaseController extends Controller {
     private function initUser(){
         // 验证登陆
         if ( D('Passport')->needLogin() ) {
-            //TODO 跳转到登录页面
-            die('need go to login');
+            // 跳转到登录页面
+            $this->redirect('Login/index');
         }
         //当前登录者uid
-        $GLOBALS['e8']['mid'] = $this->mid = intval($_SESSION['mid']);
-        $GLOBALS['e8']['user'] = $this->user = D('User')->getUserInfo($this->mid);
-        $this->assign('mid', $this->mid);   //登录者
-        $this->assign('user', $this->user); //当前登陆的人
+        if(intval($_SESSION['mid']) !== 0){
+            //非游客登录
+            $GLOBALS['e8']['mid'] = $this->mid = intval($_SESSION['mid']);
+            $GLOBALS['e8']['user'] = $this->user = D('User')->getUserInfo($this->mid);
+            $this->assign('mid', $this->mid);   //登录者
+            $this->assign('user', $this->user); //当前登陆的人
+        }
+
         return true;
     }
     /**

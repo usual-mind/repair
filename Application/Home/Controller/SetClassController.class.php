@@ -48,6 +48,7 @@ class SetClassController extends BaseController{
             } else if($type == 'class'){
                 $v['title'] .= '班';
             }
+            $v['backUrl'] = U('SetClass/classInfowidget',array('pPid'=>D('Classes')->getParentId($pid),'type'=>$type));
             $v['url'] = U('SetClass/classInfowidget',array('pid'=>$v['id'],'type'=>$type));
         }
         W('SetClass/classesInfo',array($department));
