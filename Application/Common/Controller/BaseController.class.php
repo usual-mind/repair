@@ -12,6 +12,7 @@ class BaseController extends Controller {
      * @return void
      */
     protected function _initialize(){
+
         $this->initSite();
         $this->initModule();
         $this->initUser();

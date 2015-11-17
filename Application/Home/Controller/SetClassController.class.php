@@ -18,26 +18,26 @@ class SetClassController extends BaseController{
             case 'department':
                 $type = 'grade';
                 $title = '选择年级';
-                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'department');
+                //$backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'department');
                 $department = D('Classes')->getGradeByPid($pid);
                 break;
             case 'grade':
                 $type = 'major';
                 $title = '选择专业';
-                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'grade');
+                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'department');
                 $department = D('Classes')->getMajorByPid($pid);
                 break;
             case 'major':
                 $type = 'class';
                 $title = '选择班级';
-                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'major');
+                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'grade');
                 $department = D('Classes')->getClassByPid($pid);
                 break;
             case 'class':
                 $department = D('Classes')->getAllDepartment();
                 $type = 'department';
-                $title = '选择学院';
-                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'class');
+                $title = '完善信息';
+                $backParam = array('pid'=>D('Classes')->getParentId($pid),'type'=>'major');
                 echo '<script>callBackSelectEnd('.$pid.')</script>';
                 break;
         }

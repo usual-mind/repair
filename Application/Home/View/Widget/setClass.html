@@ -1,6 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/comm.css">
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/selectclass.css">
-    <include file= './application/Home/View/Common/header.html' />
     <section class="secelt-body">
         <label class="label" id="currClassInfo"><!----计算机学院/15网络工程2班---></label>
         <ul id="classInfoBody">
@@ -17,26 +15,43 @@
     var JcurrLi;
     $(function(){
         clickItem();
-
-        $("#backBtn").click(function (){
-            alert(backUrl);
+        //后退按钮 绑定事件
+        $("#header>a").click(function (){
+            ajaxRequestHtml($(this).attr('href'),function(data){
+                //删除最后选择的班级信息
+                JcurrClassInfo.children().last().remove();
+                //替换内容
+                replace(data);
+            });
+            return false;
         });
     });
+    var clickItemFlag = false;
     //绑定事件li
     function clickItem(){
+        //开启锁
+        clickItemFlag = true;
         $('#classInfoBody>li').click(function(){
+            if(!clickItemFlag) return;
             JcurrLi = $(this);
-            ajaxRequest(JcurrLi.attr('data-href'),function(data){
-                //替换内容
-                JclassInfoBody.fadeOut('fast',function(){
-                    JcurrClassInfo.html(JcurrClassInfo.html() + ' ' + JcurrLi.children('p').html());
-                    JclassInfoBody.children().remove();
-                    JclassInfoBody.fadeIn('fast');
-                    JclassInfoBody.append(data);
-                    //再次绑定点击时间
-                    clickItem();
-                });
+            ajaxRequestHtml(JcurrLi.attr('data-href'),function(data){
+                //将选择的班级信息添加到上面的班级名称里面
+                JcurrClassInfo.html(JcurrClassInfo.html() + ' <span>' + JcurrLi.children('p').html()+'</span> ');
+                replace(data);
+                //取消锁
+                clickItemFlag = false;
             });
+        });
+
+    }
+    //替换列表的内容
+    function replace(data){
+        JclassInfoBody.fadeOut('fast',function(){
+            JclassInfoBody.children().remove();
+            JclassInfoBody.append(data);
+            JclassInfoBody.fadeIn('fast');
+            //再次绑定点击事件
+            clickItem();
         });
     }
     //选择班级结束的回调函数
@@ -48,5 +63,4 @@
         JcurrClassInfo.html('');
         classID = pid;
     }
-
 </script>

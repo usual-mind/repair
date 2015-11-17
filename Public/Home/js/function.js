@@ -1,7 +1,7 @@
 /**
- *ajax
+ *ajax请求html
  */
-function ajaxRequest(href,callback){
+function ajaxRequestHtml(href,callback){
 	$.ajax({
 		type: "GET",
 		url: href,

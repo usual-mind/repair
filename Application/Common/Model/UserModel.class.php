@@ -82,6 +82,7 @@ class UserModel extends Model
      */
     private function _getUserInfo(array $map, $field = '*')
     {
+
         $user = $this->where($map)->field($field)->find();
         if (! $user) {
             E('用户查询失败！');
