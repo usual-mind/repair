@@ -91,8 +91,9 @@ class ClassesModel extends Model
             static_cache('classArr_' . $v, null);
             //清除文件缓存
             if ($this->cacheObj->rm('classArr_' . $v))
-                //清除由getChildByPid()产生的查询缓存
+                //清除查询缓存
                 S('child_class_' . $v, null);
+                S('parent_class_' . $v, null);
         }
         return true;
     }
@@ -117,6 +118,13 @@ class ClassesModel extends Model
         $this->recursiveGetClass($res['pid'], $array);
     }
 
+    /**获取父级id
+     * @param $childId
+     * @return $parentId
+     */
+    public function getParentId($childId){
+        return $this->cache('parent_class_'.$childId)->field('pid')->where(array('id'=>$childId))->find();
+    }
     /**
      * 通过一个父级的id 获取下面所有的儿子节点
      * @param $pid
@@ -124,8 +132,10 @@ class ClassesModel extends Model
      */
     private function getChildByPid($pid)
     {
-        //查询缓存 缓存24小时
-        return $this->cache('child_class_' . $pid)->field('id,title')->where(array('pid' => $pid))->order('sort')->select();
+        //查询缓存
+        $pid = $this->cache('child_class_' . $pid)->field('id,title')->where(array('pid' => $pid))->order('sort')->select();
+        if(!$pid) E('获取父级id失败');
+        return $pid['pid'];
     }
 
     /**获取所有的学院
@@ -150,7 +160,6 @@ class ClassesModel extends Model
     public function getMajorByPid($pid){
         return $this->getChildByPid($pid);
     }
-
     /**获取某专业下的所有班级
      * @param $pid
      * @return array|bool

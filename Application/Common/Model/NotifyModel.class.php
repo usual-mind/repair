@@ -29,7 +29,6 @@ class NotifyModel extends Model
     public function getMessageList($uid){
         $condition['uid'] = intval($uid);
         $condition['is_read'] = 0;
-        
     }
     /**
      * 更改指定用户的消息从未读为已读

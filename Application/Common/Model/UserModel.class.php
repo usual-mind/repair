@@ -64,8 +64,7 @@ class UserModel extends Model
         $uid = intval($uid);
         // # 判断uid是否存在
         if (0 >= $uid or !$uid) {
-            $this->error = 'UID参数值不合法';
-            return false;
+            E('UID参数值不合法');
             // # 判断是否有用户缓存
         } elseif (!($user = static_cache('user_info_' . $uid)) and !($user = $this->cacheObj->get('ui_' . $uid))) {
             /* # 获取用户信息缓存失败 */

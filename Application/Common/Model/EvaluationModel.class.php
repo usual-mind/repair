@@ -31,12 +31,7 @@ class EvaluationModel extends Model
         empty($evaluation['type_id']) && $evaluation['type_id'] = 1;
         $evaluation['ctime'] = time();
         if(!$evaluationId = $this->add($evaluation)) E('添加评价信息失败');
-        //通知维修者收到评价
-        $config['name'] = D('User')->getLinkName($GLOBALS['e8']['mid']);
-        //TODO 维修记录链接，这里需要降低耦合
-        $config['record_link'] = U($evaluation['record_id']);
-        D('Notify')->sendNotify($repairmemId,'received_evaluation',$config);
-        //添加评价内容
+        //添加评价内容，在添加评价的时候会通知维修者
         D('Comment')->addComment();
         return $evaluationId;
     }
