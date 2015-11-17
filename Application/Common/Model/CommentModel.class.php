@@ -42,7 +42,7 @@ class CommentModel extends Model
             if(!empty($data['to_replay_id'])){
                 //这是回复评论
                 //通知被回复者收到回复消息
-                D('Notify')->sendNotify($data['to_uid'],'',);
+                //D('Notify')->sendNotify($data['to_uid'],'',);
             }
         }
         echo '------------添加评论的数据-------------<br/>';p($data);echo '------------添加评论的数据-------------<br/>';die;
