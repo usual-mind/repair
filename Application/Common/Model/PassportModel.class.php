@@ -57,11 +57,10 @@ class PassportModel
 
         if($this->isLogged()){//判断是否已经登录
             //已经登录直接返回false
-
             return false;
         }else{
             //游客访问
-            $acl = C('access');//获取游客可以访问的操作
+            $acl = C('ACCESS');//获取游客可以访问的操作
             return !((array_key_exists(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME,$acl)
                     && $acl[MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME] === true)
                 || (array_key_exists(MODULE_NAME.'/'.CONTROLLER_NAME.'/*',$acl)

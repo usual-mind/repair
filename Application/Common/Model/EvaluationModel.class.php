@@ -15,23 +15,29 @@ class EvaluationModel extends Model
 {
     /**添加一条评价信息
      * $evaluation = array(
-     *      'type_id'=>,
-     *      'grade'=>,
-     *      'record_id'=>,
-     *      'repairmem_id'=>,//维修人id
-     *      'content'=>//评价内容
+     *      'type_id'=>1, default = 1   //评价类型
+     *      'grade'=>,                  //评价分数
+     *      'record_id'=>,              //评价对应的记录id
      * );
      * @param $evaluation
+     * @param $repairmemId //维修人的id
+     * @param $content //评价类容
      * @return 插入的评价id
      */
-    public function addEvaluation($evaluation){
+    public function addEvaluation($evaluation ,$repairmemId,$content){
+        // 判断用户是否登录
+        if(!$GLOBALS['e8']['mid']) E('请先登陆');
         !empty($evaluation) || E('评价信息参数有误');
+        empty($evaluation['type_id']) && $evaluation['type_id'] = 1;
         $evaluation['ctime'] = time();
         if(!$evaluationId = $this->add($evaluation)) E('添加评价信息失败');
-        //通知维修者
-        D('Notify')->sendNotify();
+        //通知维修者收到评价
+        $config['name'] = D('User')->getLinkName($GLOBALS['e8']['mid']);
+        //TODO 维修记录链接，这里需要降低耦合
+        $config['record_link'] = U($evaluation['record_id']);
+        D('Notify')->sendNotify($repairmemId,'received_evaluation',$config);
         //添加评价内容
-        D('comment')->addComment();
+        D('Comment')->addComment();
         return $evaluationId;
     }
 
@@ -50,5 +56,4 @@ class EvaluationModel extends Model
 
         return $evaluation;
     }
-
 }

@@ -15,6 +15,10 @@ class BaseController extends Controller {
         $this->initSite();
         $this->initModule();
         $this->initUser();
+        //语言
+        $GLOBALS['_lang'] = array();
+        $GLOBALS['_lang'] = array_merge($GLOBALS['_lang'],C('NOTIFY'));
+
     }
     /**
      * 站点信息初始化
@@ -28,6 +32,8 @@ class BaseController extends Controller {
         $this->site['site_name'] = 'e8阳光维修服务';
         $this->site['keywords'] = 'e8阳光维修服务';
         $this->site['description'] = 'e8阳光维修服务';
+        $this->site['site_url'] = 'http://www.baidu.com';
+        $GLOBALS['e8']['site'] = $this->site;
         $this->assign('site',$this->site);
     }
     private function initUser(){
@@ -37,7 +43,6 @@ class BaseController extends Controller {
             die('need go to login');
         }
         //当前登录者uid
-        
         $GLOBALS['e8']['mid'] = $this->mid = intval($_SESSION['mid']);
         $GLOBALS['e8']['user'] = $this->user = D('User')->getUserInfo($this->mid);
         $this->assign('mid', $this->mid);   //登录者
