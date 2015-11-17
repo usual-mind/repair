@@ -22,17 +22,17 @@ return array(
     'thumbnail' => array(
         //小图
         'smThumbnail' => array(
-            'widht' => 200,
+            'width' => 200,
             'suffix' => '_sm'
         ),
         //中图
         'mdThumbnail' => array(
-            'widht' => 300,
+            'width' => 300,
             'suffix' => '_md'
         ),
         //大图
         'lgThumbnail' => array(
-            'widht' => 400,
+            'width' => 400,
             'suffix' => '_lg'
         )
     )
