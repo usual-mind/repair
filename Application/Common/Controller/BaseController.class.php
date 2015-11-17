@@ -12,7 +12,6 @@ class BaseController extends Controller {
      * @return void
      */
     protected function _initialize(){
-        session_start();
         $this->initSite();
         $this->initModule();
         $this->initUser();
@@ -33,11 +32,12 @@ class BaseController extends Controller {
     }
     private function initUser(){
         // 验证登陆
-        if ( D('Passport')->needLogin()) {
+        if ( D('Passport')->needLogin() ) {
             //TODO 跳转到登录页面
+            die('need go to login');
         }
-
         //当前登录者uid
+        
         $GLOBALS['e8']['mid'] = $this->mid = intval($_SESSION['mid']);
         $GLOBALS['e8']['user'] = $this->user = D('User')->getUserInfo($this->mid);
         $this->assign('mid', $this->mid);   //登录者

@@ -1,5 +1,5 @@
 <?php
-/**ÆÀ¼ÛÄ£ĞÍ
+/**è¯„ä»·æ¨¡å‹
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/16
@@ -13,26 +13,42 @@ use Think\Model;
 
 class EvaluationModel extends Model
 {
-    /**Ìí¼ÓÒ»ÌõÆÀ¼ÛĞÅÏ¢
+    /**æ·»åŠ ä¸€æ¡è¯„ä»·ä¿¡æ¯
      * $evaluation = array(
      *      'type_id'=>,
      *      'grade'=>,
-     *      'record_id'=>
+     *      'record_id'=>,
+     *      'repairmem_id'=>,//ç»´ä¿®äººid
+     *      'content'=>//è¯„ä»·å†…å®¹
      * );
      * @param $evaluation
-     * @return ²åÈëµÄÆÀ¼Ûid
+     * @return æ’å…¥çš„è¯„ä»·id
      */
     public function addEvaluation($evaluation){
-        !empty($evaluation) || E('ÆÀ¼ÛĞÅÏ¢²ÎÊıÓĞÎó');
-        if(!$evaluationId = $this->add($evaluation)) E('Ìí¼ÓÆÀ¼ÛĞÅÏ¢Ê§°Ü');
+        !empty($evaluation) || E('è¯„ä»·ä¿¡æ¯å‚æ•°æœ‰è¯¯');
+        $evaluation['ctime'] = time();
+        if(!$evaluationId = $this->add($evaluation)) E('æ·»åŠ è¯„ä»·ä¿¡æ¯å¤±è´¥');
+        //é€šçŸ¥ç»´ä¿®è€…
+        D('Notify')->sendNotify();
+        //æ·»åŠ è¯„ä»·å†…å®¹
+        D('comment')->addComment();
         return $evaluationId;
     }
 
-    /**»ñÈ¡Ö¸¶¨µÄÆÀ¼ÛĞÅÏ¢
+    /**è·å–æŒ‡å®šçš„è¯„ä»·ä¿¡æ¯
      * @param $recordId
      * @return array
      */
     public function getEvaluation($recordId){
-        
+
+        if(($condition['record_id'] = intval($recordId)) <= 0) E('è¯„ä»·ä¿¡æ¯å‚æ•°é”™è¯¯' );
+        $evaluation = $this->field('e.grade,e.ctime,t.title')->alias('e')
+            ->join('RIGHT JOIN __EVALUATION_TYPE__ t ON e.type_id = t.id')
+            ->where($condition)->order('t.sort')->limit('1')->select();
+        if(!$evaluation) E('è·å–è¯„ä»·ä¿¡æ¯å¤±è´¥');
+        //è·å–è¯„ä»·å†…å®¹
+
+        return $evaluation;
     }
+
 }

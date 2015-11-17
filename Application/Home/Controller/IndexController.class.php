@@ -9,6 +9,11 @@ use Think\Controller;
 class IndexController extends  BaseController{
     public function index(){
         //print_r(D('RepairRecord')->addRepairRecord(array('problem_desc'=>'电脑爆炸了','computer_id'=>'3')));
-        p(D('RepairRecord')->getRepairRecord('1'));
+        /*p(D('Evaluation')->addEvaluation(array(
+            'type_id'=>1,
+            'grade'=>5,
+            'record_id'=>1,
+        )));*/
+        p(D('Evaluation')->getEvaluation(1));
     }
 }
