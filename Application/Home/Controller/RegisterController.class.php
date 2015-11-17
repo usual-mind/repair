@@ -14,6 +14,7 @@ class RegisterController extends BaseController{
 
     /**
      * 处理图片上传
+     * 生成大，中，小三张缩略图
      */
     public function upLoadPic(){
         $upload = new \Think\Upload();// 实例化上传类
@@ -31,29 +32,30 @@ class RegisterController extends BaseController{
             die('<script>parent.callbackImageDisplay("","'.$upload->getError().'")</script>');
         }
         $imagePath = __ROOT__.'/data/uploads/'.$info['pic']['savepath'].$info['pic']['savename'];//原图的路径和文件名
-        $absoluteImagePath =ROOT_PATH.'data/uploads/'.$info['pic']['savepath'].$info['pic']['savename'];//盘符\+目录的形式
+        $absoluteImagePath =ROOT_PATH.'data/uploads/'.$info['pic']['savepath'].$info['pic']['savename'];//服务器绝对路径的形式
         //生成缩略图
         $imageConfig = C('thumbnail');//获取生成缩略图的配置
         $filePath = pathinfo($absoluteImagePath,PATHINFO_DIRNAME).'/';//获取原图的路径
         $pahtInfo = pathinfo($imagePath);//获得原图的路径信息
+        $fileDir = $pahtInfo['dirname'].'/';//原图的路径
         $fileName = $pahtInfo['filename'];//原图的文件名
         $filePostfix = $pahtInfo['extension'];//原图的后缀名
         //分别生成大图 中图 小图 的缩略图
-        $smImagePath = $filePath.$fileName.$imageConfig['smThumbnail']['suffix'].'.'.$filePostfix;
-        $mdImagePath = $filePath.$fileName.$imageConfig['mdThumbnail']['suffix'].'.'.$filePostfix;
-        $lgImagePath = $filePath.$fileName.$imageConfig['lgThumbnail']['suffix'].'.'.$filePostfix;
+        $smImagePath = $fileDir.$fileName.$imageConfig['smThumbnail']['suffix'].'.'.$filePostfix;
+        $mdImagePath = $fileDir.$fileName.$imageConfig['mdThumbnail']['suffix'].'.'.$filePostfix;
+        $lgImagePath = $fileDir.$fileName.$imageConfig['lgThumbnail']['suffix'].'.'.$filePostfix;
 
         $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
-        $image->thumb($imageConfig['smThumbnail']['width'], $imageConfig['smThumbnail']['width'])->save($smImagePath);
+        $image->thumb($imageConfig['smThumbnail']['width'], $imageConfig['smThumbnail']['width'])->save($filePath.$fileName.$imageConfig['smThumbnail']['suffix'].'.'.$filePostfix);
         $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
-        $image->thumb($imageConfig['mdThumbnail']['width'], $imageConfig['mdThumbnail']['width'])->save($mdImagePath);
+        $image->thumb($imageConfig['mdThumbnail']['width'], $imageConfig['mdThumbnail']['width'])->save($filePath.$fileName.$imageConfig['mdThumbnail']['suffix'].'.'.$filePostfix);
         $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
-        $image->thumb($imageConfig['lgThumbnail']['width'], $imageConfig['lgThumbnail']['width'])->save($lgImagePath);
+        $image->thumb($imageConfig['lgThumbnail']['width'], $imageConfig['lgThumbnail']['width'])->save($filePath.$fileName.$imageConfig['lgThumbnail']['suffix'].'.'.$filePostfix);
 
+        
         //将图片路径放入session
         $this->images[] = array('originalImagePath'=>$imagePath,'smImagePath'=>$smImagePath,'mdImagePath'=>$mdImagePath,'lgImagePath'=>$lgImagePath);
         session('images',$this->images);
-        p($this->images);
-        die('<script>parent.callbackImageDisplay("'.$imagePath.'")</script>');
+        die('<script>parent.callbackImageDisplay("'.$smImagePath.'")</script>');
     }
 }
