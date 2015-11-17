@@ -8,7 +8,7 @@ use Think\Controller;
 
 class IndexController extends  BaseController{
     public function index(){
-        //print_r(D('RepairRecord')->addRepairRecord(array('problem_desc'=>'电脑爆炸了','computer_id'=>'3')));
-        p(D('RepairRecord')->getRepairRecord('1'));
+        p(D('Notify')->sendNotify(1,'received_evaluation',
+            array('name'=>'taoyu','computer_name'=>'东芝 L800','record_link'=>'http://www.baidu.com'),2));
     }
 }

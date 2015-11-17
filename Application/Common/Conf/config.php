@@ -13,14 +13,10 @@ return array(
     'SECURE_CODE'=> 'e8net',//加密字串
     'COOKIE_PREFIX'=>'E8_',//cookie前缀
 
-    //游客可以访问的一些控制器
-    'access'    =>  array(
-        //'模块名/控制器名/操作名' => true,
-        //'模块名/控制器名/*' => true,
-        //'模块名/*/*' => true,
-
-    ),
-
+    //游客可以访问或禁止访问的一些操作列表
+    'ACCESS'    =>  include ('access.php'),
+    //notifyNode配置
+    'NOTIFY'    => include ('notify.php'),
     'SHOW_PAGE_TRACE' =>true,
     //缩略图相关配置，根据横宽比生成缩略图，所以只要配置宽度
     'thumbnail' => array(

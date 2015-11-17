@@ -161,6 +161,10 @@ function safetyHtml($text, $type = 'html'){
     }
     return $text;
 }
+function real_strip_tags($str, $allowable_tags="") {
+    $str = html_entity_decode($str,ENT_QUOTES,'UTF-8');
+    return strip_tags($str, $allowable_tags);
+}
 /**
  * 获取站点唯一密钥，用于区分同域名下的多个站点
  * @return string
@@ -208,4 +212,35 @@ function tsauthcode($string, $operation = 'DECODE', $key = '') {
     } else {
         return $keyc.str_replace('=', '', base64_encode($result));
     }
+}
+
+/**
+ * 用于读取/设置语言配置
+ * @param string name 配置名称
+ * @param string value 值
+ * @return mixed 配置值|设置状态
+ */
+function lang($key,$data = array()){
+    $key = strtoupper($key);
+    if(!isset($GLOBALS['_lang'][$key])){
+        if(C('APP_DEBUG')){
+            $notValveForKey = F('notValveForKey', '', DATA_PATH.'/develop');
+            if($notValveForKey==false){
+                $notValveForKey = array();
+            }
+            if(!isset($notValveForKey[$key])){
+                $notValveForKey[$key] = '?MODULE='.MODULE_NAME.'&CONTROLLER='.CONTROLLER_NAME.'&act='.ACTION_NAME;
+            }
+            F('notValveForKey', $notValveForKey, DATA_PATH.'/develop');
+        }
+        return $key;
+    }
+    if(empty($data)){
+        return $GLOBALS['_lang'][$key];
+    }
+    $replace = array_keys($data);
+    foreach($replace as &$v){
+        $v = '{'.$v.'}';
+    }
+    return str_replace($replace,$data,$GLOBALS['_lang'][$key]);
 }

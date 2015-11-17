@@ -29,19 +29,44 @@ class PassportModel
     public function getSuccess() {
         return $this->success;
     }
+
+    /**
+     * 初始化
+     */
+    public function _initialize(){
+        //session_start
+        if(!session_id())
+            session_start();
+        //登录的用户id 默认为游客 mid=0
+        isset($_SESSION['mid']) || $_SESSION['mid']=0;
+
+        //为了防止同目录下多个网站session冲突
+        isset($_SESSION['SITE_KEY']) || $_SESSION['SITE_KEY'] = getSiteKey();
+    }
+
+    /**
+     * 构造方法
+     */
+    public function __construct(){
+        $this->_initialize();
+    }
     /**
      * 验证是否需要登录
      */
     public function needLogin(){
+
         if($this->isLogged()){//判断是否已经登录
             //已经登录直接返回false
             return false;
         }else{
             //游客访问
-            $acl = C('access');
-            return !($acl[MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME] === true
-                || $acl[MODULE_NAME.'/'.CONTROLLER_NAME.'/*'] === true
-                || $acl[MODULE_NAME.'/*/*'] === true);
+            $acl = C('ACCESS');//获取游客可以访问的操作
+            return !((array_key_exists(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME,$acl)
+                    && $acl[MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME] === true)
+                || (array_key_exists(MODULE_NAME.'/'.CONTROLLER_NAME.'/*',$acl)
+                    && $acl[MODULE_NAME.'/'.CONTROLLER_NAME.'/*'] === true)
+                || (array_key_exists(MODULE_NAME.'/*/*',$acl) && $acl[MODULE_NAME.'/*/*'] === true));
+
         }
 
     }
@@ -64,8 +89,9 @@ class PassportModel
             }*/
             return $this->_recordLogin($uid);
         } else {
-            unset($_SESSION['mid']);
-            unset($_SESSION['SITE_KEY']);
+            //没有登录
+            //unset($_SESSION['mid']);
+            //unset($_SESSION['SITE_KEY']);
             return false;
         }
     }

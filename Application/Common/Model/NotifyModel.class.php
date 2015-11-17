@@ -16,11 +16,21 @@ class NotifyModel extends Model
     protected $tableName = 'notify_node';
     //缓存对象
     private $cacheObj = null;
+    private $_config = array();
     public function _initialize(){
         //初始化缓存对象
         $this->cacheObj = S(array('type'=>'file','prefix'=>'think','length'=>100));
-    }
 
+        //$site = empty($GLOBALS['ts']['site']) ? model('Xdata')->get('admin_Config:site') : $GLOBALS['ts']['site'];
+        $site = $GLOBALS['e8']['site'];
+        $this->_config['site'] = $site['site_name'];
+        $this->_config['site_url'] = $site['site_url'];
+    }
+    public function getMessageList($uid){
+        $condition['uid'] = intval($uid);
+        $condition['is_read'] = 0;
+        
+    }
     /**
      * 更改指定用户的消息从未读为已读
      * @param integer $uid 用户ID
@@ -32,6 +42,16 @@ class NotifyModel extends Model
         !empty($node) && $map['node'] = $node;
         $data['is_read'] = 1;
         return M('notify_message')->where($map)->save($data);
+    }
+    /**
+     * 获取指定用户未读消息的总数
+     * @param integer $uid 用户ID
+     * @return integer 指定用户未读消息的总数
+     */
+    public function getUnreadCount($uid){
+        $condition['uid'] = intval($uid);
+        $condition['is_read'] = 0;
+        return $this->where($condition)->count();
     }
     /**
      * 获取节点列表
@@ -73,8 +93,8 @@ class NotifyModel extends Model
      * @return void
      */
     public function sendNotify($toUid, $node, $config, $from) {
-        //empty($config) && $config = array();
-        //$config = array_merge($this->_config,$config);
+        empty($config) && $config = array();
+        $config = array_merge($this->_config,$config);
 
         $nodeInfo = $this->getNode($node);
         if(!$nodeInfo) {
@@ -83,8 +103,9 @@ class NotifyModel extends Model
         !is_array($toUid) && $toUid = explode(',', $toUid);
         $userInfo = D('User')->getUserInfoByUids($toUid);
         $data['node'] = $node;
-        $data['title'] = $config['title'];
-        $data['body'] = $config['body'];
+        $data['title'] = lang($nodeInfo['title_key'],$config);
+        $data['body'] = lang($nodeInfo['content_key'],$config);
+        $data['ctime'] = time();
         if($from) $data['from_uid'] = $from;
         foreach($userInfo as $v) {
             $data['uid'] = $v['id'];
@@ -121,7 +142,7 @@ class NotifyModel extends Model
         $s['is_read'] = 0;//刚插入的消息没有被阅读
         $s['title'] = html2Text($data['title']);
         $s['body'] = safetyHtml($data['body']);
-        $s['ctime'] = time();
+        $s['ctime'] = $data['ctime'];
         $s['from_uid'] = intval($data['from_uid']);
         return M('notify_message')->add($s);
     }
@@ -132,9 +153,9 @@ class NotifyModel extends Model
      * @return mix 删除失败返回false，删除成功返回删除的通知ID
      */
     public function deleteNotify($id) {
-        //$map['uid'] = $GLOBALS['ts']['mid'];		// 仅仅只能删除登录用户自己的通知
-        //$map['id'] = intval($id);
-        //return D('')->table($this->tablePrefix.'notify_message')->where($map)->delete();
+        $condition['uid'] = $GLOBALS['e8']['mid'];		// 仅仅只能删除登录用户自己的通知
+        $condition['id'] = intval($id);
+        return M('notify_message')->where($condition)->delete();
     }
     /**
      * 发送系统消息，给用户组或全站用户

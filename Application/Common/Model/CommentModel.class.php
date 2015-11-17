@@ -11,5 +11,10 @@ namespace Common\Model;
 
 class CommentModel
 {
+    /**
+     *
+     */
+    public function addComment(){
 
+    }
 }

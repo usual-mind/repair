@@ -1,5 +1,5 @@
 <?php
-/**����ģ��
+/**评价模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/16
@@ -13,26 +13,47 @@ use Think\Model;
 
 class EvaluationModel extends Model
 {
-    /**����һ��������Ϣ
+    /**添加一条评价信息
      * $evaluation = array(
-     *      'type_id'=>,
-     *      'grade'=>,
-     *      'record_id'=>
+     *      'type_id'=>1, default = 1   //评价类型
+     *      'grade'=>,                  //评价分数
+     *      'record_id'=>,              //评价对应的记录id
      * );
      * @param $evaluation
-     * @return ���������id
+     * @param $repairmemId //维修人的id
+     * @param $content //评价类容
+     * @return 插入的评价id
      */
-    public function addEvaluation($evaluation){
-        !empty($evaluation) || E('������Ϣ��������');
-        if(!$evaluationId = $this->add($evaluation)) E('����������Ϣʧ��');
+    public function addEvaluation($evaluation ,$repairmemId,$content){
+        // 判断用户是否登录
+        if(!$GLOBALS['e8']['mid']) E('请先登陆');
+        !empty($evaluation) || E('评价信息参数有误');
+        empty($evaluation['type_id']) && $evaluation['type_id'] = 1;
+        $evaluation['ctime'] = time();
+        if(!$evaluationId = $this->add($evaluation)) E('添加评价信息失败');
+        //通知维修者收到评价
+        $config['name'] = D('User')->getLinkName($GLOBALS['e8']['mid']);
+        //TODO 维修记录链接，这里需要降低耦合
+        $config['record_link'] = U($evaluation['record_id']);
+        D('Notify')->sendNotify($repairmemId,'received_evaluation',$config);
+        //添加评价内容
+        D('Comment')->addComment();
         return $evaluationId;
     }
 
-    /**��ȡָ����������Ϣ
+    /**获取指定的评价信息
      * @param $recordId
      * @return array
      */
     public function getEvaluation($recordId){
-        
+
+        if(($condition['record_id'] = intval($recordId)) <= 0) E('评价信息参数错误' );
+        $evaluation = $this->field('e.grade,e.ctime,t.title')->alias('e')
+            ->join('RIGHT JOIN __EVALUATION_TYPE__ t ON e.type_id = t.id')
+            ->where($condition)->order('t.sort')->limit('1')->select();
+        if(!$evaluation) E('获取评价信息失败');
+        //获取评价内容
+
+        return $evaluation;
     }
 }
