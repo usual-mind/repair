@@ -123,7 +123,9 @@ class ClassesModel extends Model
      * @return $parentId
      */
     public function getParentId($childId){
-        return $this->cache('parent_class_'.$childId)->field('pid')->where(array('id'=>$childId))->find();
+        $pid = $this->cache('parent_class_'.$childId)->field('pid')->where(array('id'=>$childId))->find();
+        if(!$pid) E('获取父级id失败');
+        return $pid['pid'];
     }
     /**
      * 通过一个父级的id 获取下面所有的儿子节点
@@ -133,9 +135,8 @@ class ClassesModel extends Model
     private function getChildByPid($pid)
     {
         //查询缓存
-        $pid = $this->cache('child_class_' . $pid)->field('id,title')->where(array('pid' => $pid))->order('sort')->select();
-        if(!$pid) E('获取父级id失败');
-        return $pid['pid'];
+        return $this->cache('child_class_' . $pid)->field('id,title')->where(array('pid' => $pid))->order('sort')->select();
+
     }
 
     /**获取所有的学院
