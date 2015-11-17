@@ -9,5 +9,5 @@ return array(
     //'模块名/控制器名/操作名' => true,
     //'模块名/控制器名/*' => true,
     //'模块名/*/*' => true,
-    'Home/Login/*' => true
+    'Home/*/*' => true
 );

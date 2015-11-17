@@ -36,7 +36,7 @@ class CommentModel extends Model
             $config['name'] = D('User')->getLinkName($data['uid']);
             //TODO 维修记录链接，这里需要降低耦合
             $config['record_link'] = U();
-            D('Notify')->sendNotify($data['to_uid'],'received_evaluation',$config);
+            //D('Notify')->sendNotify($data['to_uid'],'received_evaluation',$config);
         }else{
             //这是对e8的留言
             if(!empty($data['to_replay_id'])){

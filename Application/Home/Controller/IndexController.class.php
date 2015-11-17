@@ -8,7 +8,7 @@ use Think\Controller;
 
 class IndexController extends  BaseController{
     public function index(){
-        p(D('Notify')->sendNotify(1,'received_evaluation',
-            array('name'=>'taoyu','computer_name'=>'东芝 L800','record_link'=>'http://www.baidu.com'),2));
+        $data['content'] = '12123123213';
+        D('Comment')->addComment($data);
     }
 }
