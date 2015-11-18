@@ -29,6 +29,13 @@
                 JstudentIdBox.children('i').remove();
                 JnextBtn.attr('disabled','disabled');
             }
+
+        });
+        JstudentIdInput.keydown( function (e){
+            var student_id_reg = /^\d{10}$/;
+            $
+            alert(student_id_reg.test(this.value));
+
         });
         JstudentIdInput.focusout(function () {
             if(!checkStudentID(JstudentIdInput.val())){
@@ -37,6 +44,7 @@
                 JnextBtn.attr('disabled','disabled');
             }else{
                 JnextBtn.attr('disabled',false);
+
             }
         });
         JnextBtn.click(function () {
