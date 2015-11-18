@@ -46,7 +46,9 @@
             tipBox('选择班级！',1000)
             return false;
         }
-        $('#InfoForm').submit();
+        dialogBox("确认提交完善信息？",function(){
+            $('#InfoForm').submit();
+        },function(){});
     });
 
 </script>

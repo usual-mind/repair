@@ -4,14 +4,23 @@ namespace Home\Controller;
 use Common\Controller\BaseController;
 
 class RegisterController extends BaseController{
-    private $images = array();
     public function index(){
+        //初始化session 中的存储图片URL的数组
+        $_SESSION[images] = array();
+
         $this->setTitle("登记维修记录");
         $this->setHeader("登记维修记录");
-
+        $this->assign('submitUrl',U('Register/doRegister'));
         $this->display();
     }
 
+    /**
+     * 处理登记信息
+     */
+    public function doRegister(){
+        $problemDesc = $_POST['problemDesc'];
+        D('RepairRecor')->addRepairRecord();
+    }
     /**
      * 处理图片上传
      * 生成大，中，小三张缩略图
@@ -52,10 +61,9 @@ class RegisterController extends BaseController{
         $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
         $image->thumb($imageConfig['lgThumbnail']['width'], $imageConfig['lgThumbnail']['width'])->save($filePath.$fileName.$imageConfig['lgThumbnail']['suffix'].'.'.$filePostfix);
 
-        
+
         //将图片路径放入session
-        $this->images[] = array('originalImagePath'=>$imagePath,'smImagePath'=>$smImagePath,'mdImagePath'=>$mdImagePath,'lgImagePath'=>$lgImagePath);
-        session('images',$this->images);
+        $_SESSION[images][] = array('originalImagePath'=>$imagePath,'smImagePath'=>$smImagePath,'mdImagePath'=>$mdImagePath,'lgImagePath'=>$lgImagePath);
         die('<script>parent.callbackImageDisplay("'.$smImagePath.'")</script>');
     }
 }

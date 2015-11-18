@@ -61,7 +61,7 @@ class RepairRecordModel extends Model
      * @param $recordId
      * @return array 维修记录详情数组
      */
-    public function getRepairRecord($recordId){
+    public function b($recordId){
         //TODO 缓存处理
         $condition['id'] = intval($recordId);
         $condition['is_del'] = 0;

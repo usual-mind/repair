@@ -3,7 +3,9 @@
         <label class="label">问题描述</label>
         <section class="repair-body">
             <aside class="text">
-            	<textarea placeholder="说点什么吧..."></textarea>
+                <form action="{$submitUrl}" id="problemDescForm" method="post">
+            	    <textarea name="problemDesc"  placeholder="说点什么吧..."></textarea>
+                </form>
                 <div class="upload">
 
                     <form action="{:U('Home/Register/upLoadPic')}" enctype="multipart/form-data" id="upLoadForm" method="post" target="hidden_frame">
@@ -25,7 +27,7 @@
                 </ul>
             </aside>
         </section>
-       	<div class="submit"><a href="#" disabled >提交</a></div>
+       	<div class="submit"><a href="#" disabled id="submit">提交</a></div>
         <footer class="foot-nav">
         	<ul>
             	<li>
@@ -43,6 +45,8 @@
     <script type="text/javascript">
         var jUploadForm = $('#upLoadForm');
         var jImageSpan = jUploadForm.children('span');
+        //提交按钮
+        var submitBtn = $("#submit");
     	$(function (){
             $("#uploadPic").bind("change",function(){
                 jUploadForm.children('span').append('<img src="{$APP_PUBLIC_URL}img/uploadLoad.gif"/>');
@@ -57,6 +61,16 @@
 					parent.addClass("selected");
 				}
 			});
+            $("#problemDescForm>textarea").keyup(function () {
+                if($(this).val()!= ''){
+                    submitBtn.attr('disabled',false);
+                }else{
+                    submitBtn.attr('disabled','disabled');
+                }
+            });
+            $("#submit").click(function () {
+                $("#problemDescForm").submit();
+            });
 		});
         function callbackImageDisplay(url,errorMsg){
             if(arguments[1]){
