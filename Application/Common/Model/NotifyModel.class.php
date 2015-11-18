@@ -109,12 +109,12 @@ class NotifyModel extends Model
         foreach($userInfo as $v) {
             $data['uid'] = $v['id'];
             //发送站内消息
-            1==$nodeInfo['send_message'] && $this->sendMessage($data);
+            '1' == $nodeInfo['send_message'] && $this->sendMessage($data);
             $data['email'] = $v['email'];
             //发送邮件
-            1==$nodeInfo['send_email'] && $this->sendEmail($data);
+            '1' == $nodeInfo['send_email'] && $this->sendEmail($data);
             //发送手机推送
-            1==$nodeInfo['send_push'] && $this->sendPush($data);
+            '1' == $nodeInfo['send_push'] && $this->sendPush($data);
         }
     }
     /**

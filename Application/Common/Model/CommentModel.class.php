@@ -30,13 +30,13 @@ class CommentModel extends Model
         if(empty($data['content'])) E('请输入评论内容!');
         $data['content'] = html2Text($data['content']);//安全处理
 
-        if(!$data['record_id']){
+        if(!empty($data['record_id'])){
             //这是一条评价
             //通知维修者收到评价
-            $config['name'] = D('User')->getLinkName($data['uid']);
+            $config['name'] = D('User')->getLinkNameByUid($data['uid']);
             //TODO 维修记录链接，这里需要降低耦合
-            $config['record_link'] = U();
-            //D('Notify')->sendNotify($data['to_uid'],'received_evaluation',$config);
+            $config['record_link'] = U('Repair/index',array('record_id'=>$data['record_id']));
+            D('Notify')->sendNotify($data['to_uid'],'received_evaluation',$config);
         }else{
             //这是对e8的留言
             if(!empty($data['to_replay_id'])){
@@ -45,7 +45,7 @@ class CommentModel extends Model
                 //D('Notify')->sendNotify($data['to_uid'],'',);
             }
         }
-        echo '------------添加评论的数据-------------<br/><br/>';p($data);echo '<br/><br/>------------添加评论的数据-------------<br/>';die;
+
         return $this->add($data);
     }
 }

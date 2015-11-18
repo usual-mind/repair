@@ -32,7 +32,10 @@ class EvaluationModel extends Model
         $evaluation['ctime'] = time();
         if(!$evaluationId = $this->add($evaluation)) E('添加评价信息失败');
         //添加评价内容，在添加评价的时候会通知维修者
-        D('Comment')->addComment();
+        $data['record_id'] = $evaluation['record_id'];
+        $data['to_uid'] = $repairmemId;
+        $data['content'] = $content;
+        D('Comment')->addComment($data);
         return $evaluationId;
     }
 

@@ -113,7 +113,7 @@ function p(){
 }
 
 /**
- * t函数用于过滤标签，输出没有html的干净的文本
+ * html2Text函数用于过滤标签，输出没有html的干净的文本
  * @param string text 文本内容
  * @return string 处理后内容
  */

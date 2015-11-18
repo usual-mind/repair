@@ -97,7 +97,7 @@ class RepairRecordModel extends Model
         if(empty($data)) E('参数为空');
         empty($data['problem_desc']) && E('问题描述不能为空');
         empty($data['computer_id']) && E('computer_id不能为空');
-        $map['problem_desc']    =   $data['problem_desc'];
+        $map['problem_desc']    =   html2Text($data['problem_desc']);
         $map['computer_id']     =   $data['computer_id'];
         $map['start_time']      =   time();
         /*if(!empty($data['images'])){

@@ -10,4 +10,5 @@ return array(
     'NOTIFY_RECEIVED_EVALUATION_TITLE' => '【{site}】 您收到一个新的评价',
     'NOTIFY_RECEIVED_EVALUATION_CONTENT'
         => '{name}评价了您。快去<a href="{record_link}" target="_blank">看看</a>吧。',
+
 );
