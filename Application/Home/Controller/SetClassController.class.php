@@ -55,6 +55,6 @@ class SetClassController extends BaseController{
         $header['backUrl'] = U('SetClass/classInfowidget',$backParam);
 
         $this->assign('header',$header);
-        W('SetClass/classesList',array($department));
+        W('selector/selectList',array($department));
     }
 }

@@ -5,12 +5,16 @@ use Common\Controller\BaseController;
 
 class RegisterController extends BaseController{
     public function index(){
-        //初始化session 中的存储图片URL的数组
-        $_SESSION[images] = array();
-
         $this->setTitle("登记维修记录");
         $this->setHeader("登记维修记录");
+        //提交的地址
         $this->assign('submitUrl',U('Register/doRegister'));
+        //电脑型号的Widget所需的信息
+        $computerModel = D('Computer')->getChildByPid(0);
+        foreach($computerModel as &$v){
+            $v['url'] = U('SetComputer/ComputerInfoWidget',array('pid'=>$v['id'],'type'=>'computerModel'));
+        }
+        $this->assign('department',array($computerModel));
         $this->display();
     }
 
@@ -63,7 +67,7 @@ class RegisterController extends BaseController{
 
 
         //将图片路径放入session
-        $_SESSION[images][] = array('originalImagePath'=>$imagePath,'smImagePath'=>$smImagePath,'mdImagePath'=>$mdImagePath,'lgImagePath'=>$lgImagePath);
+        $_SESSION['images'][] = array('originalImagePath'=>$imagePath,'smImagePath'=>$smImagePath,'mdImagePath'=>$mdImagePath,'lgImagePath'=>$lgImagePath);
         die('<script>parent.callbackImageDisplay("'.$smImagePath.'")</script>');
     }
 }
