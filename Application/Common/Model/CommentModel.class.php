@@ -45,7 +45,7 @@ class CommentModel extends Model
                 //D('Notify')->sendNotify($data['to_uid'],'',);
             }
         }
-        echo '------------添加评论的数据-------------<br/>';p($data);echo '------------添加评论的数据-------------<br/>';die;
+        echo '------------添加评论的数据-------------<br/><br/>';p($data);echo '<br/><br/>------------添加评论的数据-------------<br/>';die;
         return $this->add($data);
     }
 }

@@ -36,6 +36,7 @@ class RepairStateModel extends Model
      * @return mixed
      */
     public function addStatue($stateInfo){
+        //TODO 需要登录
         if(empty($stateInfo) || !is_array($stateInfo)) E('参数错误');
         $stateInfo['ctime'] = time();
         if(!$id = $this->_repair_state->add($stateInfo)) E('添加维修记录状态信息失败');
