@@ -49,6 +49,7 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 }
 /*header开始*/
 .header-top{
+	height: 45px;
 	background-color:#FFF;
 	position:relative;
 	z-index:999;

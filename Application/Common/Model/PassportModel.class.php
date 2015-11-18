@@ -147,16 +147,16 @@ class PassportModel
         if(!$this->getCookieUid() && $is_remember_me ) {
             $expire = 3600 * 24 * 30;
             cookie('E8_LOGGED_USER', $this->jiami(C('SECURE_CODE').'.'.$uid), $expire);
-    }
+        }
 
-    // 记住活跃时间
-    cookie('E8_ACTIVE_TIME', time() + 60 * 30);
-    cookie('login_error_time', null);
+        // 记住活跃时间
+        cookie('E8_ACTIVE_TIME', time() + 60 * 30);
+        cookie('login_error_time', null);
 
-    // 更新登陆时间
-    M('User')->where('id='.$uid)->setField('last_login_time', $_SERVER['REQUEST_TIME']);
+        // 更新登陆时间
+        M('User')->where('id='.$uid)->setField('last_login_time', $_SERVER['REQUEST_TIME']);
 
-    // 记录登陆知识，首次登陆判断
+        // 记录登陆知识，首次登陆判断
         empty($this->rel) && $this->rel	= M('login_record')->where('uid = '.$uid)->limit('1')->getField('id');
 
         // 注册session

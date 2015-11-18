@@ -1,7 +1,10 @@
 <volist name="classData" id="vo">
-    {$vo.pPid}
     <li class="option"  data-href="{$vo.url}">
         <p>{$vo.title}</p>
         <a class="right-icon" href="#"></a>
     </li>
 </volist>
+<script>
+    //设置头部信息
+    setHeader("{$header.title}","{$header.backUrl}");
+</script>

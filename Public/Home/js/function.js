@@ -1,7 +1,7 @@
 /**
- *ajax
+ *ajax请求html
  */
-function ajaxRequest(href,callback){
+function ajaxRequestHtml(href,callback){
 	$.ajax({
 		type: "GET",
 		url: href,
@@ -68,4 +68,10 @@ function tipBox(tip,time){
 	$("#tipBox>.cue-text").html(tip);
 	$("#tipBox").slideDown("fast");
 	setTimeout('$("#tipBox").slideUp("fast")',time);
+}
+function setHeader(title,backUrl){
+	if(backUrl==null) backUrl='javascript:;';
+	var Jheader = $("#header");
+	Jheader.children(".hidden-text").attr('href',backUrl);
+	Jheader.children("h1").html(title);
 }
