@@ -49,6 +49,7 @@ class UserModel extends Model
             //不存在的唯一标识符格式直接返回false 表示用户不存在
             return false;
         }
+
         if($uid = $this->where($map)->limit('1')->getField('id')){
             return $uid['id'];
         }else{

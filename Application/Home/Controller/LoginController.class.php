@@ -42,7 +42,7 @@ class LoginController extends BaseController{
             $this->redirect('step1',array('errMes'=>'请输入学号'));
         }
         //获取从第一步传来的学号
-        $studentId = intval($_GET['studentId']);
+        $studentId = trim($_GET['studentId']);
         //判断用户是否已经存在
 
         if(D('User')->hasUser($studentId)){

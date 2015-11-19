@@ -195,8 +195,13 @@ class ClassesModel extends Model
      * @return array|String
      */
     public function getGradeByPid($pid){
-        //格式化年级字符串
-        return sprintf($this->gradeFormateStr,$this->getChildByPid($pid));
+        $grades = $this->getChildByPid($pid);
+        foreach($grades as &$grade) {
+            //格式化年级字符串
+            $grade['title'] = sprintf($this->gradeFormateStr,$grade['title']);
+        }
+        unset($grade);
+        return $grades;
     }
 
     /** 获取某年级下的专业
@@ -211,8 +216,13 @@ class ClassesModel extends Model
      * @return array|bool
      */
     public function getClassByPid($pid){
-        //格式化班级号字符串
-        return sprintf($this->classNumFormateStr,$this->getChildByPid($pid));
+        $classNums = $this->getChildByPid($pid);
+        foreach($classNums as &$classNum){
+            //格式化班级号字符串
+            $classNum['title'] = sprintf($this->classNumFormateStr,$classNum['title']);
+        }
+        unset($classNum);
+        return $classNums;
 
     }
 

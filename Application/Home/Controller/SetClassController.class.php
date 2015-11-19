@@ -58,8 +58,7 @@ class SetClassController extends BaseController{
         foreach($department as &$v){
             $v['url'] = U('SetClass/classInfowidget',array('pid'=>$v['id'],'type'=>$type));
         }
-        p($backParam);
-        echo $type;
+        unset($v);
         $header['title'] = $title;
         $header['backUrl'] = U('SetClass/classInfowidget',$backParam);
 

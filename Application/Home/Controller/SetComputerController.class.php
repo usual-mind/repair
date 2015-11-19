@@ -30,7 +30,7 @@ class SetComputerController extends BaseController{
         foreach($computer as &$v){
             $v['url'] = U('SetComputer/ComputerInfoWidget',array('pid'=>$v['id'],'type'=>$type));
         }
-
+        unset($v);
         $header['title'] = $title;
         $header['backUrl'] = U('SetComputer/ComputerInfoWidget',$backParam);
 
