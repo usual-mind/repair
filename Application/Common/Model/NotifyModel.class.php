@@ -94,13 +94,17 @@ class NotifyModel extends Model
     public function sendNotify($toUid, $node, $config, $from) {
         empty($config) && $config = array();
         $config = array_merge($this->_config,$config);
+        //处理toUid数组
+        !is_array($toUid) && $toUid = explode(',', $toUid);
+
+        if(empty($toUid)) return true;//如果接受消息的用户id数组为空直接返回真
 
         $nodeInfo = $this->getNode($node);
-        if(!$nodeInfo) {
-            return false;
-        }
-        !is_array($toUid) && $toUid = explode(',', $toUid);
+
+        if(!$nodeInfo) E('没有找到该节点'.$node);
+
         $userInfo = D('User')->getUserInfoByUids($toUid);
+
         $data['node'] = $node;
         $data['title'] = lang($nodeInfo['title_key'],$config);
         $data['body'] = lang($nodeInfo['content_key'],$config);

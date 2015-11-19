@@ -8,9 +8,8 @@ use Think\Controller;
 
 class IndexController extends  BaseController{
     public function index(){
-        //$data['grade'] = '5';
-        //$data['record_id'] = '1';
-        //D('Evaluation')->addEvaluation($data,1,'牛逼！！！！');
-        var_dump(D('DutyInfo')->isDuty(1));
+        $data['problem_desc'] = '电脑爆炸了';
+        $data['computer_id'] = '4';
+        var_dump(D('RepairRecord')->addRepairRecord($data));
     }
 }

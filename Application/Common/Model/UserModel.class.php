@@ -116,6 +116,7 @@ class UserModel extends Model
     {
         is_array($uids) || $uids = explode(',', $uids);
         $uids = array_unique(array_filter($uids));//清除数组中重复的值和空值
+
         $list = array();
         foreach ($uids as $uid) {
             $list[$uid] = $this->getUserInfo($uid);

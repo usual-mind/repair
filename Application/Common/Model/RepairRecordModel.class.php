@@ -94,11 +94,14 @@ class RepairRecordModel extends Model
      * @return 返回插入的id
      */
     public function addRepairRecord($data){
+
+        
         if(empty($data)) E('参数为空');
+        if(!isset($GLOBALS['e8']['mid']) || intval($GLOBALS['e8']['mid'])<=0) E('请先登录!');
         empty($data['problem_desc']) && E('问题描述不能为空');
         empty($data['computer_id']) && E('computer_id不能为空');
         $map['problem_desc']    =   html2Text($data['problem_desc']);
-        $map['computer_id']     =   $data['computer_id'];
+        $map['computer_id']     =   intval($data['computer_id']);
         $map['start_time']      =   time();
         /*if(!empty($data['images'])){
             //插入图片
@@ -112,6 +115,18 @@ class RepairRecordModel extends Model
         $state['state_info']        =   '请耐心等待';
         $state['state_node']        =   'commit';
         D('RepairState')->addStatue($state);
+
+        //推送消息给当天值班人员
+        $config['name'] = D('User')->getLinkNameByUid($GLOBALS['e8']['mid']);//获取修电脑的人的名字
+        $config['computer'] = D('Computer')->getComputerNameById($map['computer_id']);//获取电脑全称
+        //TODO 需要降低耦合
+        $config['detailurl'] = U('Index/index',array('id'=>$repairRecordId));
+
+        D('Notify')->sendNotify(
+            D('DutyInfo')->getToDayDuty(),
+            'new_repair_record',
+            $config
+            );
         return $repairRecordId;//返回插入的维修记录id
     }
 }

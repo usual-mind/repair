@@ -35,7 +35,7 @@ class CommentModel extends Model
             //通知维修者收到评价
             $config['name'] = D('User')->getLinkNameByUid($data['uid']);
             //TODO 维修记录链接，这里需要降低耦合
-            $config['record_link'] = U('Repair/index',array('record_id'=>$data['record_id']));
+            $config['detailurl'] = U('Repair/index',array('record_id'=>$data['record_id']));
             D('Notify')->sendNotify($data['to_uid'],'received_evaluation',$config);
         }else{
             //这是对e8的留言
