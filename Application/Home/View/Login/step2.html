@@ -50,5 +50,14 @@
             $('#InfoForm').submit();
         },function(){});
     });
+    //选择班级结束的回调函数
+    function callBackSelectEnd(pid){
+        $("#classIdInput").val(pid);
+        $('#selectClassBody').hide('fast');
+        $('#setp2Body').show('fast');
+        $('#selectClassBtn>p').html(JcurrClassInfo.html());
+        JcurrClassInfo.html('');
+        classID = pid;
+    }
 
 </script>

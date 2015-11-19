@@ -1,3 +1,9 @@
+#selectComputerBody {
+	position: absolute;
+	top: 50px;
+	display: none;
+	width: 100%;
+}
 .repair-body .text{
 	background:#FFF;
 	padding:10px;

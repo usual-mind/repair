@@ -10,11 +10,15 @@ class RegisterController extends BaseController{
         //提交的地址
         $this->assign('submitUrl',U('Register/doRegister'));
         //电脑型号的Widget所需的信息
-        $computerModel = D('Computer')->getChildByPid(0);
-        foreach($computerModel as &$v){
-            $v['url'] = U('SetComputer/ComputerInfoWidget',array('pid'=>$v['id'],'type'=>'computerModel'));
+        $computerBrand = D('Computer')->getChildByPid(0);
+        foreach($computerBrand as &$v){
+            $v['url'] = U('SetComputer/ComputerInfoWidget',array('pid'=>$v['id'],'type'=>'computerBrand'));
         }
-        $this->assign('department',array($computerModel));
+        $header['title'] = '登记维修记录';
+        $header['backUrl'] = U('Login/index');
+        $this->assign('header',$header);
+
+        $this->assign('department',array($computerBrand));
         $this->display();
     }
 

@@ -1,10 +1,12 @@
     <include file= './application/Home/View/Common/header.html' />
     <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/regisiter.css">
+    <div id="registerBody">
         <label class="label">问题描述</label>
         <section class="repair-body">
             <aside class="text">
                 <form action="{$submitUrl}" id="problemDescForm" method="post">
             	    <textarea name="problemDesc"  placeholder="说点什么吧..."></textarea>
+                    <input type="hidden" name="computerModel" id="computerIdInput">
                 </form>
                 <div class="upload">
 
@@ -19,11 +21,8 @@
             </aside>
             <aside class="form">
         		<label class="label">添加/选择电脑型号</label>
-                <ul class="model">
-                	<li>联想/E30C</li>
-                    <li class="selected">东芝/E30C</li>
-                    
-                    <div><a href="#">添加</a></div> 
+                <ul id="model" class="model">
+                    <div><a href="#" id="addBtn">添加</a></div>
                 </ul>
             </aside>
         </section>
@@ -41,7 +40,10 @@
                 </li>
             </ul>
         </footer>
-    {:W('selector/selector',$department)}
+    </div>
+    <div id="selectComputerBody">
+        {:W('selector/selector',$department)}
+    </div>
     <include file= './application/Home/View/Common/footer.html' />
     <script type="text/javascript">
         var jUploadForm = $('#upLoadForm');
@@ -69,9 +71,17 @@
                     submitBtn.attr('disabled','disabled');
                 }
             });
+            //提交按钮
             $("#submit").click(function () {
                 $("#problemDescForm").submit();
             });
+            //添加按钮
+            $('#addBtn').click(function(){
+                setHeader('选择品牌');
+                $('#registerBody').hide('fast');
+                $('#selectComputerBody').show('fast');
+            });
+
 		});
         function callbackImageDisplay(url,errorMsg){
             if(arguments[1]){
@@ -82,5 +92,20 @@
                 return;
             }
             jImageSpan.children('img:last-child').attr('src',url);
+        }
+        //选择电脑结束的回调函数
+        Jmodel = $('#model');
+        function callBackSelectEnd(pid){
+            $('#selectComputerBody').hide('fast');
+            $('#registerBody').show('fast');
+            //在电脑型号中添加用户添加的电脑型号
+            Jmodel.append('<li>'+JcurrClassInfo.html()+'</li>');
+            JcurrClassInfo.html('');
+            classID = pid;
+            //点击电脑型号
+            $('#model>li').click(function () {
+                Jmodel.find('.selected').removeClass('selected');
+                this.setAttribute('class','selected');
+            });
         }
     </script>

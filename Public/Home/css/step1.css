@@ -11,20 +11,21 @@ body{
 }
 .login-body>.ID{
 	position: relative;
-	width:300px;
+	width:280px;
 	margin:0 auto;
 }
 .login-body>.ID>input{
 	border:none;
 	border-bottom:1px solid #CCC;
-	width:300px;
+	width:280px;
 	outline: none;
 	font-size:14px;
 	color:#666;
 	padding:10px;
+	box-sizing: border-box;
 }
 .login-body .ID>i{
 	position: absolute;
-	right: -60px;
+	right: -30px;
 	top:8px;
 }

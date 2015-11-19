@@ -64,8 +64,7 @@ class LoginController extends BaseController{
         $header['backUrl'] = U('Login/step1');
 
         $this->assign('header',$header);
-        //$a = $departments;
-        //unset($departments);
+
         $this->assign('department',array($departments));
         $this->display();
     }
