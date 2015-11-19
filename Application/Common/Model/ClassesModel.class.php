@@ -17,8 +17,14 @@ class ClassesModel extends Model
     protected $tableName = 'classes';
     //班级全称格式化字符串
     private $classesFormateStr = '%s/%d级/%s(%d)班';
+    //班级号格式化字符串
+    private $classNumFormateStr = '%s班';
+    //年级格式化字符串
+    private $gradeFormateStr = '%s级';
+
     //缓存对象
     private $cacheObj = null;
+
 
     public function _initialize()
     {
@@ -44,6 +50,44 @@ class ClassesModel extends Model
     public function getClassesFormateStr()
     {
         return $this->classesFormateStr;
+    }
+    /**
+     * 设置班级号格式化字符串
+     * @param $fromateStr
+     * @return $this
+     */
+    public function setClassNumFormateStr($fromateStr)
+    {
+        $this->classNumFormateStr = $fromateStr;
+        return $this;
+    }
+
+    /**
+     * 获取班级号格式化字符串
+     * @return string
+     */
+    public function getClassNumFormateStr()
+    {
+        return $this->classNumFormateStr;
+    }
+    /**
+     * 设置年级格式化字符串
+     * @param $fromateStr
+     * @return $this
+     */
+    public function setGradeFormateStr($fromateStr)
+    {
+        $this->gradeFormateStr = $fromateStr;
+        return $this;
+    }
+
+    /**
+     * 获取年级格式化字符串
+     * @return string
+     */
+    public function getGradeFormateStr()
+    {
+        return $this->gradeFormateStr;
     }
 
     /**
@@ -151,7 +195,8 @@ class ClassesModel extends Model
      * @return array|String
      */
     public function getGradeByPid($pid){
-        return $this->getChildByPid($pid);
+        //格式化年级字符串
+        return sprintf($this->gradeFormateStr,$this->getChildByPid($pid));
     }
 
     /** 获取某年级下的专业
@@ -166,7 +211,9 @@ class ClassesModel extends Model
      * @return array|bool
      */
     public function getClassByPid($pid){
-        return $this->getChildByPid($pid);
+        //格式化班级号字符串
+        return sprintf($this->classNumFormateStr,$this->getChildByPid($pid));
+
     }
 
     /**添加班级信息
