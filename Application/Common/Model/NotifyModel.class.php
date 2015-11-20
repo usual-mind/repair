@@ -150,7 +150,7 @@ class NotifyModel extends Model
         $s['uid'] = intval($data['uid']);
         $s['node'] = $data['node'];
         $s['is_read'] = 0;//刚插入的消息没有被阅读
-        $s['title'] = html2Text($data['title']);
+        $s['title'] = safetyHtml($data['title']);
         $s['body'] = safetyHtml($data['body']);
         $s['ctime'] = $data['ctime'];
         $s['from_uid'] = intval($data['from_uid']);

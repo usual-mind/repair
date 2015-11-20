@@ -48,4 +48,8 @@ class CommentModel extends Model
 
         return $this->add($data);
     }
+
+    public function getCommentById(){
+        //TODO
+    }
 }
