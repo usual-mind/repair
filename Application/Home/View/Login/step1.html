@@ -20,7 +20,7 @@
     var JstudentIdBox = $('#studentIdBox');//输入框外面的DIV
 
     $(function(){
-        {$showTip}
+        <notempty name="showTip">{$showTip}</notempty>
         JstudentIdInput.keyup( function() {
             if(checkStudentID(JstudentIdInput.val())){
                 JstudentIdBox.append('<i class="succ"></i>');

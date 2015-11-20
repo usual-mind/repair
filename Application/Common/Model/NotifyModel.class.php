@@ -1,5 +1,6 @@
 <?php
-/**通知模型
+/**
+ * 通知模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/11
@@ -26,9 +27,16 @@ class NotifyModel extends Model
         $this->_config['site'] = $site['site_name'];
         $this->_config['site_url'] = $site['site_url'];
     }
+
+    /**获取消息
+     * @param $uid
+     * @return mixed
+     */
     public function getMessageList($uid){
+        //TODO 缓存处理;分页问题;
         $condition['uid'] = intval($uid);
         $condition['is_read'] = 0;
+        return M('notify_message')->where($condition)->order('id DESC')->select();
     }
     /**
      * 更改指定用户的消息从未读为已读
@@ -98,9 +106,8 @@ class NotifyModel extends Model
         !is_array($toUid) && $toUid = explode(',', $toUid);
 
         if(empty($toUid)) return true;//如果接受消息的用户id数组为空直接返回真
-
+        //获取节点信息
         $nodeInfo = $this->getNode($node);
-
         if(!$nodeInfo) E('没有找到该节点'.$node);
 
         $userInfo = D('User')->getUserInfoByUids($toUid);
@@ -143,7 +150,7 @@ class NotifyModel extends Model
         $s['uid'] = intval($data['uid']);
         $s['node'] = $data['node'];
         $s['is_read'] = 0;//刚插入的消息没有被阅读
-        $s['title'] = html2Text($data['title']);
+        $s['title'] = safetyHtml($data['title']);
         $s['body'] = safetyHtml($data['body']);
         $s['ctime'] = $data['ctime'];
         $s['from_uid'] = intval($data['from_uid']);
@@ -163,28 +170,39 @@ class NotifyModel extends Model
     /**
      * 发送系统消息，给用户组或全站用户
      * @param array $user_group 用户组ID
-     * @param string $content 发送信息内容
+     * @param string $node 通知节点
+     * @param array $config 配置数据
      * @return boolean 是否发送成功
      */
-    public function sendSysMessage($user_group , $content , $node='sys_notify') {
+    public function sendSysMessage($user_group , $node , $config ) {
         $ctime = time();
         $user_group = intval($user_group);
+        //获取节点信息
+        $nodeInfo = $this->getNode($node);
+        if(!$nodeInfo) E('没有找到该节点'.$node);
+        //合并配置信息
+        empty($config) && $config = array();
+        $config = array_merge($this->_config,$config);
+
+        $title = lang($nodeInfo['title_key'],$config);
+        $body = lang($nodeInfo['content_key'],$config);
         if(!empty($user_group)) {
             // 判断组中是否存在用户
             $m['group_id'] = $user_group;
             $c = M('UserGroupLink')->where($m)->count();
             if($c > 0) {
-                // 针对用户组  执行insert_select 语句  这里有一个问题 并没有判断用户是否被删除可
+                // 针对用户组  执行insert_select 语句 //TODO 这里有一个问题 并没有判断用户是否被删除可
                 $sql = "INSERT INTO {$this->tablePrefix}notify_message (`uid`,`node`,`title`,`body`,`ctime`,`is_read`,`from_uid`)
-    				SELECT uid,'{$node}','','{$content}','{$ctime}','0','0'
+    				SELECT uid,'{$node}','{$title}','{$body}','{$ctime}','0','2'
     				FROM {$this->tablePrefix}user_group_link WHERE group_id = {$user_group} ";
             } else {
+                //如果该用户组里没有用户直接返回true
                 return true;
             }
         } else {
             // 全站用户  执行insert_select 语句
             $sql = "INSERT INTO {$this->tablePrefix}notify_message (`uid`,`node`,`title`,`body`,`ctime`,`is_read`,`from_uid`)
-    				SELECT uid,'{$node}','','{$content}','{$ctime}','0','0'
+    				SELECT uid,'{$node}','{$title}','{$body}','{$ctime}','0','2'
     				FROM {$this->tablePrefix}user WHERE is_del=0 ";
         }
         p($sql);die;

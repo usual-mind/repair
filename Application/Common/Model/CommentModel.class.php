@@ -1,5 +1,6 @@
 <?php
-/**评论模型
+/**
+ * 评论模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/16
@@ -47,5 +48,9 @@ class CommentModel extends Model
         }
 
         return $this->add($data);
+    }
+
+    public function getCommentById(){
+        //TODO
     }
 }

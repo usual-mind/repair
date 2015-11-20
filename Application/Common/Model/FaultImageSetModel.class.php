@@ -1,5 +1,6 @@
 <?php
-/**电脑故障图片模型
+/**
+ * 电脑故障图片模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/14

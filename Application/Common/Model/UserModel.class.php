@@ -1,5 +1,6 @@
 <?php
-/**用户模型
+/**
+ * 用户模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/8
@@ -146,14 +147,19 @@ class UserModel extends Model
         //判断学号是否被注册了
         if ($this->hasUser($user['student_id'])) E('该学号已存在');
         //判断微信是否被注册了
-        if ($user['weixin'] && $this->hasUser($user['weixin'])) E('该微信号已存在');
+        if (isset($user['weixin']) && $this->hasUser($user['weixin'])) E('该微信号已存在');
 
         //获取班级字符串
         if (empty($user['classes_id'])) E('请填写班级信息');
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
         $user['classes_name'] = D('Classes')->getClassById($user['classes_id'],true);
 
         $user['ctime'] = time();             // # 注册时间
         $user['reg_ip'] = ip2long(get_client_ip());    // # 用户客户端注册IP
+
         if (($uid = $this->add($user))) {
             //  把用户添加到用户组
             D('UserGroupLink')->domoveUserGroup($uid, $group_id);

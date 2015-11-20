@@ -1,5 +1,6 @@
 <?php
-/**通行证模型
+/**
+ * 通行证模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/13
@@ -163,9 +164,8 @@ class PassportModel
         $_SESSION['mid'] = intval($uid);
         $_SESSION['SITE_KEY'] = getSiteKey();
 
-        $map['ip'] = ip2long(get_client_ip());
+        $map['ip'] = get_client_ip(1);
         $map['ctime'] = time();
-
         $this->success = '登录成功，努力加载中。。';
 
         if($this->rel) {
