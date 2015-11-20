@@ -16,6 +16,27 @@ class ComputerLinkModel extends Model
 {
     protected $tableName = 'computer_model_link';
 
+    /**
+     * 添加电脑给某个用户
+     *
+     * @param $uid
+     * @param $computerInfo 可以是数组或者是字符串用逗号隔开 比如'东芝,L800'
+     *  //可以传入品牌+型号
+     * $classInfo => array('东芝','L800');
+     * //也可以传入型号 但是需要指定一下$pid
+     * @param $pid 父级id
+     * @return bool|int
+     */
+    public function addComputerToUser($uid,$computerInfo,$pid=0){
+        $uid = intval($uid);
+        if(!$uid) E('添加电脑失败，UID错误!');
+        //先插入电脑品牌和型号 如果该电脑已经存在会返回该电脑的id
+        if(!$computerId = D('Computer')->addComputer($computerInfo,$pid=0)) E('添加电脑型号失败!');
+        $data['computer_model_id'] = $computerId;
+        $data['uid'] = $uid;
+        return $this->add($data);
+    }
+
     /**获取某个用户的所有电脑
      * @param $uids
      * @return array

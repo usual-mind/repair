@@ -95,10 +95,11 @@ class UserModel extends Model
             //获取用户的用户组信息
             $userGroup = D ( 'UserGroupLink' )->getUserGroupData ( $uid );
             $user ['user_group'] = $userGroup [$uid];
-            //TODO 获取该用户的所有电脑信息
+            // 获取该用户的所有电脑信息
             $computerList = D('ComputerLink')->getUserComputerList($uid);
             $user['computer'] = $computerList[$uid];
-
+            //TODO 格式化手机号码
+            $user['tel_num'] = $user['tel_num'];
             $this->cacheObj->set ( 'ui_' . $uid, $user, 600 );
             static_cache ( 'user_info_' . $uid, $user );
             return $user;
@@ -175,4 +176,3 @@ class UserModel extends Model
     }
 
 }
-
