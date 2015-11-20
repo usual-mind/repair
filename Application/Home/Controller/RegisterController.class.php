@@ -17,8 +17,12 @@ class RegisterController extends BaseController{
         $header['title'] = '登记维修记录';
         $header['backUrl'] = U('Login/index');
         $this->assign('header',$header);
-
         $this->assign('department',array($computerBrand));
+
+        //获取用户信息
+        $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
+
+        $this->assign('className',$userInfo['classes_name']);
         $this->display();
     }
 
@@ -58,20 +62,37 @@ class RegisterController extends BaseController{
         $fileName = $pahtInfo['filename'];//原图的文件名
         $filePostfix = $pahtInfo['extension'];//原图的后缀名
         //分别生成大图 中图 小图 的缩略图
-        $smImagePath = $fileDir.$fileName.$imageConfig['smThumbnail']['suffix'].'.'.$filePostfix;
-        $mdImagePath = $fileDir.$fileName.$imageConfig['mdThumbnail']['suffix'].'.'.$filePostfix;
-        $lgImagePath = $fileDir.$fileName.$imageConfig['lgThumbnail']['suffix'].'.'.$filePostfix;
 
-        $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
-        $image->thumb($imageConfig['smThumbnail']['width'], $imageConfig['smThumbnail']['width'])->save($filePath.$fileName.$imageConfig['smThumbnail']['suffix'].'.'.$filePostfix);
-        $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
-        $image->thumb($imageConfig['mdThumbnail']['width'], $imageConfig['mdThumbnail']['width'])->save($filePath.$fileName.$imageConfig['mdThumbnail']['suffix'].'.'.$filePostfix);
-        $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
-        $image->thumb($imageConfig['lgThumbnail']['width'], $imageConfig['lgThumbnail']['width'])->save($filePath.$fileName.$imageConfig['lgThumbnail']['suffix'].'.'.$filePostfix);
-
+        $smImagePath=NULL;
+        $mdImagePath=NULL;
+        $lgImagePath=NULL;
+        //首先讲返回的图片URl设置成原图
+        $retImagePath = $imagePath;
+        if(!empty($imageConfig['lgThumbnail'])){
+            $lgImagePath = $fileDir.$fileName.$imageConfig['lgThumbnail']['suffix'].'.'.$filePostfix;
+            $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
+            $image->thumb($imageConfig['lgThumbnail']['width'], $imageConfig['lgThumbnail']['width'])->save($filePath.$fileName.$imageConfig['lgThumbnail']['suffix'].'.'.$filePostfix);
+            //将返回的图片设置成$lgImagePath
+            $retImagePath = $lgImagePath;
+        }
+        if(!empty($imageConfig['mdThumbnail'])){
+            $mdImagePath = $fileDir.$fileName.$imageConfig['mdThumbnail']['suffix'].'.'.$filePostfix;
+            $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
+            $image->thumb($imageConfig['mdThumbnail']['width'], $imageConfig['mdThumbnail']['width'])->save($filePath.$fileName.$imageConfig['mdThumbnail']['suffix'].'.'.$filePostfix);
+            //将返回的图片设置成$mdImagePath
+            $retImagePath = $mdImagePath;
+        }
+        if(!empty($imageConfig['smThumbnail'])){
+            $smImagePath = $fileDir.$fileName.$imageConfig['smThumbnail']['suffix'].'.'.$filePostfix;
+            $image = new \Think\Image(\Think\Image::IMAGE_GD,$absoluteImagePath); // GD库 打开图片
+            $image->thumb($imageConfig['smThumbnail']['width'], $imageConfig['smThumbnail']['width'])->save($filePath.$fileName.$imageConfig['smThumbnail']['suffix'].'.'.$filePostfix);
+            //将返回的图片设置成$smImagePath
+            $retImagePath = $smImagePath;
+        }
 
         //将图片路径放入session
         $_SESSION['images'][] = array('originalImagePath'=>$imagePath,'smImagePath'=>$smImagePath,'mdImagePath'=>$mdImagePath,'lgImagePath'=>$lgImagePath);
-        die('<script>parent.callbackImageDisplay("'.$smImagePath.'")</script>');
+
+        die('<script>parent.callbackImageDisplay("'.$retImagePath.'")</script>');
     }
 }

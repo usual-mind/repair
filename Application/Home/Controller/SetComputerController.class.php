@@ -23,6 +23,7 @@ class SetComputerController extends BaseController{
                 $computer = D('Computer')->getChildByPid(0);
                 $type = 'computerBrand';
                 $title = '选择品牌';
+                //TODO添加了电脑型号
                 echo '<script>callBackSelectEnd('.$pid.')</script>';
                 break;
 

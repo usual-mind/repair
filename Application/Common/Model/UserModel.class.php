@@ -150,7 +150,7 @@ class UserModel extends Model
 
         //获取班级字符串
         if (empty($user['classes_id'])) E('请填写班级信息');
-        $user['classes_name'] = D('Classes')->getClassById($user['classes_id']);
+        $user['classes_name'] = D('Classes')->getClassById($user['classes_id'],true);
 
         $user['ctime'] = time();             // # 注册时间
         $user['reg_ip'] = ip2long(get_client_ip());    // # 用户客户端注册IP

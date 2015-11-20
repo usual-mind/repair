@@ -80,6 +80,8 @@ class LoginController extends BaseController{
         $user['tel_num'] = I('post.tel',0);
         //开始注册
         D('User')->addUser($user);
+        //注册成功之后登录
+        D('Passport')->loginLocalWithoutPassword($user['student_id'],true);
         //TODO 注册成功跳转到注册成功页面
     }
 

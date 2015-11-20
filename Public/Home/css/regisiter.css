@@ -29,7 +29,7 @@
 	width:72px;
 	height:72px;
 	float: left;
-	margin-right: 5px;
+	margin: 5px;
 }
 .repair-body .upload a{
 	float: left;
@@ -97,4 +97,19 @@
 	height:30px;
 	border:none;
 	background-color:#F5F5F5;
+}
+.className{
+	color:#666;
+	font-size: 14px;
+	padding: 10px 10px 0 10px;
+	text-align: center;
+}
+.className>span{
+	margin-top: 5px;
+	display: block;
+	font-size: 12px;
+	color:#999;
+}
+.className>span>a{
+	color: #4691FF;
 }
