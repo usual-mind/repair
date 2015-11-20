@@ -146,7 +146,7 @@ class UserModel extends Model
         //判断学号是否被注册了
         if ($this->hasUser($user['student_id'])) E('该学号已存在');
         //判断微信是否被注册了
-        if ($user['weixin'] && $this->hasUser($user['weixin'])) E('该微信号已存在');
+        if (isset($user['weixin']) && $this->hasUser($user['weixin'])) E('该微信号已存在');
 
         //获取班级字符串
         if (empty($user['classes_id'])) E('请填写班级信息');

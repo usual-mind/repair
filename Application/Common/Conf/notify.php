@@ -10,7 +10,7 @@ return array(
     'NOTIFY_RECEIVED_EVALUATION_TITLE' => '【{site}】 您收到一个新的评价',
     'NOTIFY_RECEIVED_EVALUATION_CONTENT'
         => '{name}评价了您。快去<a href="{detailurl}" target="_blank">看看</a>吧。',
-    'NOTIFY_NEW_REPAIR_RECORD_TITLE'=>'【{site}】 {name}送来一台电脑需要维修',
+    'NOTIFY_NEW_REPAIR_RECORD_TITLE'=>'【{site}】又来一台电脑需要维修',
     'NOTIFY_NEW_REPAIR_RECORD_CONTENT'=>'以下电脑正等待您的维修：{computer};<a target="_blank" href="{detailurl}">点击查看</a>',
 
 );

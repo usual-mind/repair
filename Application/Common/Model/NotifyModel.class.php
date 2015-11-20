@@ -26,9 +26,16 @@ class NotifyModel extends Model
         $this->_config['site'] = $site['site_name'];
         $this->_config['site_url'] = $site['site_url'];
     }
+
+    /**获取消息
+     * @param $uid
+     * @return mixed
+     */
     public function getMessageList($uid){
+        //TODO 缓存处理;分页问题;
         $condition['uid'] = intval($uid);
         $condition['is_read'] = 0;
+        return M('notify_message')->where($condition)->order('id DESC')->select();
     }
     /**
      * 更改指定用户的消息从未读为已读

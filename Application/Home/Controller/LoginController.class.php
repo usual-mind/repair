@@ -44,12 +44,15 @@ class LoginController extends BaseController{
         //获取从第一步传来的学号
         $studentId = trim($_GET['studentId']);
         //判断用户是否已经存在
-
         if(D('User')->hasUser($studentId)){
             //该用户存在 直接登录
-            D('Passport')->loginLocalWithoutPassword($studentId,true);
-            //TODO 登录成功 跳转到个人中心
-            $this->redirect('Index/index');
+            if(D('Passport')->loginLocalWithoutPassword($studentId,true)){
+                //TODO 登录成功 跳转到个人中心
+                $this->redirect('Index/index');
+            }else{
+                E('登录失败!');
+            }
+
         }
 
         $this->assign('studentId',$studentId);
@@ -82,5 +85,11 @@ class LoginController extends BaseController{
         D('User')->addUser($user);
         //TODO 注册成功跳转到注册成功页面
     }
-
+    /**
+     * 退出登录
+     */
+    public function logout(){
+        D('Passport')->logout();
+        echo '退出成功!';
+    }
 }

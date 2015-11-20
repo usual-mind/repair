@@ -20,7 +20,7 @@ define('APP_DEBUG',True);
 define('ROOT_PATH',str_replace('\\','/',dirname(__FILE__)).'/');
 // 定义应用目录
 define('APP_PATH',ROOT_PATH.'Application/');
-
+header('Content-type:text/html;charset=utf-8');
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';
 
