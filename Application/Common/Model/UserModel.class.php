@@ -1,5 +1,6 @@
 <?php
-/**用户模型
+/**
+ * 用户模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/8

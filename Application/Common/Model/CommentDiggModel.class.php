@@ -16,6 +16,12 @@ class CommentDiggModel extends Model
 {
     protected $tableName = 'comment_digg';
 
+    /**
+     * 添加赞
+     * @param $commentId
+     * @param $mid
+     * @return bool|mixed
+     */
     public function addDigg($commentId , $mid){
         $data['comment_id'] = intval($commentId);
         if(empty($mid)) $mid = $GLOBALS['e8']['mid'];
@@ -45,6 +51,29 @@ class CommentDiggModel extends Model
             $this->setDiggCache();
         }
         return $diggId;
+    }
+
+    /**取消赞
+     * @param $commentId
+     * @param $mids
+     */
+    public function delDigg($commentId , $mid){
+        $data['comment_id'] = intval($commentId);
+        if(empty($mid)) $mid = $GLOBALS['e8']['mid'];
+        if(!$mid) E('未登录不能赞!');
+        //该评论是否已经被$mid赞过了
+        $isDigged = $this->where ( $data )->getField ( 'id' );
+        if(!$isDigged){
+            $this->error = '取消赞失败，你可能已经取消过赞了!';
+            return false;
+        }
+        $res = $this->where($data)->delete();
+        if($res){
+            //评论表的赞总数自减1
+            D('Comment')->where('id='.$data['comment_id'])->setDec('digg_count');
+            $this->setDiggCache();
+        }
+        return $res;
     }
     public function setDiggCache(){
         //TODO

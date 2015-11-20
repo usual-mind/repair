@@ -2,7 +2,6 @@
 namespace Home\Controller;
 
 use Common\Controller\BaseController;
-use Common\Model\RegisterModel;
 
 use Think\Controller;
 

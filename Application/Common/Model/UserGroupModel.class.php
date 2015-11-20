@@ -1,5 +1,6 @@
 <?php
-/**用户组模型
+/**
+ * 用户组模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/11

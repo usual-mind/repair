@@ -1,5 +1,6 @@
 <?php
-/**通行证模型
+/**
+ * 通行证模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/13

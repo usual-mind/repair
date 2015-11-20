@@ -1,5 +1,6 @@
 <?php
-/**通知模型
+/**
+ * 通知模型
  * Created by PhpStorm.
  * User: TaoYu
  * Date: 2015/11/11
