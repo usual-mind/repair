@@ -92,8 +92,12 @@
             $('#addBtn').click(function(){
                 showSelComputerBox(function(brandId,model){
                         ajaxRequest("{$addComputer}?brandId="+brandId+"&model="+model,function(data){
-                        $('#model>li').append("<li>"+data+"</li>");
-                    });
+                            if(data.state){
+                                $('#model>li').append("<li>"+data.computerName+"</li>");
+                            }else{
+                                tipBox(data.errMsg,1000);
+                            }
+                    },'json');
                 },function(){});
             });
 		});
