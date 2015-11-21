@@ -59,7 +59,7 @@ class RegisterController extends BaseController{
     public function doRegister(){
         $problemDesc = $_POST['problemDesc'];
         $computerModelId = $_POST['computerModelId'];
-        if(empty($_SESSION['images'])){
+        if(!empty($_SESSION['images'])){
 
         }
         $data = array(problem_desc =>$problemDesc,computer_id=>$computerModelId,image_set_id =>'');
