@@ -6,7 +6,7 @@ class BaseController extends Controller {
     protected $site = array();
     protected $mid;//当前登录的用户的id
     protected $user;//当前登录的用户的信息
-
+    protected $ajaxReturnData = array();
     /**
      * 控制器初始化
      * @return void
@@ -84,5 +84,20 @@ class BaseController extends Controller {
      */
     public function setDescription($description = '') {
         $this->assign('_description',$description);
+    }
+
+    /**
+     * 复写父类ajaxReturn方法
+     * @param mixed $data
+     * @param int $state
+     * @param string $message
+     * @param string $type
+     * @param int $json_option
+     */
+    public function ajaxReturn($data,$state = 1,$message='',$type='',$json_option=0){
+        $this->ajaxReturnData['state']  = $state;
+        $this->ajaxReturnData['message']  = $message;
+        $data = array_merge($this->ajaxReturnData,$data);
+        parent::ajaxReturn($data,$type='',$json_option);
     }
 }
