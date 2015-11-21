@@ -47,10 +47,11 @@ class FaultImageSetModel extends Model
      *                            'url_lg'=>
      *                          ),...);
      */
-    public function addImages($images){
-
+    public function addImages(array $images){
+        $images = array_unique(array_filter($images));
         //创建图片集
         $data['count'] = count($images);
+        if($data['count']<=0) return null;//如果传入的数组为空直接返回null
         $data['ctime'] = time();
         if(!($setId = $this->add($data))) E('创建图片集失败！'.$this->getError());
         //将所有的图片插入到fault_images表中
