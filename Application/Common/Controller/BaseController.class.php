@@ -97,10 +97,7 @@ class BaseController extends Controller {
     public function ajaxReturn($data,$state = 1,$message='',$type='',$json_option=0){
         $this->ajaxReturnData['state']  = $state;
         $this->ajaxReturnData['message']  = $message;
-<<<<<<< HEAD
-=======
         is_array($data) || $data = array();
->>>>>>> origin/master
         $data = array_merge($data,$this->ajaxReturnData);
         parent::ajaxReturn($data,$type='',$json_option);
     }
