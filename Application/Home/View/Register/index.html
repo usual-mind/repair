@@ -6,7 +6,7 @@
             <aside class="text">
                 <form action="{$submitUrl}" id="problemDescForm" method="post">
             	    <textarea name="problemDesc"  placeholder="说点什么吧..."></textarea>
-                    <input type="hidden" name="computerModel" id="computerIdInput">
+                    <input type="hidden" name="computerModelId" id="computerModelId">
                 </form>
                 <div class="upload">
 
@@ -36,7 +36,7 @@
                 </ul>
             </aside>
         </section>
-       	<div class="submit"><a href="#" disabled id="submit">提交</a></div>
+       	<div class="submit"><button href="#" disabled id="submit">提交</button></div>
         <!--调用选择电脑的Widget-->
         {:W('SelComputer/SelComputer')}
         <footer class="foot-nav">
@@ -63,6 +63,9 @@
             $('#model>li').click(function(){
                 $('#model>.selected').removeClass('selected');
                 $(this).addClass('selected');
+                if($("#problemDescForm>textarea").val()!= ''){
+                    submitBtn.attr('disabled',false);
+                }
             });
             $("#uploadPic").bind("change",function(){
                 jUploadForm.children('span').append('<img src="{$APP_PUBLIC_URL}img/uploadLoad.gif"/>');
@@ -78,14 +81,15 @@
 				}
 			});
             $("#problemDescForm>textarea").keyup(function () {
-                if($(this).val()!= ''){
+                if($(this).val()!= '' && $("#model .selected").size()==1){
                     submitBtn.attr('disabled',false);
                 }else{
                     submitBtn.attr('disabled','disabled');
                 }
             });
             //提交按钮
-            $("#submit").click(function () {
+            submitBtn.click(function () {
+                $("#computerModelId").val($('#model>.selected').attr('data-id'));
                 $("#problemDescForm").submit();
             });
             //添加按钮
@@ -95,7 +99,7 @@
                             if(data.state){
                                 $('#model>li').append("<li>"+data.computerName+"</li>");
                             }else{
-                                tipBox(data.errMsg,1000);
+                                tipBox(data.message,1000);
                             }
                     },'json');
                 },function(){});
