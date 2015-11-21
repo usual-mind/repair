@@ -36,13 +36,23 @@ class ComputerLinkModel extends Model
 =======
 >>>>>>> origin/master
         if(!$computerId = D('Computer')->addComputer($computerInfo,$pid)) E('添加电脑型号失败!');
+        //判断该用户是否已经添加过这台电脑了
+        $computerList = $this->getUserComputerList($uid);
+        $computerList = $computerList[$uid];
+        foreach($computerList as $v){
+            if($v['id'] == $computerId){
+                //进来这里代表已经添加过这台电脑了直接返回false
+                $this->error = '你已经添加过这台电脑了!';
+                return false;
+            }
+        }
         $data['computer_model_id'] = $computerId;
         $data['uid'] = $uid;
         //插入数据库
         if(!$this->add($data)) E('添加电脑失败！');
         //清除用户模型缓存
         D('User')->cleanCache($uid);
-        return $computerId;
+        return $computerId;//返回插入的电脑id
     }
 
     /**获取某个用户的所有电脑
@@ -64,7 +74,7 @@ class ComputerLinkModel extends Model
                         'computer_name' => D('Computer')->getComputerNameById($v['computer_model_id']));
                 }
             }else{//该用户没有添加电脑
-                $return[$uid] = null;
+                $return[$uid] = array();
             }
         }
         return $return;
