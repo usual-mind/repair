@@ -45,7 +45,8 @@ class RegisterController extends BaseController{
      *  给用户添加电脑型号
      */
     public function addComputer(){
-        D('ComputerLink')->addComputerToUser($GLOBALS['e8']['mid'],I('get.model',''),I('get.brandId',0));
+        //返回插入的电脑型号
+        echo D('ComputerLink')->addComputerToUser($GLOBALS['e8']['mid'],I('get.model',''),I('get.brandId',0));
     }
     /**
      * 处理登记信息
