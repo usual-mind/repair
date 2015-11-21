@@ -31,10 +31,7 @@ class ComputerLinkModel extends Model
         $uid = intval($uid);
         if(!$uid) E('添加电脑失败，UID错误!');
         //先插入电脑品牌和型号 如果该电脑已经存在会返回该电脑的id
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
         if(!$computerId = D('Computer')->addComputer($computerInfo,$pid)) E('添加电脑型号失败!');
         //判断该用户是否已经添加过这台电脑了
         $computerList = $this->getUserComputerList($uid);
