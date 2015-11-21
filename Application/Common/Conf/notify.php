@@ -1,5 +1,6 @@
 <?php
-/**Notify节点配置
+/**
+ * Notify节点配置
  * Created by PhpStorm.
  * User: TAOYU
  * Date: 2015/11/17
