@@ -357,7 +357,7 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 	margin-bottom:90px;
 	margin:20px 0 90px 0;
 }
-.submit>a{
+.submit>button{
 	display:block;
 	font-size:16px;
 	width:100%;
@@ -368,7 +368,7 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 	text-align:center;
 	line-height:40px;
 }
-.submit>a[disabled]{
+.submit>button[disabled]{
 	background-color:#C5F0BB;
 }
 /*选项卡部分*/

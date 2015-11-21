@@ -48,9 +48,9 @@ class RegisterController extends BaseController{
         //返回插入的电脑型号
         try{
             $computerName = D('ComputerLink')->addComputerToUser($GLOBALS['e8']['mid'],I('get.model',''),I('get.brandId',0));
-            $this->ajaxReturn(array("state"=>1,"computerName"=>$computerName));
+            $this->ajaxReturn(array('computerName'=>$computerName));
         }catch (\Exception $e){
-            $this->ajaxReturn(array("state"=>0,"errMsg"=>$e->getMessage()));
+            $this->ajaxReturn(array(),0,$e->getMessage());
         }
     }
     /**
@@ -58,6 +58,12 @@ class RegisterController extends BaseController{
      */
     public function doRegister(){
         $problemDesc = $_POST['problemDesc'];
+        $computerModelId = $_POST['computerModelId'];
+        if(empty($_SESSION['images'])){
+
+        }
+        $data = array(problem_desc =>$problemDesc,computer_id=>$computerModelId,image_set_id =>'');
+        $_SESSION['images'] = array();
         D('RepairRecor')->addRepairRecord();
     }
     /**
@@ -118,7 +124,7 @@ class RegisterController extends BaseController{
         }
 
         //将图片路径放入session
-        $_SESSION['images'][] = array('originalImagePath'=>$imagePath,'smImagePath'=>$smImagePath,'mdImagePath'=>$mdImagePath,'lgImagePath'=>$lgImagePath);
+        $_SESSION['images'][] = array('url_original'=>$imagePath,'url_sm'=>$smImagePath,'url_mid'=>$mdImagePath,'url_lg'=>$lgImagePath);
 
         die('<script>parent.callbackImageDisplay("'.$retImagePath.'")</script>');
     }
