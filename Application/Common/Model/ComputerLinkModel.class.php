@@ -36,12 +36,10 @@ class ComputerLinkModel extends Model
         //判断该用户是否已经添加过这台电脑了
         $computerList = $this->getUserComputerList($uid);
         $computerList = $computerList[$uid];
-        foreach($computerList as $v){
-            if($v['id'] == $computerId){
-                //进来这里代表已经添加过这台电脑了直接返回false
-                $this->error = '你已经添加过这台电脑了!';
-                return false;
-            }
+        foreach($computerList as $v) {
+            if ($v['id'] == $computerId)
+                //进来这里代表已经添加过这台电脑了 直接抛出异常
+                E('你已经添加过这台电脑了!');
         }
         $data['computer_model_id'] = $computerId;
         $data['uid'] = $uid;
