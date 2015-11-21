@@ -28,7 +28,7 @@ class FaultImageSetModel extends Model
             E('没有找到id为' . $setId . '的图片集');
             return false;
         }
-        $images = M('fault_images')->field('url,url_sm,url_mid,url_lg')
+        $images = M('fault_images')->field('url_original,url_sm,url_mid,url_lg')
             ->where('image_set_id='.$set['id'])->limit($set['count'])->select();
         $return = array();
         foreach($images as $image){
@@ -36,14 +36,16 @@ class FaultImageSetModel extends Model
         }
         return $return;
     }
-    public function getDefalutImg(){
-
-    }
     /**
      * 插入一组图片
      * 返回图片集id
      *
-     * @parme array $images   array('图片的url','图片的url',....);
+     * @parme array $images   array(0=>array(
+     *                            'url_original'=>,
+     *                            'url_sm'=>,
+     *                            'url_sm'=>,
+     *                            'url_lg'=>
+     *                          ),...);
      */
     public function addImages($images){
 
@@ -53,8 +55,11 @@ class FaultImageSetModel extends Model
         if(!($setId = $this->add($data))) E('创建图片集失败！'.$this->getError());
         //将所有的图片插入到fault_images表中
         $image['image_set_id'] = $setId;
-        foreach($images as $url){
-            $image['url'] = $url;
+        foreach($images as $allUrls){
+            $image['url_original']  =   empty($allUrls['url_original'])?'':$allUrls['url_original'];
+            $image['url_sm']        =   empty($allUrls['url_sm'])?'':$allUrls['url_sm'];
+            $image['url_mid']       =   empty($allUrls['url_mid'])?'':$allUrls['url_mid'];
+            $image['url_lg']        =   empty($allUrls['url_lg'])?'':$allUrls['url_lg'];
             M('fault_images')->add($image);
         }
         return $setId;
