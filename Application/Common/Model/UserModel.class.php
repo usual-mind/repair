@@ -112,7 +112,7 @@ class UserModel extends Model
         array_shift($m);
         $formateTelNum = '';
         foreach($m as $v){
-            $formateTelNum.='-'.$v;
+            $formateTelNum.=$v.'-';
         }
         $formateTelNum = rtrim($formateTelNum,'-');
         return $formateTelNum;
