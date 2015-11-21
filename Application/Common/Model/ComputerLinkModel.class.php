@@ -34,10 +34,11 @@ class ComputerLinkModel extends Model
         if(!$computerId = D('Computer')->addComputer($computerInfo,$pid)) E('添加电脑型号失败!');
         $data['computer_model_id'] = $computerId;
         $data['uid'] = $uid;
-        $id = $this->add($data);//插入数据库
+        //插入数据库
+        if(!$this->add($data)) E('添加电脑失败！');
         //清除用户模型缓存
         D('User')->cleanCache($uid);
-        return $id;
+        return $computerId;
     }
 
     /**获取某个用户的所有电脑
