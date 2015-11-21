@@ -119,7 +119,6 @@ class ComputerModel extends Model
      */
     public function addComputer($computerInfo,$pid=0)
     {
-
         is_array($computerInfo) || $computerInfo = explode(',', $computerInfo);
         $computerInfo = array_unique(array_filter($computerInfo));//删除数组中为空的值和重复的值
 
@@ -131,7 +130,7 @@ class ComputerModel extends Model
         return $pid;//最后插入的肯定是班级号
     }
 
-    /**添加某一项信息 //TODO 修改代码
+    /**添加某一项信息
      * @param $data
      * @return int 返回插入记录的id
      */
