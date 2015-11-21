@@ -19,15 +19,23 @@
                     </form>
                 </div>
             </aside>
+            <label class="label">我的班级和联系方式<span>（可在<a href="#">个人中心</a>修改）</span></label>
+            <div class="sel-class">
+                <p>{$className}</p>
+            </div>
+            <div class="sel-class">
+                <p>{$telNumber}</p>
+            </div>
             <aside class="form">
         		<label class="label">添加/选择电脑型号</label>
                 <ul id="model" class="model">
                     <div><a href="#" id="addBtn">添加</a></div>
                 </ul>
             </aside>
-            <p class="className">班级：{$className}<span>如果班级信息有误可在<a href="#">个人中心</a>中修改</span></p>
         </section>
        	<div class="submit"><a href="#" disabled id="submit">提交</a></div>
+        <!--调用选择电脑的Widget-->
+        {:W('SelComputer/SelComputer')}
         <footer class="foot-nav">
         	<ul>
             	<li>
@@ -41,9 +49,6 @@
                 </li>
             </ul>
         </footer>
-    </div>
-    <div id="selectComputerBody">
-        {:W('selector/selector',$department)}
     </div>
     <include file= './application/Home/View/Common/footer.html' />
     <script type="text/javascript">
@@ -78,11 +83,12 @@
             });
             //添加按钮
             $('#addBtn').click(function(){
-                setHeader('选择品牌');
-                $('#registerBody').hide('fast');
-                $('#selectComputerBody').show('fast');
+                showSelComputerBox();
             });
+            //电脑型号输入框的输入按钮
+            $('#computerModelInput').KeyUp(function(){
 
+            });
 		});
         function callbackImageDisplay(url,errorMsg){
             if(arguments[1]){
@@ -93,20 +99,5 @@
                 return;
             }
             jImageSpan.children('img:last-child').attr('src',url);
-        }
-        //选择电脑结束的回调函数
-        Jmodel = $('#model');
-        function callBackSelectEnd(pid){
-            $('#selectComputerBody').hide('fast');
-            $('#registerBody').show('fast');
-            //在电脑型号中添加用户添加的电脑型号
-            Jmodel.append('<li>'+JcurrClassInfo.html()+'</li>');
-            JcurrClassInfo.html('');
-            classID = pid;
-            //点击电脑型号
-            $('#model>li').click(function () {
-                Jmodel.find('.selected').removeClass('selected');
-                this.setAttribute('class','selected');
-            });
         }
     </script>

@@ -113,3 +113,19 @@
 .className>span>a{
 	color: #4691FF;
 }
+
+.sel-class{
+	border-bottom: 1px #F5f5f5 solid;
+}
+.sel-class p{
+	color:#777;
+}
+.label>span{
+	margin-left: 10px;
+	font-size: 12px;
+	color:#999;
+}
+.label>span>a{
+	text-decoration:underline;
+	color: #4691FF;
+}

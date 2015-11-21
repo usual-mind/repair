@@ -1,11 +1,15 @@
 /**
- *ajax请求html
+ *ajax请求
+ * @param href 请求的URl
+ * @param callback 请求成功的回调函数
+ * @param dataType	请求返回的数据类型
  */
-function ajaxRequestHtml(href,callback){
+function ajaxRequest(href,callback,dataType){
+	if(typeof(dataType) == "undefined") dataType='html';
 	$.ajax({
 		type: "GET",
 		url: href,
-		dataType: "html",
+		dataType: dataType,
 		success:function(data){
 			callback(data);
 		},
@@ -16,27 +20,7 @@ function ajaxRequestHtml(href,callback){
 		}
 	});
 }
-/**
-*ajax跳转
-*href:要跳转的链接
-*/
-function ajaxJump(href){
-	$("html").fadeOut("fast",function(){
-		$.ajax({
-			type: "GET",
-			url: href,
-			dataType: "html",
-			success: function(data){
-				$(this).remove();
-				document.write(data);
-			},
-			error: function(jqXHR){
-				//ajax请求出错
-				alert( "错误号: " + jqXHR.status );
-			}
-		});
-	});
-}
+
 /**
 *显示对话框
 *mess：消息内容

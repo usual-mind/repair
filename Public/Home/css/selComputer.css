@@ -1,0 +1,32 @@
+#selComputerMessage{
+    display: none;
+}
+.addComputerModel{
+    padding:10px;
+    margin-bottom: 60px;
+}
+.addComputerModel>div>ul{
+    border: 1px solid #bbb;
+    border-top:none;
+    -webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.1);-moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.1);box-shadow: 0px 1px 2px rgba(0,0,0,0.1)!important;
+    border-top: none;
+}
+.addComputerModel>div>ul>li{
+    line-height: 25px;
+    border-bottom: 1px solid #EDEDED;
+    padding-left: 10px;
+}
+.addComputerModel>div>ul>li:hover{
+    background-color: #f5f5f5;
+}
+.addComputerModel input,.addComputerModel select{
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    padding:5px;
+    margin-top: 15px;
+    border:1px solid #bbb;
+}
+.addComputerModel input:focus {
+    border: 1px solid #4791FF;
+}

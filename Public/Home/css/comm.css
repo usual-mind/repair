@@ -391,3 +391,26 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 	color:#EB4F38;
 	border-bottom:#EB4F38 2px solid;
 }
+.sel-class p{
+	box-sizing:border-box;
+	line-height:40px;
+	width:100%;
+	background-color:#FFF;
+	color:#666;
+	font-size:14px;
+
+}
+.sel-class{
+	position:relative;
+	background-color:#FFF;
+	padding:0 15px;
+}
+.sel-class .right-icon{
+	position:absolute;
+	top:13px;
+	right:10px;
+	display:block;
+	width:9px;
+	height:15px;
+	background:url(../img/icon.png)  no-repeat -112px 0;
+}

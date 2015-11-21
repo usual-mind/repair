@@ -14,18 +14,22 @@ class RegisterController extends BaseController{
         foreach($computerBrand as &$v){
             $v['url'] = U('SetComputer/ComputerInfoWidget',array('pid'=>$v['id'],'type'=>'computerBrand'));
         }
+        /*
         $header['title'] = '登记维修记录';
         $header['backUrl'] = U('Login/index');
         $this->assign('header',$header);
         $this->assign('department',array($computerBrand));
+        */
 
         //获取用户信息
         $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
-
         $this->assign('className',$userInfo['classes_name']);
+        $this->assign('telNumber',$userInfo['tel_num']);
         $this->display();
     }
-
+    /**
+     * 返回用户匹配电脑品牌输入的
+     */
     /**
      * 处理登记信息
      */

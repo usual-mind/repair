@@ -1,0 +1,45 @@
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/selComputer.css">
+<div class="messageBox" id="selComputerMessage">
+    <div class="mask"></div>
+    <section class="bs1">
+        <!--选择电脑型号-->
+        <div id="addComputerModel" class="addComputerModel">
+            <h2>添加电脑型号</h2>
+            <div>
+                <select>
+                    <volist name="allBrand" id="vo">
+                        <option value="{$vo.id}">{$vo.title}</option>
+                    </volist>
+                </select>
+            </div>
+            <div>
+                <input type="text" id="computerModelInput" name="computerModel" placeholder="电脑型号" />
+                <ul id="inputTip">
+                    <li>E31</li>
+                    <li>E33</li>
+                    <li>E34</li>
+                    <li>E35</li>
+                    <li>E36</li>
+                </ul>
+            </div>
+        </div>
+        <!--选择电脑结束-->
+        <ul>
+            <li id="selComputerBoxOkBtn">确定</li>
+            <li id="selComputerBoxCancelBtn">取消</li>
+        </ul>
+    </section>
+</div>
+<script type="text/javascript">
+    function showSelComputerBox(fnOk,fuCancel){
+        $('#selComputerMessage').show('fast');
+        $('#selComputerBoxOkBtn').click(function(){
+            $('#selComputerMessage').hide('fast');
+            fnOk();
+        });
+        $('#selComputerBoxCancelBtn').click(function(){
+            $('#selComputerMessage').hide('fast');
+            fuCancel();
+        });
+    }
+</script>

@@ -17,7 +17,7 @@
         clickItem();
         //后退按钮 绑定事件
         $("#header>a").click(function (){
-            ajaxRequestHtml($(this).attr('href'),function(data){
+            ajaxRequest($(this).attr('href'),function(data){
                 //删除最后选择的班级信息
                 JcurrClassInfo.children().last().remove();
                 //替换内容
@@ -34,7 +34,7 @@
         $('#classInfoBody>li').click(function(){
             if(!clickItemFlag) return;
             JcurrLi = $(this);
-            ajaxRequestHtml(JcurrLi.attr('data-href'),function(data){
+            ajaxRequest(JcurrLi.attr('data-href'),function(data){
                 //将选择的班级信息添加到上面的班级名称里面
                 JcurrClassInfo.html(JcurrClassInfo.html() + ' <span>' + JcurrLi.children('p').html()+'</span> ');
                 replace(data);
