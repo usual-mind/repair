@@ -98,16 +98,29 @@ class UserModel extends Model
             // 获取该用户的所有电脑信息
             $computerList = D('ComputerLink')->getUserComputerList($uid);
             $user['computer'] = $computerList[$uid];
-            //TODO 格式化手机号码
-            $user['tel_num'] = $user['tel_num'];
-            $this->cacheObj->set ( 'ui_' . $uid, $user, 600 );
+
+            $user['tel_num'] = $this->formateTelNum($user['tel_num']);
+            $this->cacheObj->set ( 'ui_' . $uid, $user );
             static_cache ( 'user_info_' . $uid, $user );
             return $user;
         }
     }
+    public function formateTelNum($telNum){
+        // 格式化手机号码
+        $m = array();
+        preg_match('/(\d{3})(\d{4})(\d{4})/',$telNum,$m);
+        array_shift($m);
+        $formateTelNum = '';
+        foreach($m as $v){
+            $formateTelNum.='-'.$v;
+        }
+        $formateTelNum = rtrim($formateTelNum,'-');
+        return $formateTelNum;
+    }
     public function cleanCache($uids){
         //TODO 清除用户缓存
     }
+
     /**
      * 根据UID批量获取多个用户的相关信息
      *

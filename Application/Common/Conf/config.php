@@ -17,7 +17,7 @@ return array(
     'ACCESS'    =>  include ('access.php'),
     //notifyNode配置
     'NOTIFY'    => include ('notify.php'),
-    //'SHOW_PAGE_TRACE' =>true,
+    'SHOW_PAGE_TRACE' =>true,
     //缩略图相关配置，根据横宽比生成缩略图，所以只要配置宽度
     'thumbnail' => array(
         //小图

@@ -10,6 +10,6 @@ class IndexController extends  BaseController{
         /*$data['problem_desc'] = '电脑爆炸了';
         $data['computer_id'] = '4';
         var_dump(D('RepairRecord')->addRepairRecord($data));*/
-        p(D('Notify')->getMessageList(1));
+        p(D('Computer')->searchModel('E',3));
     }
 }

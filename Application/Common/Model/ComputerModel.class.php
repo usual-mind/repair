@@ -145,4 +145,23 @@ class ComputerModel extends Model
         }
         return $this->add($data);
     }
+
+    /**
+     * 根据关键词搜索电脑型号
+     * @param $keywords
+     * @param $pid
+     * @param $limit
+     * @return mixed|null
+     */
+    public function searchModel($keywords,$pid,$limit = 10){
+        $condition['pid'] = intval($pid);
+        if(!$condition['pid']) return null;
+        $bind = array();
+        if($keywords){
+            $condition['title'] = array('like', ':keywords');
+            //参数绑定
+            $bind[':keywords'] = trim($keywords).'%';
+        }
+        return $this->where($condition)->bind($bind)->limit($limit)->select();
+    }
 }
