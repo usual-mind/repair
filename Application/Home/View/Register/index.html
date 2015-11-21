@@ -91,7 +91,6 @@
             //添加按钮
             $('#addBtn').click(function(){
                 showSelComputerBox(function(brandId,model){
-                    document.write("{$addComputer}?brandId="+brandId+"&model="+model);
                     ajaxRequest("{$addComputer}?brandId="+brandId+"&model="+model,function(){
 
                     });

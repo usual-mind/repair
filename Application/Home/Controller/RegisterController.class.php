@@ -84,9 +84,9 @@ class RegisterController extends BaseController{
         $filePostfix = $pahtInfo['extension'];//原图的后缀名
         //分别生成大图 中图 小图 的缩略图
 
-        $smImagePath=NULL;
-        $mdImagePath=NULL;
-        $lgImagePath=NULL;
+        $smImagePath='';
+        $mdImagePath='';
+        $lgImagePath='';
         //首先讲返回的图片URl设置成原图
         $retImagePath = $imagePath;
         if(!empty($imageConfig['lgThumbnail'])){
