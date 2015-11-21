@@ -37,6 +37,7 @@ class RepairStateModel extends Model
      * @return mixed
      */
     public function addStatue($stateInfo){
+
         //TODO 需要登录
         if(empty($stateInfo) || !is_array($stateInfo)) E('参数错误');
         $stateInfo['ctime'] = time();

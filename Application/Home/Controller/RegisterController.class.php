@@ -61,11 +61,14 @@ class RegisterController extends BaseController{
         $computerModelId = $_POST['computerModelId'];
         if(!empty($_SESSION['images'])){
             $imageSetId = D('FaultImageSet')->addImages($_SESSION['images']);
-            $data = array(problem_desc =>$problemDesc,computer_id=>$computerModelId,image_set_id =>$imageSetId);
+            $data['problem_desc']   =   $problemDesc;
+            $data['computer_id']    =   $computerModelId;
+            $data['image_set_id']   =   $imageSetId;
+            unset($_SESSION['images']);
         }else{
-            $data = array(problem_desc =>$problemDesc,computer_id=>$computerModelId);
+            $data['problem_desc']   =   $problemDesc;
+            $data['computer_id']    =   $computerModelId;
         }
-        $_SESSION['images'] = array();
         D('RepairRecord')->addRepairRecord($data);
         //登记成功
     }
