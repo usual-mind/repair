@@ -25,11 +25,24 @@ class RegisterController extends BaseController{
         $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
         $this->assign('className',$userInfo['classes_name']);
         $this->assign('telNumber',$userInfo['tel_num']);
+        $this->assign('searchTipUrl',U('searchModel'));
         $this->display();
     }
     /**
-     * 返回用户匹配电脑品牌输入的
+     * 返回匹配的电脑型号
      */
+    public function searchModel(){
+        $pid = I('get.pid',0);
+        $keyword = I('get.keyword','');
+        $res = D('Computer')->searchModel($keyword,$pid,5);
+        echo json_encode($res);
+    }
+    /**
+     *  给用户添加电脑型号
+     */
+    public function addComputer(){
+        D('ComputerLink')->addComputerToUser($GLOBALS['e8']['mid'],I('get.brandId',0),I('get.model',''));
+    }
     /**
      * 处理登记信息
      */

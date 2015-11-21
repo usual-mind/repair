@@ -6,7 +6,7 @@
         <div id="addComputerModel" class="addComputerModel">
             <h2>添加电脑型号</h2>
             <div>
-                <select>
+                <select id="computerBrandSel">
                     <volist name="allBrand" id="vo">
                         <option value="{$vo.id}">{$vo.title}</option>
                     </volist>
@@ -15,11 +15,6 @@
             <div>
                 <input type="text" id="computerModelInput" name="computerModel" placeholder="电脑型号" />
                 <ul id="inputTip">
-                    <li>E31</li>
-                    <li>E33</li>
-                    <li>E34</li>
-                    <li>E35</li>
-                    <li>E36</li>
                 </ul>
             </div>
         </div>
@@ -31,11 +26,33 @@
     </section>
 </div>
 <script type="text/javascript">
+    $(function(){
+        //电脑品牌select
+        var JcomputerBrandSel = $('#computerBrandSel');
+        var JcomputerModelInput = $("#computerModelInput");
+        var JinputTipUl = $('#inputTip');
+        JcomputerModelInput.keyup(function(data){
+            $('#inputTip>li').remove();
+            ajaxRequest("{$searchTipUrl}?pid="+JcomputerBrandSel.val()+"&keyword="+JcomputerModelInput.val(),function(data){
+                len = data.length;
+                if(len>0){
+                    JinputTipUl.show('fast');
+                    for(i=0;i<len;i++){
+                        JinputTipUl.append("<li data-id="+data[i].id+">"+data[i].title+"</li>");
+                    }
+                    $('#inputTip>li').click(function(){
+                        JcomputerModelInput.val($(this).html());
+                        JinputTipUl.hide('fast');
+                    });
+                }
+            },"json");
+        });
+    });
     function showSelComputerBox(fnOk,fuCancel){
         $('#selComputerMessage').show('fast');
         $('#selComputerBoxOkBtn').click(function(){
             $('#selComputerMessage').hide('fast');
-            fnOk();
+            fnOk($('#computerBrandSel').val(),$("#computerModelInput").val());
         });
         $('#selComputerBoxCancelBtn').click(function(){
             $('#selComputerMessage').hide('fast');

@@ -83,11 +83,9 @@
             });
             //添加按钮
             $('#addBtn').click(function(){
-                showSelComputerBox();
-            });
-            //电脑型号输入框的输入按钮
-            $('#computerModelInput').KeyUp(function(){
+                showSelComputerBox(function(brandId,model){
 
+                },function(){});
             });
 		});
         function callbackImageDisplay(url,errorMsg){

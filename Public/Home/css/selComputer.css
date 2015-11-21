@@ -10,6 +10,7 @@
     border-top:none;
     -webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.1);-moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.1);box-shadow: 0px 1px 2px rgba(0,0,0,0.1)!important;
     border-top: none;
+    display: none;
 }
 .addComputerModel>div>ul>li{
     line-height: 25px;
