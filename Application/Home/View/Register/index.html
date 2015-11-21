@@ -29,6 +29,9 @@
             <aside class="form">
         		<label class="label">添加/选择电脑型号</label>
                 <ul id="model" class="model">
+                    <volist name="computers" id="computer">
+                        <li data-id="{$computer.id}">{$computer.computer_name}</li>
+                    </volist>
                     <div><a href="#" id="addBtn">添加</a></div>
                 </ul>
             </aside>
@@ -57,6 +60,10 @@
         //提交按钮
         var submitBtn = $("#submit");
     	$(function (){
+            $('#model>li').click(function(){
+                $('#model>.selected').removeClass('selected');
+                $(this).addClass('selected');
+            });
             $("#uploadPic").bind("change",function(){
                 jUploadForm.children('span').append('<img src="{$APP_PUBLIC_URL}img/uploadLoad.gif"/>');
                 jUploadForm.submit();
@@ -84,7 +91,10 @@
             //添加按钮
             $('#addBtn').click(function(){
                 showSelComputerBox(function(brandId,model){
+                    document.write("{$addComputer}?brandId="+brandId+"&model="+model);
+                    ajaxRequest("{$addComputer}?brandId="+brandId+"&model="+model,function(){
 
+                    });
                 },function(){});
             });
 		});

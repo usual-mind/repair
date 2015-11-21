@@ -25,7 +25,11 @@ class RegisterController extends BaseController{
         $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
         $this->assign('className',$userInfo['classes_name']);
         $this->assign('telNumber',$userInfo['tel_num']);
+        $this->assign('computers',$userInfo['computer']);
+        //分配搜索的url
         $this->assign('searchTipUrl',U('searchModel'));
+        //分配添加电脑的url
+        $this->assign('addComputer',U('addComputer'));
         $this->display();
     }
     /**
@@ -41,7 +45,7 @@ class RegisterController extends BaseController{
      *  给用户添加电脑型号
      */
     public function addComputer(){
-        D('ComputerLink')->addComputerToUser($GLOBALS['e8']['mid'],I('get.brandId',0),I('get.model',''));
+        D('ComputerLink')->addComputerToUser($GLOBALS['e8']['mid'],I('get.model',''),I('get.brandId',0));
     }
     /**
      * 处理登记信息
