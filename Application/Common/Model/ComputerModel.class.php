@@ -119,9 +119,10 @@ class ComputerModel extends Model
      */
     public function addComputer($computerInfo,$pid=0)
     {
-        //TODO 修改代码
-        is_array($computerInfo) || $classInfo = explode(',', $computerInfo);
+
+        is_array($computerInfo) || $computerInfo = explode(',', $computerInfo);
         $computerInfo = array_unique(array_filter($computerInfo));//删除数组中为空的值和重复的值
+
         foreach($computerInfo as $title){
 
             if(!$pid = $this->addComputerItem($title,$pid))
