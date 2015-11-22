@@ -44,14 +44,13 @@ class BaseController extends Controller {
             $this->redirect('Login/index');
         }
         //当前登录者uid
-        if(intval($_SESSION['mid']) !== 0){
+        if(intval($_SESSION['e8']['mid']) !== 0){
             //非游客登录
-            $GLOBALS['e8']['mid'] = $this->mid = intval($_SESSION['mid']);
+            $GLOBALS['e8']['mid'] = $this->mid = intval($_SESSION['e8']['mid']);
             $GLOBALS['e8']['user'] = $this->user = D('User')->getUserInfo($this->mid);
             $this->assign('mid', $this->mid);   //登录者
             $this->assign('user', $this->user); //当前登陆的人
         }
-
         return true;
     }
     /**
