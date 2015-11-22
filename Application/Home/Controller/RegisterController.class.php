@@ -37,6 +37,9 @@ class RegisterController extends BaseController{
      */
     public function searchModel(){
         $pid = I('get.pid',0);
+        if($pid == 0){
+            $this->error('没有该电脑品牌');
+        }
         $keyword = I('get.keyword','');
         $res = D('Computer')->searchModel($keyword,$pid,5);
         echo json_encode($res);
@@ -57,15 +60,19 @@ class RegisterController extends BaseController{
      * 处理登记信息
      */
     public function doRegister(){
-        $problemDesc = $_POST['problemDesc'];
+        $problemDesc = safetyHtml($_POST['problemDesc']);
+
+        if(empty($_POST['computerModelId'])){
+            $this->error('请选择电脑型号');
+        }
         $computerModelId = $_POST['computerModelId'];
         if(!empty($_SESSION['images'])){
             $imageSetId = D('FaultImageSet')->addImages($_SESSION['images']);
-            $data = array(problem_desc =>$problemDesc,computer_id=>$computerModelId,image_set_id =>$imageSetId);
+            $data = array('problem_desc' =>$problemDesc,'computer_id'=>$computerModelId,'image_set_id' =>$imageSetId);
         }else{
-            $data = array(problem_desc =>$problemDesc,computer_id=>$computerModelId);
+            $data = array('problem_desc' =>$problemDesc,'computer_id'=>$computerModelId);
         }
-        $_SESSION['images'] = array();
+        unset($_SESSION['images']);
         D('RepairRecord')->addRepairRecord($data);
         //登记成功
     }
