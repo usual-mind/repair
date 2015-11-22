@@ -30,8 +30,10 @@ class RepairRecordModel extends Model
             return null;
         }
         foreach($records as &$record){
-            //维修人员
-            $record['repairmem'] = D('user')->getLinkNameByUid($record['repairmem_id']);
+            if(!empty($record['repairmem_id'])){
+                //维修人员
+                $record['repairmem'] = D('user')->getLinkNameByUid($record['repairmem_id']);
+            }
             //提交时间
             $record['start_time'] = friendlyShowTime($record['start_time']);
             /*

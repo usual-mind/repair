@@ -15,6 +15,7 @@ class FaceModel
     private $_uid;
     private $savePath = '';//保存头像的根目录
     private $emptyUrl = '';//默认的头像url
+    private $error='';
     /**
      * 初始化模型，加载相应的文件
      * @param integer $uid 用户UID
@@ -22,7 +23,7 @@ class FaceModel
      */
     public function init($uid) {
         $this->_uid = intval($uid);
-        $this->savePath = DATA_PATH.'/upload'.$this->convertUidToPath($this->_uid);
+        $this->savePath = '/face'.$this->convertUidToPath($this->_uid);
         return $this;
     }
     /**
@@ -32,14 +33,13 @@ class FaceModel
      */
     public function convertUidToPath($uid) {
         // 静态缓存
-        $sc = static_cache('avatar_uidpath_' . $uid);
+        $sc = static_cache('face_uidpath_' . $uid);
         if (!empty($sc)) {
             return $sc;
         }
         $md5 = md5($uid);
-        var_dump($md5);
         $sc = '/' . substr($md5, 0, 2) . '/' . substr($md5, 2, 2) . '/' . substr($md5, 4, 2);
-        static_cache('avatar_uidpath_' . $uid, $sc);
+        static_cache('face_uidpath_' . $uid, $sc);
         return $sc;
     }
     /**
@@ -52,7 +52,6 @@ class FaceModel
         if(file_exists($originalFileName)){
             //$filemtime = filemtime($originalFileName);
             //$avatar = getImageUrl($originalFileName, 50, 50) . '?v' . $filemtime;
-
         }*/
     }
     /**
@@ -60,8 +59,8 @@ class FaceModel
      * @param int $size 头像大小
      */
     public function getFace(){
-        $empty_url = __ROOT__.'/Public/Home/noface';
-        $avatar_url = array(
+        $empty_url = __ROOT__.'/Public/'.MODULE_NAME.'/img/noface';
+        $face_url = array(
             'face_original' => $empty_url . '/big.jpg',
             'face_big' => $empty_url . '/big.jpg',
             'face_middle' => $empty_url . '/middle.jpg',
@@ -71,20 +70,51 @@ class FaceModel
 
         $original_file_name = $this->savePath.'/original.jpg';
         if (file_exists($original_file_name)) {
-            $filemtime = @filemtime(UPLOAD_PATH . $original_file_name);
-            $avatar_url['avatar_original'] = getImageUrl($original_file_name);
-            $avatar_url['avatar_big'] = getImageUrl($original_file_name, 200, 200) . '?v' . $filemtime;
-            $avatar_url['avatar_middle'] = getImageUrl($original_file_name, 100, 100) . '?v' . $filemtime;
-            $avatar_url['avatar_small'] = getImageUrl($original_file_name, 50, 50) . '?v' . $filemtime;
-            $avatar_url['avatar_tiny'] = getImageUrl($original_file_name, 30, 30) . '?v' . $filemtime;
+            $filemtime = filemtime( $original_file_name );
+            $face_url['face_original'] = $this->getFaceUrl($original_file_name);
+            $face_url['face_big'] = $this->getFaceUrl($original_file_name, 200, 200) . '?v' . $filemtime;
+            $face_url['face_middle'] = $this->getFaceUrl($original_file_name, 100, 100) . '?v' . $filemtime;
+            $face_url['face_small'] = $this->getFaceUrl($original_file_name, 50, 50) . '?v' . $filemtime;
+            $face_url['face_tiny'] = $this->getFaceUrl($original_file_name, 30, 30) . '?v' . $filemtime;
         }
-
-        return $avatar_url;
+        return $face_url;
     }
     /**
-     * 上传头像
+     * 上传头像到临时文件夹
+     * @param $file file控件的name
+     * @return 上传成功返回上传的图片url 失败返回false
      */
-    public function upload(){
+    public function uploadToTemp($file = 'file'){
 
+
+    }
+    /**
+     * 根据width和height获取头像图片名
+     * @param $original_file_name
+     * @param $width
+     * @param $height
+     * @return string
+     */
+    public function getFacePic($original_file_name , $width, $height){
+        $ext = strrchr($original_file_name, '.');//获取扩展名
+        //这里不用rtrim的原因是 rtrim这个函数有个bug 如 echo rtrim('aajj.jpg','.jpg');
+        return basename($original_file_name , $ext).'_'.$width.'_'.$height.$ext;
+    }
+    /**
+     * 获取图片的url
+     * @param $original_file_name
+     * @param string $width
+     * @param string $height
+     * @return string
+     */
+    public function getFaceUrl($original_file_name , $width='', $height=''){
+        $original_file_url = path2url($original_file_name);
+        if(!$width){
+            return $original_file_url;
+        }
+        $this->getFacePic($original_file_url,$width,$height);
+    }
+    public function getError(){
+        return $this->error;
     }
 }
