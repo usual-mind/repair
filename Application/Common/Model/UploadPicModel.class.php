@@ -15,7 +15,7 @@ class UploadPicModel
     /**
      * 上传图片到临时目录并且保存到session
      * @param string $file 上传文件控件的name值
-     * @return bool|string
+     * @return bool|string 返回上传的缩略图url
      */
     public function uploadToTemp($file = 'file'){
         $upload = new \Think\Upload();// 实例化上传类
@@ -33,9 +33,14 @@ class UploadPicModel
         }else{
             //上传成功 返回上传的文件路径
             $tempPic = $upload->rootPath.$info['savepath'].$info['savename'];
+            // GD库 打开图片
+            $image = new \Think\Image($tempPic);
+            //生成缩略图返回
+            $tempThumbPic = $upload->rootPath.$info['savepath'].basename($info['savename'],'.'.$info['ext']).'_thumb.'.$info['ext'];
+            $image->thumb(100,100)->save($tempThumbPic);
             //把上传的临时文件保存到session中
-            $_SESSION['images'][] = $tempPic;
-            return $tempPic;
+            $_SESSION['images'][$tempPic] = array('original'=>$tempPic,'thumb'=>$tempThumbPic);
+            return $tempThumbPic;
         }
     }
 
@@ -58,8 +63,10 @@ class UploadPicModel
         empty($subPath) && $subPath = date('Y/m/d/');
         $return = array();
         foreach($tempFiles as $tempFile){
-            $return[] = $this->savePic($tempFile,$rootPath,$subPath,$ext,$fileName);
+            $return[] = $this->savePic($tempFile['original'],$rootPath,$subPath,$ext,$fileName);
         }
+        //保存图片后需要删除原来的图片
+        $this->delTempPic($tempFile['original']);
         return $return;
     }
     /**
@@ -113,8 +120,7 @@ class UploadPicModel
                 ->save($config['path']);
         }
         unset($config);
-        //保存图片后需要删除原来的图片
-        $this->delTempPic($tempFile);
+        
         return $configs;
     }
 
@@ -123,8 +129,8 @@ class UploadPicModel
      * @param $tempPic
      */
     public function delTempPic($tempPic){
-        unset($_SESSION['images'][array_search($_SESSION['images'],$tempPic)]);
-        unlink($tempPic);
+        unset($_SESSION['images'][$tempPic]);
+        unlink($tempPic , $_SESSION['images'][$tempPic]['thumb']);
     }
     public function getError(){
         return $this->error;
