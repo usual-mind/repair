@@ -57,7 +57,7 @@ class BaseController extends Controller {
      * 初始化模块(Home)
      */
     private function initModule() {
-        $this->assign('APP_PUBLIC_URL',__ROOT__."/Public/Home/");
+        $this->assign('APP_PUBLIC_URL',__ROOT__.'/Public/'.MODULE_NAME.'/');
     }
 
     /**

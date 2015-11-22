@@ -81,6 +81,9 @@ class LoginController extends BaseController{
         $user['name'] = I('post.name','','htmlspecialchars');
         $user['classes_id'] = I('post.classID',0);
         $user['tel_num'] = I('post.tel',0);
+        if($user['student_id']== 0 || $user['name']=='' || $user['classes_id']==0 || $user['tel_num']==0){
+            $this->error("请将信息填写完整！");
+        }
         //开始注册
         D('User')->addUser($user);
         //注册成功之后登录
