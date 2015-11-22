@@ -99,7 +99,7 @@ class NotifyModel extends Model
      * @param intval $from 消息来源用户的UID
      * @return void
      */
-    public function sendNotify($toUid, $node, $config, $from) {
+    public function sendNotify($toUid, $node, $config, $from='') {
         empty($config) && $config = array();
         $config = array_merge($this->_config,$config);
         //处理toUid数组

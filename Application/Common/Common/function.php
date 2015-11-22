@@ -244,3 +244,9 @@ function lang($key,$data = array()){
     }
     return str_replace($replace,$data,$GLOBALS['_lang'][$key]);
 }
+/**
+ * 将相对于单入口index.php文件的相对路径转为浏览器访问的url
+ */
+function path2url($path){
+    return __ROOT__ .ltrim($path,'.');
+}

@@ -88,9 +88,9 @@ class RepairRecordModel extends Model
      * 添加一条维修信息
      * $data 中的一些键
      * array(
-     *      problem_desc =>,
-     *      computer_id=>,
-     *      image_set_id =>//如果没有图片就不用有这个键
+     *      'problem_desc' =>,
+     *      'computer_id'=>,
+     *      'image_set_id' =>//如果没有图片就不用有这个键
      * @param $data
      * @return 返回插入的id
      */
@@ -104,6 +104,7 @@ class RepairRecordModel extends Model
         $map['problem_desc']    =   html2Text($data['problem_desc']);
         $map['computer_id']     =   intval($data['computer_id']);
         $map['start_time']      =   time();
+        $map['uid']             =   $GLOBALS['e8']['mid'];
         /*if(!empty($data['images'])){
             //插入图片
             $map['repair_record_id'] = D('FaultImageSet')->addImages($data['images']);

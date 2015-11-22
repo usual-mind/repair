@@ -39,7 +39,7 @@ class PassportModel
         if(!session_id())
             session_start();
         //登录的用户id 默认为游客 mid=0
-        isset($_SESSION['mid']) || $_SESSION['mid']=0;
+        isset($_SESSION['e8']['mid']) || $_SESSION['e8']['mid']=0;
 
         //为了防止同目录下多个网站session冲突
         isset($_SESSION['SITE_KEY']) || $_SESSION['SITE_KEY'] = getSiteKey();
@@ -78,7 +78,7 @@ class PassportModel
      */
     public function isLogged() {
         // 验证本地系统登录
-        if(intval($_SESSION['mid']) > 0 && $_SESSION['SITE_KEY']==getSiteKey()) {
+        if(intval($_SESSION['e8']['mid']) > 0 && $_SESSION['SITE_KEY']==getSiteKey()) {
             return true;
         } else if($uid = $this->getCookieUid()) {
             //TODO 判断用户是否禁用
@@ -161,7 +161,7 @@ class PassportModel
         empty($this->rel) && $this->rel	= M('login_record')->where('uid = '.$uid)->limit('1')->getField('id');
 
         // 注册session
-        $_SESSION['mid'] = intval($uid);
+        $_SESSION['e8']['mid'] = intval($uid);
         $_SESSION['SITE_KEY'] = getSiteKey();
 
         $map['ip'] = get_client_ip(1);
@@ -183,7 +183,7 @@ class PassportModel
      * @return void
      */
     public function logout() {
-        unset($_SESSION['mid'],$_SESSION['SITE_KEY']); // 注销session
+        unset($_SESSION['e8']['mid'],$_SESSION['SITE_KEY']); // 注销session
         cookie('E8_LOGGED_USER', NULL);	// 注销cookie
     }
     /**
