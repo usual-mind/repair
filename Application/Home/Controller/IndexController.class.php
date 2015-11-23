@@ -10,7 +10,13 @@ class IndexController extends  BaseController{
 
         //$this->show('<form action="'.U('Index/up').'" method="post" enctype="multipart/form-data"><input name="file" type="file" /><input type="submit"></form>');
         //D('Face')->init(1)->buildFacePic();
+<<<<<<< HEAD
         print_r($GLOBALS);
+=======
+        //unset($_SESSION['images']);die;
+        p($_SESSION);die;
+
+>>>>>>> origin/master
     }
     public function up(){
         $configs = array(

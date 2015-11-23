@@ -19,21 +19,24 @@ return array(
     'NOTIFY'    => include ('notify.php'),
     'SHOW_PAGE_TRACE' =>true,
     //缩略图相关配置，根据横宽比生成缩略图，所以只要配置宽度
-    'thumbnail' => array(
+    'THUMB' => array(
         //小图
-        'smThumbnail' => array(
-            'width' => 200,
-            'suffix' => '_sm'
+        'SM_THUMB' => array(
+            'WIDTH' => 200,
+            'HEIGHT'=>'auto',
+            'SUFFIX' => '_sm'
         ),
         //中图
-        'mdThumbnail' => array(
-            'width' => 300,
-            'suffix' => '_md'
+        'MD_THUMB' => array(
+            'WIDTH' => 300,
+            'HEIGHT'=>'auto',
+            'SUFFIX' => '_md'
         ),
         //大图
-        'lgThumbnail' => array(
-            'width' => 400,
-            'suffix' => '_lg'
+        'LG_THUMB' => array(
+            'WIDTH' => 400,
+            'HEIGHT'=>'auto',
+            'SUFFIX' => '_lg'
         )
     )
 );

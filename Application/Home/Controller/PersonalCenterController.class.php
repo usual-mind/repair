@@ -9,8 +9,11 @@ class PersonalCenterController extends BaseController{
         if(!D('Passport')->isLogged()){
             $this->redirect(U('Login/index'));
         }
-        p(D('RepairRecord')->getUserRepairRecords($GLOBALS['e8']['mid']));
-        die;
+
+        $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
+        $records = D('RepairRecord')->getUserRepairRecords($GLOBALS['e8']['mid']);
+        $this->assign('userInfo',$userInfo);
+        $this->assign('records',$records);
         $this->display();
     }
 }

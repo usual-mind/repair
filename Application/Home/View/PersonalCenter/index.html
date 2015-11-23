@@ -3,43 +3,53 @@
         <!--header开始-->
         <section class="personal-body">
         	<div class="personal-top">
-            	<div class="img">
+            	<a class="set">设置</a>
+                <div class="img">
                 	<span><img src="pic/head-portrait.gif"/></span>
-                    <label>陶炜</label>
+                    <label>{$userInfo.name}</label>
                 </div>
-                <p>计算机学院15网工2班</p>
+                <p>{$userInfo.classes_name}</p>
             </div>
         </section>
+    <!--问题描述-->
+    <section class="entry-description bs2">
+        <p>描述问题进行登记吧...</p>
+        <i></i>
+    </section>
         <!----维修记录--->
 	<section class="record-body">
-        <!--State:状态-->
-        	<div class="state">
-            	<header>
-                	<label>维修完毕</label>
-                	<label>待领取</label>
-                </header>
-                
-                <section>
-                	<span><img src="pic/01.gif"/></span>
-                    <div class="description">
-                        <p>
-                    		<label>问题描述：</label>
-                        	重装系统 加装 office2011
-                        </p>
-                    </div>
+        <empty name="records">
+            <p style="margin-top:20px;text-align: center;">暂无维修记录</p>
+        <else />
+            <volist name="records" id="record">
+
+                <!--State:状态开始-->
+                <div class="state">
+                    <header>
+
+                        <label>{$record.state.node_info}</label>
+                    </header>
+
+                    <section>
+                        <span><img src=""/></span>
+                        <div class="description">
+                            <p>
+                                <label>问题描述：</label>
+                                {$record.problem_desc}
+                            </p>
+                        </div>
+                        <footer>
+                            <p>型号：{$record.computer_name}</p>
+                            <p>{$record.start_time}</p>
+                        </footer>
+                    </section>
                     <footer>
-                  		<p>型号：联想/E350</p>
-                  		<p>2015年11月8日 19:44:39</p>
-                  	</footer>
-                </section>
-                <footer>
-                	<p>维修人：陶炜</p>
-                	<p>删除记录</p>
-                </footer>
-            </div>
+                        <p>维修人：陶炜</p>
+                        <p>删除记录</p>
+                    </footer>
+                </div>
+                <!--State:状态结束-->
+            </volist>
+        </empty>
 	</section>
-        <div class="option">
-        	<p>我的维修记录</p>
-        	<a class="right-icon" href="#"></a>
-        </div>
 <include file= './application/Home/View/Common/footer.html' />
