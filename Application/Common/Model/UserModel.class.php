@@ -92,13 +92,15 @@ class UserModel extends Model
         } else {
             unset ( $user ['password'] , $user ['is_del']);
             $uid = $user ['id'];
+            //格式化的手机号码
+            $user['formate_tel_num'] = $this->formateTelNum($user['tel_num']);
             //获取用户的用户组信息
             $userGroup = D ( 'UserGroupLink' )->getUserGroupData ( $uid );
             $user ['user_group'] = $userGroup [$uid];
             // 获取该用户的所有电脑信息
             $computerList = D('ComputerLink')->getUserComputerList($uid);
             $user['computer'] = $computerList[$uid];
-            $user['tel_num'] = $this->formateTelNum($user['tel_num']);
+
             //头像
             $user['face'] = D('Face')->init($uid)->getFace();
             $this->cacheObj->set ( 'ui_' . $uid, $user );
