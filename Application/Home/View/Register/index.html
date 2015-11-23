@@ -38,7 +38,7 @@
         </section>
        	<div class="submit"><button href="#" disabled id="submit">提交</button></div>
         <!--调用选择电脑的Widget-->
-        {:W('SelComputer/SelComputer')}
+        {:W('SelComputer/selComputer')}
         <footer class="foot-nav">
         	<ul>
             	<li>
@@ -89,6 +89,7 @@
             });
             //提交按钮
             submitBtn.click(function () {
+                $(this).attr('disabled',false);
                 $("#computerModelId").val($('#model>.selected').attr('data-id'));
                 $("#problemDescForm").submit();
             });

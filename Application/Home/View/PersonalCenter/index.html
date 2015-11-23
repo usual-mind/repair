@@ -1,9 +1,9 @@
 <include file= './application/Home/View/Common/header.html' />
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/personalcenter.css">
-        <!--header开始-->
+<div id="personalCenterBox">
         <section class="personal-body">
         	<div class="personal-top">
-            	<a class="set">设置</a>
+            	<a class="set" id="setBtn">设置</a>
                 <div class="img">
                 	<span><img src="pic/head-portrait.gif"/></span>
                     <label>{$userInfo.name}</label>
@@ -52,4 +52,23 @@
             </volist>
         </empty>
 	</section>
+</div>
+{:W('PersonData/personData')}
 <include file= './application/Home/View/Common/footer.html' />
+<script type="text/javascript">
+    $(function () {
+        //点击设置按钮
+        $('#setBtn').click(function () {
+            setHeader("编辑个人资料");
+            $('#dataBox').show('fast');
+            $('#personalCenterBox').hide();
+            setBackFun(function(){
+                $('#dataBox').hide();
+                $('#personalCenterBox').show('fast');
+                $('#header>button').remove();
+                $('#header').prepend('<a href="#" class="hidden-text" title="后退">后退</a>');
+            });
+        });
+
+    });
+</script>

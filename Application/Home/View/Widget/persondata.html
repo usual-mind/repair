@@ -1,0 +1,58 @@
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/persondata.css">
+    <div id="dataBox">
+            <div class="dataBox">
+                <ul>
+                    <form>
+                        <li class="face"><label>头像：</label><img src="pic/head-portrait.gif"/><input type="file" name="face" /></li>
+                    </form>
+                    <form method="post" action="{$doModifyUrl}">
+                        <li><label>学号：</label><input id="studentIDInput" type="number" value="{$userInfo.student_id}"/></li>
+                        <li><label>姓名：</label><input id="nameInput" type="text" value="{$userInfo.name}"/></li>
+                        <input type="hidden" name="classId" value="classIdInput" />
+                        <li><label>班级：</label><p id="className">{$userInfo.classes_name}</p><i></i></li>
+                        <li><label>手机：</label><input id="telNumInput" type="text" value="{$userInfo.tel_num}"/></li>
+                    </form>
+                </ul>
+            </div>
+        <div class="submit"><button id="complete" href="#" disabled>完成</button></div>
+    </div>
+    <div id="selectClassBody">
+        {:W('selector/selector')}
+    </div>
+    <script type="text/javascript">
+        var JstudentIDInput = $("#studentIDInput");
+        var JnameInput = $("#nameInput");
+        var JtelNumInput = $("#telNumInput");
+        var Jclass = $('#class');
+        $(function(){
+            JstudentIDInput.keyup(startCompleteBtn);
+            JnameInput.keyup(startCompleteBtn);
+            JtelNumInput.keyup(startCompleteBtn);
+            //选择班级点击事件
+            $('#className').click(function(){
+                setBackFun(false);
+                setHeader('选择学院');
+                $('#dataBox').hide();
+                $('#selectClassBody').show('fast');
+            });
+        });
+        //启用完成按钮
+        function startCompleteBtn(){
+            submitBtnStas(true);
+        }
+        //设置完成按钮的状态 启用或禁用
+        function submitBtnStas(flag){
+            flag?$('#complete').attr('disabled',false):$('#complete').attr('disabled',true);
+        }
+        //选择班级结束的回调函数
+        function callBackSelectEnd(pid){
+            $("#classId").val(pid);
+            $('#selectClassBody').hide();
+            $('#dataBox').show('fast');
+            $('#className').html(JcurrClassInfo.html());
+            JcurrClassInfo.html('');
+            submitBtnStas(true);
+            setTimeout('setHeader("编辑个人资料")',100);
+        }
+
+    </script>

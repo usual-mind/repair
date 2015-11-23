@@ -54,6 +54,16 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 	position:relative;
 	z-index:999;
 }
+.header-top>button{
+	width:13px;
+	height:23px;
+	background:url(../img/icon.png) no-repeat 0 0;
+	position:absolute;
+	top:11px;
+	left:10px;
+	border: none;
+	outline: none;
+}
 .header-top a{
 	width:13px;
 	height:23px;

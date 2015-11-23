@@ -56,6 +56,20 @@ function tipBox(tip,time){
 function setHeader(title,backUrl){
 	if(backUrl==null) backUrl='javascript:;';
 	var Jheader = $("#header");
-	Jheader.children(".hidden-text").attr('href',backUrl);
+	Jheader.children(".hidden-text").attr('data-href',backUrl);
 	Jheader.children("h1").html(title);
+}
+/**
+ *	设置返回按钮的回调函数
+ */
+function setBackFun(fn){
+	if(!fn){
+		$('#header>button').remove();
+		$('#header').prepend('<a href="#" class="hidden-text" title="后退">后退</a>');
+		return;
+	}
+	$('#header>a').remove();
+	$('#header').prepend('<button href="#" class="hidden-text" title="后退">后退</button>');
+	$('#header>button').click(fn);
+
 }

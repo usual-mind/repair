@@ -17,7 +17,7 @@
         clickItem();
         //后退按钮 绑定事件
         $("#header>a").click(function (){
-            ajaxRequest($(this).attr('href'),function(data){
+            ajaxRequest($(this).attr('data-href'),function(data){
                 //删除最后选择的班级信息
                 JcurrClassInfo.children().last().remove();
                 //替换内容
