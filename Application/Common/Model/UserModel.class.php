@@ -98,8 +98,9 @@ class UserModel extends Model
             // 获取该用户的所有电脑信息
             $computerList = D('ComputerLink')->getUserComputerList($uid);
             $user['computer'] = $computerList[$uid];
-
             $user['tel_num'] = $this->formateTelNum($user['tel_num']);
+            //头像
+            $user['face'] = D('Face')->init($uid)->getFace();
             $this->cacheObj->set ( 'ui_' . $uid, $user );
             static_cache ( 'user_info_' . $uid, $user );
             return $user;
