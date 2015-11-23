@@ -85,7 +85,7 @@ class FaceModel
      * @return 上传成功返回上传的图片url 失败返回false
      */
     public function uploadToTemp($file = 'file'){
-
+        return D('UploadPic')->init()->uploadToTemp($file);
     }
     public function saveFace(){
         //$configs,$rootPath,$subPath='',$ext='',$fileName='uniqid'

@@ -12,6 +12,9 @@ class UploadPicModel
 {
     private $error = '';
 
+    public function init(){
+        unset($_SESSION['images']);
+    }
     /**
      * 上传图片到临时目录并且保存到session
      * @param string $file 上传文件控件的name值
