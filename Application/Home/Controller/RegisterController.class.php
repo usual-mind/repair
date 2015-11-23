@@ -60,18 +60,31 @@ class RegisterController extends BaseController{
      * 处理登记信息
      */
     public function doRegister(){
-        $problemDesc = html2Text($_POST['problemDesc']);
 
+        $problemDesc = html2Text($_POST['problemDesc']);
         if(empty($_POST['computerModelId'])){
             $this->error('请选择电脑型号');
         }
         $computerModelId = $_POST['computerModelId'];
-        if(!empty($_SESSION['images'])){
-            $imageSetId = D('FaultImageSet')->addImages($_SESSION['images']);
+        $imageConfig = C('THUMB');//获取生成缩略图的配置
+
+        $configs['lg'] = array('width'=>$imageConfig['LG_THUMB']['WIDTH'],'height'=>$imageConfig['LG_THUMB']['HEIGHT']);
+        $configs['mid'] = array('width'=>$imageConfig['MD_THUMB']['WIDTH'],'height'=>$imageConfig['MD_THUMB']['HEIGHT']);
+        $configs['sm'] = array('width'=>$imageConfig['SM_THUMB']['WIDTH'],'height'=>$imageConfig['SM_THUMB']['HEIGHT']);
+        $res = D('UploadPic')->saveAllTempPic($configs,USER_UPLOAD_PATH.'/pic/');
+        $images = array();
+        foreach($res as $v){
+            $images[]['url_original'] =  $v['original']['url'];
+            $images[]['url_sm'] =  $v['sm']['url'];
+            $images[]['url_mid'] =  $v['mid']['url'];
+            $images[]['url_lg'] =  $v['lg']['url'];
+        }
+        if(!empty($images)){
+            $imageSetId = D('FaultImageSet')->addImages($images);
             $data['problem_desc']   =   $problemDesc;
             $data['computer_id']    =   $computerModelId;
             $data['image_set_id']   =   $imageSetId;
-            unset($_SESSION['images']);
+            unset($images);
         }else{
             $data['problem_desc']   =   $problemDesc;
             $data['computer_id']    =   $computerModelId;
@@ -85,7 +98,7 @@ class RegisterController extends BaseController{
      * 生成大，中，小三张缩略图
      */
     public function upLoadPic(){
-        $upload = new \Think\Upload();// 实例化上传类
+        /*$upload = new \Think\Upload();// 实例化上传类
         $upload->maxSize   =     5242880 ;// 设置附件上传大小 5*1024*1024
         $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
         //$rootPath = ROOT_PATH.'data/uploads/'.date('Y/m/d/');
@@ -141,6 +154,13 @@ class RegisterController extends BaseController{
         //将图片路径放入session
         $_SESSION['images'][] = array('url_original'=>$imageUrl,'url_sm'=>$smImageUrl,'url_mid'=>$mdImageUrl,'url_lg'=>$lgImageUrl);
 
-        die('<script>parent.callbackImageDisplay("'.$retImageUrl.'")</script>');
+        die('<script>parent.callbackImageDisplay("'.$retImageUrl.'")</script>');*/
+        if(!$tempThumbPic = D('UploadPic')->uploadToTemp('pic')){
+            die('<script>parent.callbackImageDisplay("","图片上传失败")</script>');
+        }
+        //返回缩略图
+        die('<script>parent.callbackImageDisplay("'.$tempThumbPic.'")</script>');
+
     }
+
 }

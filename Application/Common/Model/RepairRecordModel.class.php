@@ -51,6 +51,8 @@ class RepairRecordModel extends Model
                 $record['images'] = array_shift($images);//获取第一张图片
 
             }
+            //获取最近的维修状态
+            $record['state'] = D('RepairState')->getLastNode($record['id']);
             //获取电脑全称
             $record['computer_name'] = D('Computer')->getComputerNameById($record['computer_id']);
             unset($record['is_del'],$record['image_set_id']);

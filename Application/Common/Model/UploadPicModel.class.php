@@ -34,13 +34,13 @@ class UploadPicModel
             //上传成功 返回上传的文件路径
             $tempPic = $upload->rootPath.$info['savepath'].$info['savename'];
             // GD库 打开图片
-            $image = new \Think\Image($tempPic);
+            $image = new \Think\Image(\Think\Image::IMAGE_GD,$tempPic);
             //生成缩略图返回
             $tempThumbPic = $upload->rootPath.$info['savepath'].basename($info['savename'],'.'.$info['ext']).'_thumb.'.$info['ext'];
             $image->thumb(100,100)->save($tempThumbPic);
             //把上传的临时文件保存到session中
             $_SESSION['images'][$tempPic] = array('original'=>$tempPic,'thumb'=>$tempThumbPic);
-            return $tempThumbPic;
+            return path2url($tempThumbPic);
         }
     }
 
@@ -63,10 +63,10 @@ class UploadPicModel
         empty($subPath) && $subPath = date('Y/m/d/');
         $return = array();
         foreach($tempFiles as $tempFile){
-            $return[] = $this->savePic($tempFile['original'],$rootPath,$subPath,$ext,$fileName);
+            $return[] = $this->savePic($tempFile['original'],$configs,$rootPath,$subPath,$ext,$fileName);
+            //保存图片后需要删除原来的图片
+            $this->delTempPic($tempFile['original']);
         }
-        //保存图片后需要删除原来的图片
-        $this->delTempPic($tempFile['original']);
         return $return;
     }
     /**
@@ -98,14 +98,19 @@ class UploadPicModel
         if(!is_dir($savePath)){
             mkdir($savePath,0777,true);
         }
+        $original = $savePath.$fileName.$ext;
+        //把原图从temp文件夹中移动到$savePath中
+        if(!rename($tempFile,$original)){
+            return null;
+        }
+
         //获取图片的尺寸
-        list($width,$height) = getimagesize($tempFile);
+        list($width,$height) = getimagesize($original);
         //纵宽比
         $spectRatio = $height/$width;
         // GD库 打开图片
         $image = new \Think\Image();
-
-        $image->open($tempFile);
+        $image->open($original);
         foreach($configs as $k=>&$config){
             if(empty($config['width']) || 'auto' == $config['width']){
                 //按照给定的高度等比例计算出宽度
@@ -119,6 +124,8 @@ class UploadPicModel
             $image->thumb($config['width'],$config['height'],\Think\Image::IMAGE_THUMB_FIXED)
                 ->save($config['path']);
         }
+        //原图信息
+        $configs['original'] = array('width'=>$width,'hieght'=>$height,'path'=>$original,'url'=>path2url($original));
         unset($config);
         
         return $configs;
@@ -129,8 +136,11 @@ class UploadPicModel
      * @param $tempPic
      */
     public function delTempPic($tempPic){
+        if(file_exists($tempPic)){
+            unlink($tempPic);
+        }
+        unlink($_SESSION['images'][$tempPic]['thumb']);//删除缩略图
         unset($_SESSION['images'][$tempPic]);
-        unlink($tempPic , $_SESSION['images'][$tempPic]['thumb']);
     }
     public function getError(){
         return $this->error;

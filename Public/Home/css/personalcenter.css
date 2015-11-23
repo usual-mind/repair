@@ -28,14 +28,9 @@
 .record-body .state>header{
 	padding:10px;
 	font-size:12px;
+	overflow: hidden;
 }
-.record-body .state>header>label:first-child{
-	color:#666;
-}
-.record-body .state>header>label:last-child{
-	float:right;
-	color:#FF0000;
-}
+
 .record-body .state>section{
 	background-color:#F5F5F5;
 	padding:10px 10px 10px 20px;
