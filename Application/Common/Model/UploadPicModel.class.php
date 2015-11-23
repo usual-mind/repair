@@ -31,7 +31,7 @@ class UploadPicModel
             $this->error = $upload->getError();
             return false;
         }else{
-            //上传成功 返回上传的文件路径
+            //上传成功
             $tempPic = $upload->rootPath.$info['savepath'].$info['savename'];
             // GD库 打开图片
             $image = new \Think\Image($tempPic);
@@ -120,7 +120,6 @@ class UploadPicModel
                 ->save($config['path']);
         }
         unset($config);
-        
         return $configs;
     }
 

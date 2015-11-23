@@ -86,7 +86,15 @@ class FaceModel
      */
     public function uploadToTemp($file = 'file'){
 
-
+    }
+    public function saveFace(){
+        //$configs,$rootPath,$subPath='',$ext='',$fileName='uniqid'
+        $configs['200_200']=array('width'=>200,'height'=>200);
+        $configs['100_100']=array('width'=>100,'height'=>100);
+        $configs['50_50']=array('width'=>50,'height'=>50);
+        $configs['30_30']=array('width'=>30,'height'=>30);
+        $pic = D('UploadPic')->saveAllTempPic($configs,USER_UPLOAD_PATH,$this->savePath,'jpg','original');
+        print_r($pic);
     }
     /**
      * 根据width和height获取头像图片名
@@ -95,7 +103,7 @@ class FaceModel
      * @param $height
      * @return string
      */
-    public function getFacePic($original_file_name , $width, $height){
+    public static function getFacePic($original_file_name , $width, $height){
         $ext = strrchr($original_file_name, '.');//获取扩展名
         //这里不用rtrim的原因是 rtrim这个函数有个bug 如 echo rtrim('aajj.jpg','.jpg');
         return basename($original_file_name , $ext).'_'.$width.'_'.$height.$ext;
