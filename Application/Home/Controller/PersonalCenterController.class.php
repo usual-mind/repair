@@ -19,4 +19,14 @@ class PersonalCenterController extends BaseController{
         $this->assign('records',$records);
         $this->display();
     }
+    /**
+     * 伪异步上传头像
+     */
+    public function uploadFace(){
+        if(!$faceUrl = D('Face')->uploadToTemp('face')){
+            die('<script>callBackUploadFace("","上传头像失败")</script>');
+        }else{
+            die(die('<script>callBackUploadFace('.$faceUrl.',"")</script>'));
+        }
+    }
 }

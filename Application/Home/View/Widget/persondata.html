@@ -2,8 +2,9 @@
     <div id="dataBox">
             <div class="dataBox">
                 <ul>
-                    <form>
-                        <li class="face"><label>头像：</label><img src="pic/head-portrait.gif"/><input type="file" name="face" /></li>
+                    <form id="uploadFaceForm" enctype="multipart/form-data" action="{$uploadFaceUrl}" method="post" target="hidden_frame">
+                        <li class="face"><label>头像：</label><img id="facePic" src="{$userInfo.face.face_tiny}"/><input type="file" id="uploadInput" accept="image/*" name="face" /></li>
+                        <iframe style="display: none;" name="hidden_frame" scrolling="no"></iframe>
                     </form>
                     <form method="post" action="{$doModifyUrl}">
                         <li><label>学号：</label><input id="studentIDInput" type="number" value="{$userInfo.student_id}"/></li>
@@ -24,6 +25,7 @@
         var JnameInput = $("#nameInput");
         var JtelNumInput = $("#telNumInput");
         var Jclass = $('#class');
+        var jUploadFaceForm = $('#uploadFaceForm');
         $(function(){
             JstudentIDInput.keyup(startCompleteBtn);
             JnameInput.keyup(startCompleteBtn);
@@ -32,8 +34,23 @@
             $('#className').click(function(){
                 setBackFun(false);
                 setHeader('选择学院');
+                //后退按钮 绑定事件
+                $("#header>a").click(function (){
+                    ajaxRequest($(this).attr('data-href'),function(data){
+                        //删除最后选择的班级信息
+                        JcurrClassInfo.children().last().remove();
+                        //替换内容
+                        replace(data);
+                    });
+                    return false;
+                });
+
                 $('#dataBox').hide();
                 $('#selectClassBody').show('fast');
+            });
+            $("#uploadInput").bind("change",function(){
+                $('#facePic').attr('src','{$APP_PUBLIC_URL}img/uploadLoad.gif');
+                jUploadFaceForm.submit();
             });
         });
         //启用完成按钮
@@ -54,5 +71,12 @@
             submitBtnStas(true);
             setTimeout('setHeader("编辑个人资料")',100);
         }
-
+        //上传回调函数
+        function callBackUploadFace(faceURL,errMsg){
+            if(faceURL == ''){
+                tipBox(errMsg);
+            }else{
+                $('#facePic').attr('src',faceURL);
+            }
+        }
     </script>

@@ -24,7 +24,7 @@ class RegisterController extends BaseController{
         //获取用户信息
         $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
         $this->assign('className',$userInfo['classes_name']);
-        $this->assign('telNumber',$userInfo['tel_num']);
+        $this->assign('telNumber',$userInfo['formate_tel_num']);
         $this->assign('computers',$userInfo['computer']);
         //分配搜索的url
         $this->assign('searchTipUrl',U('searchModel'));

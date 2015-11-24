@@ -5,14 +5,14 @@
         	<div class="personal-top">
             	<a class="set" id="setBtn">设置</a>
                 <div class="img">
-                	<span><img src="pic/head-portrait.gif"/></span>
+                	<span><img src="{$userInfo.face.face_tiny}"/></span>
                     <label>{$userInfo.name}</label>
                 </div>
                 <p>{$userInfo.classes_name}</p>
             </div>
         </section>
     <!--问题描述-->
-    <section class="entry-description bs2">
+    <section id="entryDescription" class="entry-description bs2">
         <p>描述问题进行登记吧...</p>
         <i></i>
     </section>
@@ -68,6 +68,10 @@
                 $('#header>button').remove();
                 $('#header').prepend('<a href="#" class="hidden-text" title="后退">后退</a>');
             });
+        });
+        //点击开始登记按钮
+        $('#entryDescription').click(function(){
+
         });
 
     });
