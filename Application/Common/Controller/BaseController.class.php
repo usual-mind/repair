@@ -38,10 +38,15 @@ class BaseController extends Controller {
         $this->assign('site',$this->site);
     }
     private function initUser(){
+
         // 验证登陆
         if ( D('Passport')->needLogin() ) {
             // 跳转到登录页面
-            $this->redirect('Login/index');
+            //登录后要返回的链接 base64加密了
+            $returnUrl = base64_encode(U(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME , $_GET,'',true));
+
+            $this->redirect('Login/index',array('returnUrl' =>$returnUrl,
+                'errMes' => base64_encode('请先登录!')));
         }
         //当前登录者uid
         if(intval($_SESSION['e8']['mid']) !== 0){
