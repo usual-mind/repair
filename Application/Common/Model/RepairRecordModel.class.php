@@ -71,7 +71,7 @@ class RepairRecordModel extends Model
         $condition['id'] = intval($recordId);
         $condition['is_del'] = 0;
         if(!$repairRecord = $this->where($condition)->find()){
-            echo $this->getLastSql();die;
+
             //E('获取ID为'.$recordId.'的维修记录详情失败'.$this->getError());
             $this->error = '没有找到该维修记录!';
             return false;

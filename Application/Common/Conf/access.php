@@ -11,4 +11,6 @@ return array(
     //'模块名/*/*' => true,
     //'Home/*/*' => true
     'Home/Login/*'=>true,
+    'Home/SetClass/*'=>true,
+    'Home/setComputer/*'=>true
 );
