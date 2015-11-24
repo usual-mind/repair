@@ -3,7 +3,7 @@
             <div class="dataBox">
                 <ul>
                     <form id="uploadFaceForm" enctype="multipart/form-data" action="{$uploadFaceUrl}" method="post" target="hidden_frame">
-                        <li class="face"><label>头像：</label><img id="facePic" src="{$userInfo.face.face_tiny}"/><input type="file" id="uploadInput" accept="image/*" name="face" /></li>
+                        <li class="face"><label>头像：</label><img id="facePic" src="{$userInfo.face.face_middle}"/><input type="file" id="uploadInput" accept="image/*" name="face" /></li>
                         <iframe style="display: none;" name="hidden_frame" scrolling="no"></iframe>
                     </form>
                     <form method="post" action="{$doModifyUrl}">

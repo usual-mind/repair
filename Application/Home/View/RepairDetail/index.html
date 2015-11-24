@@ -1,0 +1,25 @@
+<include file= './application/Home/View/Common/header.html' />
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/status.css">
+<!--tab开始-->
+<div class="tab">
+    <span class="selected">维修状态</span>
+    <span>维修详情</span>
+</div>
+<!--tab结束-->
+
+<div class="line">
+    <div class="grayLine"></div>
+    <span class="infoSubmit"><i></i></span>
+    <span class="startRepair"><i></i></span>
+    <span class="repairComplete"><i></i></span>
+</div>
+<ul class="statusInfo">
+    <volist name="detail.repairState" id="state">
+        <li class="triangle-left">
+            <h2>{$state.state_title}</h2>
+            <div>{$state.state_info}</div>
+            <span>{$state.ctime}</span>
+        </li>
+    </volist>
+</ul>
+<include file= './application/Home/View/Common/footer.html' />

@@ -14,6 +14,7 @@ class UploadPicModel
 
     public function init(){
         unset($_SESSION['images']);
+        return $this;
     }
     /**
      * 上传图片到临时目录并且保存到session
@@ -28,6 +29,7 @@ class UploadPicModel
         $upload->replace    =       true;//如果存在同名文件直接覆盖
         $upload->rootPath   =       USER_UPLOAD_PATH.'/Temp_pic/';
         $upload->savePath   =       date('Y/m/d/');//保存路径
+
         $info = $upload->uploadOne($_FILES[$file]);
         if(!$info) {
             // 上传错误提示错误信息

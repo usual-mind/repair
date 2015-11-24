@@ -73,7 +73,9 @@ class RepairStateModel extends Model
         //TODO 缓存处理
         $repairId = intval($repairId);
         if(!$repairId) E('参数错误');
-        if(!$node = $this->_repair_state->field('state_node')->where('repair_record_id='.$repairId)->order('ctime desc')->find()) E('获取维修状态节点失败');
+        if(!$node = $this->_repair_state->field('state_node')
+            ->where('repair_record_id='.$repairId)->order('ctime desc')->find()) E('获取维修状态节点失败');
+
         return $this->getNode($node['state_node']);
 
     }

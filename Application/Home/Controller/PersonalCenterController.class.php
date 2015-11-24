@@ -10,9 +10,9 @@ class PersonalCenterController extends BaseController{
         $header['title'] = '个人中心';
         $header['backUrl'] = '';
         $this->assign('header',$header);
-        if(!D('Passport')->isLogged()){
-            $this->redirect(U('Login/index'));
-        }
+//        if(!D('Passport')->isLogged()){
+//            $this->redirect(U('Login/index'));
+//        }
         $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
         $records = D('RepairRecord')->getUserRepairRecords($GLOBALS['e8']['mid']);
         $this->assign('userInfo',$userInfo);
@@ -24,9 +24,9 @@ class PersonalCenterController extends BaseController{
      */
     public function uploadFace(){
         if(!$faceUrl = D('Face')->uploadToTemp('face')){
-            die('<script>callBackUploadFace("","上传头像失败")</script>');
+            die('<script>parent.callBackUploadFace("","上传头像失败")</script>');
         }else{
-            die(die('<script>callBackUploadFace('.$faceUrl.',"")</script>'));
+            die(die('<script>parent.callBackUploadFace("'.$faceUrl.'","")</script>'));
         }
     }
 }

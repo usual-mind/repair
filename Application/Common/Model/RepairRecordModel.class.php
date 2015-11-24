@@ -70,14 +70,19 @@ class RepairRecordModel extends Model
         //TODO 缓存处理
         $condition['id'] = intval($recordId);
         $condition['is_del'] = 0;
-        if(!$repairRecord = $this->where($condition)->find())
-            E('获取ID为'.$recordId.'的维修记录详情失败'.$this->getError());
+        if(!$repairRecord = $this->where($condition)->find()){
+            echo $this->getLastSql();die;
+            //E('获取ID为'.$recordId.'的维修记录详情失败'.$this->getError());
+            $this->error = '没有找到该维修记录!';
+            return false;
+        }
+
         if(!empty($repairRecord['image_set_id'])){
             //获取图片
             $repairRecord['images'] = D('FaultImageSet')->getImagesBySetId($repairRecord['image_set_id']);
         }
         //维修人员
-        $repairRecord['repairmem'] = D('user')->getLinkNameByUid($repairRecord['repairmem_id']);
+        empty($repairRecord['repairmem']) || $repairRecord['repairmem'] = D('user')->getLinkNameByUid($repairRecord['repairmem_id']);
         //提交时间
         $repairRecord['start_time'] =friendlyShowTime($repairRecord['start_time']);
         //获取电脑全称
