@@ -10,6 +10,6 @@ class IndexController extends  BaseController{
     {
         //p(D('User')->getUserInfo(1));
         //unset($_SESSION['images']);
-        p($_SESSION);
+        D('SystemConfig')->set('Permission:1',array('core'=>array('aasd'=>1)),false);
     }
 }
