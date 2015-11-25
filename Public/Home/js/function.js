@@ -73,3 +73,24 @@ function setBackFun(fn){
 	$('#header>button').click(fn);
 
 }
+/**
+ * 检测学号格式
+ * @param studentID 学号
+ * @returns {boolean}
+ */
+function checkStudentID(studentID){
+	//学号正则表达式
+	var student_id_reg = /^\d{10}$/;
+	return student_id_reg.test(studentID);
+}
+
+/**
+ * 检测手机号码格式
+ * @param telNUm 手机号码
+ * @returns {boolean}
+ */
+function checkTelNum(telNUm){
+	//学号正则表达式
+	var telNUm_reg = /^1\d{10}$/
+	return telNUm_reg.test(telNUm);
+}

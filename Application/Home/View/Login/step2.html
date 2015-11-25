@@ -23,9 +23,6 @@
 <include file= './application/Home/View/Common/footer.html' />
 <script type="text/javascript">
     var classID = 0;
-    //电话号码正则表达式
-    var re = /^1\d{10}$/;
-    //选择班级点击事件
     $('#selectClassBtn').click(function(){
         setHeader('选择学院');
         $('#setp2Body').hide('fast');
@@ -37,7 +34,7 @@
             tipBox('请输入姓名！',1000)
             return false;
         }
-        if(!re.test($('#telInput').val())){
+        if(!checkTelNum($('#telInput').val())){
             tipBox('请检查联系方式是否填写正确！',1000)
             return false;
         }
@@ -58,5 +55,7 @@
         JcurrClassInfo.html('');
         classID = pid;
     }
+    function check(){
 
+    }
 </script>

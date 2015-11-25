@@ -6,12 +6,12 @@
                         <li class="face"><label>头像：</label><img id="facePic" src="{$userInfo.face.face_middle}"/><input type="file" id="uploadInput" accept="image/*" name="face" /></li>
                         <iframe style="display: none;" name="hidden_frame" scrolling="no"></iframe>
                     </form>
-                    <form method="post" action="{$doModifyUrl}">
-                        <li><label>学号：</label><input id="studentIDInput" type="number" value="{$userInfo.student_id}"/></li>
-                        <li><label>姓名：</label><input id="nameInput" type="text" value="{$userInfo.name}"/></li>
-                        <input type="hidden" name="classId" value="classIdInput" />
+                    <form method="post" id="personalDataForm" action="{$personalDataModify}">
+                        <li><label>学号：</label><input id="studentIDInput" name="student_id" type="number" value="{$userInfo.student_id}"/></li>
+                        <li><label>姓名：</label><input id="nameInput" name="name" type="text" value="{$userInfo.name}"/></li>
+                        <input type="hidden" name="class_id" id="classIdInput" value="{$userInfo.classes_id}"/>
                         <li><label>班级：</label><p id="className">{$userInfo.classes_name}</p><i></i></li>
-                        <li><label>手机：</label><input id="telNumInput" type="text" value="{$userInfo.tel_num}"/></li>
+                        <li><label>手机：</label><input name="tel_num" id="telNumInput" type="number" value="{$userInfo.tel_num}"/></li>
                     </form>
                 </ul>
             </div>
@@ -44,13 +44,34 @@
                     });
                     return false;
                 });
-
                 $('#dataBox').hide();
-                $('#selectClassBody').show('fast');
+                $('#selectClassBody').slideToggle('fast');
             });
             $("#uploadInput").bind("change",function(){
+                submitBtnStas(true);
                 $('#facePic').attr('src','{$APP_PUBLIC_URL}img/uploadLoad.gif');
                 jUploadFaceForm.submit();
+            });
+            //提交按钮点击事件
+            $('#complete').click(function(){
+                if(JnameInput.val() == ''){
+                    tipBox("请输入姓名！");
+                    return false;
+                }
+                if(!checkStudentID(JstudentIDInput.val())){
+                    tipBox("请检查学号是否输入正确！");
+                    return false;
+                }
+                if(JnameInput.val() == ''){
+                    tipBox("请输入姓名！");
+                    return false;
+                }
+                if(!checkTelNum(JtelNumInput.val())){
+                    alert(JtelNumInput.val());
+                    tipBox('请检查手机号码是否输入正确！');
+                    return false;
+                }
+                $('#personalDataForm').submit();
             });
         });
         //启用完成按钮
@@ -63,9 +84,9 @@
         }
         //选择班级结束的回调函数
         function callBackSelectEnd(pid){
-            $("#classId").val(pid);
+            $("#classIdInput").val(pid);
             $('#selectClassBody').hide();
-            $('#dataBox').show('fast');
+            $('#dataBox').slideToggle('fast');
             $('#className').html(JcurrClassInfo.html());
             JcurrClassInfo.html('');
             submitBtnStas(true);

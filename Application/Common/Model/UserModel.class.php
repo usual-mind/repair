@@ -181,6 +181,39 @@ class UserModel extends Model
         }
         E('添加用户失败!');
     }
+
+    /**
+     * 修改用户的个人信息
+     *  $user = array(
+     *      'student_id' =>,
+     *      'weixin'     =>, //可有可无
+     *      'name'       =>,
+     *      'classes_id' =>,
+     *      'tel_num'    =>,
+     * );
+     * @param array $user
+     */
+    public function saveUser($uid,array $user,$group_id){
+        if (!$this->hasUser($uid,true)) E('该uid不存在');
+        if (empty($user['student_id'])) E('请输入学号');
+        //判断学号是否被注册了
+        $currentUser = $this->getUserInfo($uid);
+        if($currentUser['student_id'] != $user['student_id']){
+            if ($this->hasUser($user['student_id'])) E('该学号已存在');
+        }
+        //判断微信是否被注册了
+        if (isset($user['weixin']) && $this->hasUser($user['weixin'])) E('该微信号已存在');
+
+        //获取班级字符串
+        if (empty($user['classes_id'])) E('请填写班级信息');
+
+        $user['classes_name'] = D('Classes')->getClassById($user['classes_id'],true);
+
+        if(!empty($group_id))//  把用户添加到用户组
+            D('UserGroupLink')->domoveUserGroup($uid, $group_id);
+        if($this->where('id='.$uid)->save($user)) return true;
+        E('修改用户个人信息失败 ');
+    }
     /**
      * 通过uid获取带连接的用户姓名
      * @param $uid
