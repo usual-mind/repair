@@ -2,11 +2,11 @@
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/status.css">
 <!--tab开始-->
 <div class="tab">
-    <span class="selected">维修状态</span>
-    <span>维修详情</span>
+    <span class="selected" id="stateTab">维修状态</span>
+    <span id="infoTab">维修详情</span>
 </div>
 <!--tab结束-->
-<section style="display: none" id="repairStateBox">
+<section id="repairStateBox">
     <div class="line">
         <div class="grayLine"></div>
         <volist name="detail.repairState" id="state">
@@ -32,7 +32,7 @@
         </volist>
     </ul>
 </section>
-    <section class="record-body">
+    <section class="record-body" style="display: none;" id="recordBody">
         <div class="state">
             <header>
                 <label>尚未维修</label>
@@ -66,6 +66,16 @@
         $("#repair_failedIcon").css('top',$("#repair_failed").offset().top);
         $("#wait_receiveIcon").css('top',$("#wait_receive").offset().top);
         $("#receivedIcon").css('top',$("#received").offset().top);
+        //tab维修详情点击事件
+        $('#InfoTab').click(function(){
+            $('#repairStateBox').hide();
+            $('#recordBody').show();
+        });
+        //tab维修状态点击事件
+        $('#stateTab').click(function(){
+            $('#repairStateBox').show();
+            $('#recordBody').hide();
+        });
     });
 </script>
 <include file= './application/Home/View/Common/footer.html' />

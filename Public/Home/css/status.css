@@ -30,7 +30,7 @@
 	font-size:12px;
 	color:#999;
 }
-html,body{
+html,body,#repairStateBox{
 	overflow:hidden;
 	height:100%;
 }
