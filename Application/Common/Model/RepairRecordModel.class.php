@@ -109,8 +109,7 @@ class RepairRecordModel extends Model
      * @return 返回插入的id
      */
     public function addRepairRecord($data){
-
-        
+        p();
         if(empty($data)) E('参数为空');
         if(!isset($GLOBALS['e8']['mid']) || intval($GLOBALS['e8']['mid'])<=0) E('请先登录!');
         empty($data['problem_desc']) && E('问题描述不能为空');
@@ -119,6 +118,9 @@ class RepairRecordModel extends Model
         $map['computer_id']     =   intval($data['computer_id']);
         $map['start_time']      =   time();
         $map['uid']             =   $GLOBALS['e8']['mid'];
+
+        empty($data['image_set_id']) || $map['image_set_id'] = $data['image_set_id'];
+
         /*if(!empty($data['images'])){
             //插入图片
             $map['repair_record_id'] = D('FaultImageSet')->addImages($data['images']);

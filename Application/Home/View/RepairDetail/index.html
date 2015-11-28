@@ -1,5 +1,6 @@
 <include file= './application/Home/View/Common/header.html' />
 <link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/status.css">
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/evaluation.css">
 <!--tab开始-->
 <div class="tab">
     <span class="selected" id="stateTab">维修状态</span>
@@ -33,48 +34,101 @@
     </ul>
 </section>
     <section class="record-body" style="display: none;" id="recordBody">
-        <div class="state">
-            <header>
-                <label>尚未维修</label>
-                <label>待领取</label>
-            </header>
-
-            <section>
-                <span><img src="pic/01.gif"/></span>
-                <div class="description">
-                    <p>
-                        <label>问题描述：</label>
-                        {$detail.problem_desc}
-                    </p>
+        <section class="evaluation-body">
+            <div class="prompt">
+                <div>
+                    <i></i>
+                    <p>本次维修成功</p>
                 </div>
-                <footer>
-                    <p>型号：{$detail.computer_name}</p>
-                    <p>{$detail.start_time}</p>
-                </footer>
+            </div>
+            <!--领取-->
+            <div class="receive">
+                <i></i>
+                <p>领取人：陶炜</p>
+                <p>计算机学院15网络工程2班</p>
+                <p>13956460803</p>
+            </div>
+            <?php p($detail);?>
+            <!--维修完毕-->
+            <section class="record-body">
+                <!--State:状态-->
+                <div class="state">
+                    <header>
+                        <label>待领取</label>
+                    </header>
+
+                    <section>
+                        <span><img src="{$detail['images'][0]['url_sm']}"/></span>
+                        <div class="description">
+                            <p>
+                                <label>问题描述：</label>
+                                {$detail.problem_desc}
+                            </p>
+                        </div>
+                        <footer>
+                            <p>型号：{$detail.computer_name}</p>
+                            <p>{$detail.start_time}</p>
+                        </footer>
+                    </section>
+                    <footer>
+                        <p>维修人：陶炜</p>
+                        <p>删除记录</p>
+                    </footer>
+                </div>
             </section>
-            <footer>
-                <p>维修人：陶炜</p>
-                <p>删除记录</p>
-            </footer>
-        </div>
+            <!--流程记录-->
+            <div class="time">
+                <ul>
+                    <li>预约时间：2015年11月8日 19:58:20</li>
+                    <li>维修时间：2015年11月8日 19:58:20</li>
+                    <li>维修完毕时间：2015年11月8日 19:59:04</li>
+                    <li>领取时间：2015年11月8日 19:59:04</li>
+                </ul>
+            </div>
+            <!--评价一下-->
+            <div class="evaluation">
+                <label>评价一下吧</label>
+                <ul class="star5">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <input type="text" placeholder="评价一下" />
+                <a>提交评价</a>
+            </div>
+        </section>
     </section>
 <script type="text/javascript">
     $(function(){
         //调整图标位置
-        $("#commitIcon").css('top',$("#commit").offset().top);
-        $("#repairingIcon").css('top',$("#repairing").offset().top);
-        $("#repair_failedIcon").css('top',$("#repair_failed").offset().top);
-        $("#wait_receiveIcon").css('top',$("#wait_receive").offset().top);
-        $("#receivedIcon").css('top',$("#received").offset().top);
+        var commitTop = $("#commit").length<=0?0:$("#commit").offset().top;
+        var repairingTop = $("#repairing").length<=0?0:$("#repairing").offset().top;
+        var repair_failedTop = $("#repair_failed").length<=0?0:$("#repair_failed").offset().top;
+        var wait_receiveTop = $("#wait_receive").length<=0?0:$("#wait_receive").offset().top;
+        var receivedTop = $("#received").length<=0?0:$("#received").offset().top;
+
+        $("#commitIcon").css('top',commitTop);
+        $("#repairingIcon").css('top',repairingTop);
+        $("#repair_failedIcon").css('top',repair_failedTop);
+        $("#wait_receiveIcon").css('top',wait_receiveTop);
+        $("#receivedIcon").css('top',receivedTop);
         //tab维修详情点击事件
-        $('#InfoTab').click(function(){
-            $('#repairStateBox').hide();
-            $('#recordBody').show();
+        var JinfoTab = $('#infoTab');
+        var JstateTab = $('#stateTab');
+        JinfoTab.click(function(){
+            JinfoTab.addClass('selected');
+            JstateTab.removeClass('selected');
+            $('#repairStateBox').hide('fast');
+            $('#recordBody').show('fast');
         });
         //tab维修状态点击事件
-        $('#stateTab').click(function(){
-            $('#repairStateBox').show();
-            $('#recordBody').hide();
+        JstateTab.click(function(){
+            JstateTab.addClass('selected');
+            JinfoTab.removeClass('selected');
+            $('#repairStateBox').show('fast');
+            $('#recordBody').hide('fast');
         });
     });
 </script>

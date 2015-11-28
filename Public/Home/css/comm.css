@@ -163,7 +163,7 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 }
 .record-body .state>section{
 	background-color:#F5F5F5;
-	padding:10px 10px 10px 20px;
+	padding:10px 10px 10px 15px;
 	position:relative;
 }
 .record-body .state>section>span{
@@ -172,8 +172,12 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 	width:70px;
 	height:70px;
 }
+.record-body .state>section img{
+	width: 70px;
+	height: 70px;
+}
 .record-body .state>section .description{
-	padding-left:75px;
+	padding-left:80px;
 	padding-bottom:20px;
 	min-height:70px;
 	

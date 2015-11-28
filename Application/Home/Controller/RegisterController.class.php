@@ -74,11 +74,11 @@ class RegisterController extends BaseController{
         $res = D('UploadPic')->saveAllTempPic($configs,USER_UPLOAD_PATH.'/pic/');
         $images = array();
         $i=0;
-        foreach($res as $v){
-            $images[$i]['url_original'] =  $v['original']['url'];
-            $images[$i]['url_sm'] =  $v['sm']['url'];
-            $images[$i]['url_mid'] =  $v['mid']['url'];
-            $images[$i]['url_lg'] =  $v['lg']['url'];
+        foreach($res as $v) {
+            $images[$i]['url_original'] = $v['original']['url'];
+            $images[$i]['url_sm'] = $v['sm']['url'];
+            $images[$i]['url_mid'] = $v['mid']['url'];
+            $images[$i]['url_lg'] = $v['lg']['url'];
             $i++;
         }
         if(!empty($images)){

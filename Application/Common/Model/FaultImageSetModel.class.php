@@ -53,7 +53,6 @@ class FaultImageSetModel extends Model
      *                          ),...);
      */
     public function addImages(array $images){
-        $images = array_unique(array_filter($images));
         //创建图片集
         $data['count'] = count($images);
         if($data['count']<=0) return null;//如果传入的数组为空直接返回null
