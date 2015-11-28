@@ -21,6 +21,7 @@
         <empty name="records">
             <p style="margin-top:20px;text-align: center;">暂无维修记录</p>
         <else />
+            <?php p($records);die;?>
             <volist name="records" id="record">
 
                 <!--State:状态开始-->

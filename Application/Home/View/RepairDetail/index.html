@@ -6,20 +6,66 @@
     <span>维修详情</span>
 </div>
 <!--tab结束-->
+<section style="display: none" id="repairStateBox">
+    <div class="line">
+        <div class="grayLine"></div>
+        <volist name="detail.repairState" id="state">
+            <if condition="$state.state_node == 'commit' ">
+                <span id="{$state.state_node}Icon" class="commit"><i></i></span>
+            </if>
+            <if condition="$state.state_node == 'repairing' ">
+                <span id="{$state.state_node}Icon" class="repairing"><i></i></span>
+            </if>
+            <if condition="$state.state_node == 'wait_receive' ">
+                <span id="{$state.state_node}Icon" class="wait_receive"><i></i></span>
+            </if>
+        </volist>
+    </div>
 
-<div class="line">
-    <div class="grayLine"></div>
-    <span class="infoSubmit"><i></i></span>
-    <span class="startRepair"><i></i></span>
-    <span class="repairComplete"><i></i></span>
-</div>
-<ul class="statusInfo">
-    <volist name="detail.repairState" id="state">
-        <li class="triangle-left">
-            <h2>{$state.state_title}</h2>
-            <div>{$state.state_info}</div>
-            <span>{$state.ctime}</span>
-        </li>
-    </volist>
-</ul>
+    <ul class="statusInfo">
+        <volist name="detail.repairState" id="state">
+            <li id ="{$state.state_node}" class="triangle-left">
+                <h2>{$state.state_title}</h2>
+                <div>{$state.state_info}</div>
+                <span>{$state.ctime}</span>
+            </li>
+        </volist>
+    </ul>
+</section>
+    <section class="record-body">
+        <div class="state">
+            <header>
+                <label>尚未维修</label>
+                <label>待领取</label>
+            </header>
+
+            <section>
+                <span><img src="pic/01.gif"/></span>
+                <div class="description">
+                    <p>
+                        <label>问题描述：</label>
+                        {$detail.problem_desc}
+                    </p>
+                </div>
+                <footer>
+                    <p>型号：{$detail.computer_name}</p>
+                    <p>{$detail.start_time}</p>
+                </footer>
+            </section>
+            <footer>
+                <p>维修人：陶炜</p>
+                <p>删除记录</p>
+            </footer>
+        </div>
+    </section>
+<script type="text/javascript">
+    $(function(){
+        //调整图标位置
+        $("#commitIcon").css('top',$("#commit").offset().top);
+        $("#repairingIcon").css('top',$("#repairing").offset().top);
+        $("#repair_failedIcon").css('top',$("#repair_failed").offset().top);
+        $("#wait_receiveIcon").css('top',$("#wait_receive").offset().top);
+        $("#receivedIcon").css('top',$("#received").offset().top);
+    });
+</script>
 <include file= './application/Home/View/Common/footer.html' />
