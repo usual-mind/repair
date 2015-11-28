@@ -46,30 +46,43 @@ html,body{
 	width:1px;
 	background-color:#C5C5C5;
 }
-.line .infoSubmit,.line .startRepair,.line .repairComplete{
+.line .commit,.line .repairing,.line .wait_receive,.line .repair_failed,.line .received{
 	height:60px;
 	background-color:#F5F5F5;
 	position:absolute;
 	top:120px;
 	width: 25%;
 }
-.line .infoSubmit i,.line .startRepair i,.line .repairComplete i{
+.line .commit i,.line .repairing i,.line .wait_receive i,.line .repair_failed i,.line .received i{
 	margin:15px auto 0;
 	width:30px;
 	height:30px;
 	display:block;
 	background:url('../img/icon.png') no-repeat -456px 0;
 }
-.line .startRepair{
+.line .repairing{
 	top:230px;
 }
-.line .repairComplete{
+.line .wait_receive{
 	top:339px;
 }
-.line .startRepair i{
+
+.line .received{
+	top:700px;
+}
+.line .repair_failed{
+	top:500px;
+}
+.line .repair_failed i{
+	background:url('../img/icon.png') no-repeat -602px 0;
+}
+.line .received i{
+	background:url('../img/icon.png') no-repeat -633px 0;
+}
+.line .repairing i{
 	background:url('../img/icon.png') no-repeat -487px 0;
 }
-.line .repairComplete i{
+.line .wait_receive i{
 	background:url('../img/icon.png') no-repeat -518px 0;
 }
 .line span:after{
