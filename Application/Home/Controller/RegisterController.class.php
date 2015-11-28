@@ -50,8 +50,8 @@ class RegisterController extends BaseController{
     public function addComputer(){
         //返回插入的电脑型号
         try{
-            $computerName = D('ComputerLink')->addComputerToUser($GLOBALS['e8']['mid'],I('get.model',''),I('get.brandId',0));
-            $this->ajaxReturn(array('computerName'=>$computerName));
+            $computerId = D('ComputerLink')->addComputerToUser($GLOBALS['e8']['mid'],I('get.model',''),I('get.brandId',0));
+            $this->ajaxReturn(array('computerName'=>D('Computer')->getComputerNameById($computerId)));
         }catch (\Exception $e){
             $this->ajaxReturn(array(),0,$e->getMessage());
         }

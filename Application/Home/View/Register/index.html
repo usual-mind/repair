@@ -98,7 +98,7 @@
                 showSelComputerBox(function(brandId,model){
                         ajaxRequest("{$addComputer}?brandId="+brandId+"&model="+model,function(data){
                             if(data.state){
-                                $('#model>li').append("<li>"+data.computerName+"</li>");
+                                $('#model').append("<li>"+data.computerName+"</li>");
                             }else{
                                 tipBox(data.message,1000);
                             }
