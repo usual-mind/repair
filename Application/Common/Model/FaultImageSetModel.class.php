@@ -15,10 +15,16 @@ use Think\Model;
 class FaultImageSetModel extends Model
 {
     protected $tableName = 'fault_image_set';
-    protected $defaultImage = '';
+    protected $defaultImage = array();
 
     public function _initialize(){
-        $this->defaultImage = __ROOT__.'/Public/'.MODULE_NAME.'/img/default.jpg';
+        $emptyImagePath = __ROOT__.'/Public/'.MODULE_NAME.'/img/';
+        $this->defaultImage = array(array(
+            'url_original' => $emptyImagePath.'default.jpg',
+            'url_sm' => $emptyImagePath.'default.jpg',
+            'url_mid' => $emptyImagePath.'default.jpg',
+            'url_lg' => $emptyImagePath.'default.jpg',
+        ));
     }
     /**通过图片集id获取所有的图片
      * @param $setId
@@ -40,7 +46,7 @@ class FaultImageSetModel extends Model
             $return[] = $image;
         }
         return $return;
-    }
+}
     /**
      * 插入一组图片
      * 返回图片集id
@@ -61,10 +67,10 @@ class FaultImageSetModel extends Model
         //将所有的图片插入到fault_images表中
         $image['image_set_id'] = $setId;
         foreach($images as $allUrls){
-            $image['url_original']  =   empty($allUrls['url_original'])?'':$allUrls['url_original'];
-            $image['url_sm']        =   empty($allUrls['url_sm'])?'':$allUrls['url_sm'];
-            $image['url_mid']       =   empty($allUrls['url_mid'])?'':$allUrls['url_mid'];
-            $image['url_lg']        =   empty($allUrls['url_lg'])?'':$allUrls['url_lg'];
+            $image['url_original']  =   $allUrls['url_original'];
+            $image['url_sm']        =   $allUrls['url_sm'];
+            $image['url_mid']       =   $allUrls['url_mid'];
+            $image['url_lg']        =   $allUrls['url_lg'];
             M('fault_images')->add($image);
         }
         return $setId;

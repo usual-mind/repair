@@ -48,7 +48,6 @@
                 <p>计算机学院15网络工程2班</p>
                 <p>13956460803</p>
             </div>
-            <?php p($detail);?>
             <!--维修完毕-->
             <section class="record-body">
                 <!--State:状态-->
@@ -56,7 +55,7 @@
                     <header>
                         <label>待领取</label>
                     </header>
-
+                    <?php p($detail);?>
                     <section>
                         <span><img src="{$detail['images'][0]['url_sm']}"/></span>
                         <div class="description">
