@@ -78,8 +78,13 @@ class RepairRecordModel extends Model
         }
 
         if(!empty($repairRecord['image_set_id'])){
+            $repairRecord['has_image'] = 1;
             //获取图片
             $repairRecord['images'] = D('FaultImageSet')->getImagesBySetId($repairRecord['image_set_id']);
+        }else{
+            //没有上传图片使用默认图片
+            $repairRecord['has_image'] = 0;
+            $repairRecord['images'] = D('FaultImageSet')->getDefaultImage();
         }
         //维修人员
         empty($repairRecord['repairmem']) || $repairRecord['repairmem'] = D('user')->getLinkNameByUid($repairRecord['repairmem_id']);

@@ -15,6 +15,11 @@ use Think\Model;
 class FaultImageSetModel extends Model
 {
     protected $tableName = 'fault_image_set';
+    protected $defaultImage = '';
+
+    public function _initialize(){
+        $this->defaultImage = __ROOT__.'/Public/'.MODULE_NAME.'/img/default.jpg';
+    }
     /**通过图片集id获取所有的图片
      * @param $setId
      * @return array|bool
@@ -64,5 +69,8 @@ class FaultImageSetModel extends Model
             M('fault_images')->add($image);
         }
         return $setId;
+    }
+    public function getDefaultImage(){
+        return $this->defaultImage;
     }
 }
