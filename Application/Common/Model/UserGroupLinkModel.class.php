@@ -37,7 +37,8 @@ class UserGroupLinkModel extends Model
                 $map['uid'] = $uid;
                 //目前一个用户只能加入一个用户组 所以调用find()
                 $list = $this->where($map)->find();
-                $return[$uid] = $list['group_id'];
+
+                $return[$uid] = empty($list)?array():$list['group_id'];
                 $this->cacheObj->set ( 'user_group_' . $uid, $return[$uid]);
             }
         }
@@ -79,6 +80,7 @@ class UserGroupLinkModel extends Model
 
         return $userGroupData;
     }
+
     /**
      * 转移用户的用户组
      * @param array $uids 用户UID

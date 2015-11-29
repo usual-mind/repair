@@ -10,7 +10,40 @@ class IndexController extends  BaseController{
     {
         //p(D('User')->getUserInfo(1));
         //unset($_SESSION['images']);
-        //D('SystemConfig')->set('Permission:1',array('core'=>array('aasd'=>1)),false);
-        p(D('RepairRecord')->getRepairRecord(29));
+        //p(D('SystemConfig')->get('Permission:1'));
+        //$config = array('core'=>array('normal'=>array('feed_view'=>1)));
+        //D('SystemConfig')->set('Permission:1',$config,false);
+            /**
+             *
+             *
+             * [core] => Array
+            (
+            [normal] => Array
+            (
+            [feed_view] => 1
+            [read_data] => 1
+            [invite_user] => 1
+            [send_message] => 1
+            [search_info] => 1
+            [comment_del] => 1
+            [feed_del] => 1
+            [feed_post] => 1
+            [feed_comment] => 1
+            [feed_report] => 1
+            [feed_share] => 1
+            )
+
+            [admin] => Array
+            (
+            [feed_del] => 1
+            [comment_del] => 1
+            [message_del] => 1
+            [admin_login] => 1
+            [feed_recommend] => 1
+            )
+
+            )
+             */
+        D('Permission')->loadRule(300);
     }
 }
