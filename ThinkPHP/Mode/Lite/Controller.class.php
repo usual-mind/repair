@@ -67,7 +67,6 @@ abstract class Controller {
     protected function show($content,$charset='',$contentType='',$prefix='') {
         $this->view->display('',$charset,$contentType,$content,$prefix);
     }
-
     /**
      *  获取输出页面内容
      * 调用内置的模板引擎fetch方法，

@@ -51,7 +51,6 @@ class SystemConfigModel extends Model
         }else {
             $data['list'] = $list;
             $data['key'] = $key;
-
             $res = $this->add($data);
         }
         if(!$res) E('设置系统配置出错!');
