@@ -22,7 +22,7 @@
             </if>
         </volist>
     </div>
-
+    <?php p($state);?>
     <ul class="statusInfo">
         <volist name="detail.repairState" id="state">
             <li id ="{$state.state_node}" class="triangle-left">
@@ -35,18 +35,20 @@
 </section>
     <section class="record-body" style="display: none;" id="recordBody">
         <section class="evaluation-body">
-            <div class="prompt">
-                <div>
-                    <i></i>
-                    <p>本次维修成功</p>
+            <div class="succBox">
+                <div class="prompt">
+                    <div>
+                        <i></i>
+                        <p>本次维修成功</p>
+                    </div>
                 </div>
-            </div>
-            <!--领取-->
-            <div class="receive">
-                <i></i>
-                <p>领取人：陶炜</p>
-                <p>计算机学院15网络工程2班</p>
-                <p>13956460803</p>
+                <!--领取-->
+                <div class="receive">
+                    <i></i>
+                    <p>领取人：陶炜</p>
+                    <p>计算机学院15网络工程2班</p>
+                    <p>13956460803</p>
+                </div>
             </div>
             <!--维修完毕-->
             <section class="record-body">
@@ -70,10 +72,16 @@
                     </section>
                     <footer>
                         <p>维修人：陶炜</p>
-                        <p>删除记录</p>
+                        {:W('RepairRecordMange/showButton',array(array('repair_record_id'=>$detail['id'],'repair_record_uid'=>$detail['uid'])))}
                     </footer>
                 </div>
             </section>
+            <!--图片-->
+            <div class="pic">
+                <volist name="detail['images']" id="img">
+                    <img src="{$img.url_lg}" />
+                </volist>
+            </div>
             <!--流程记录-->
             <div class="time">
                 <ul>

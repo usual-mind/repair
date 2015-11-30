@@ -80,13 +80,6 @@
 	float:left;
 	margin-top: 5px;
 }
-.record-body .state>footer>p:last-child{
-	float:right;
-	width:80px;
-	line-height:25px;
-	background-color:#F5F5F5;
-	text-align:center;
-}
 .messCount{
 	position: absolute;
 	top: 15px;

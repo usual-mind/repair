@@ -1,12 +1,13 @@
-<ul>
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/repair_record_mange.css">
+<ul class="record_mange">
     <if condition="$repair">
         <if condition="$show_repair_btn">
-            <li><a href="javascript:;" onclick="repair('{$repair_record_id}', 1);">我来维修</a></li>
+            <li class="stat_repair"><a href="javascript:;" onclick="repair('{$repair_record_id}', 1);">我来维修</a></li>
             <else />
-            <li><a href="javascript:;" onclick="repair('{$repair_record_id}', 0);">取消维修</a></li>
+            <li class="cancel_repair"><a href="javascript:;" onclick="repair('{$repair_record_id}', 0);">取消维修</a></li>
         </if>
     </if>
     <if condition="$repair_record_del">
-        <li><a href="javascript:void(0)" event-node ='del_repair_record' event-args='repair_record_id={$repair_record_id}&uid={$repair_record_uid}'>删除维修记录</a></li>
+        <li class="del_repair"><a href="javascript:void(0)" event-node ='del_repair_record' event-args='repair_record_id={$repair_record_id}&uid={$repair_record_uid}'>删除记录</a></li>
     </if>
 </ul>

@@ -21,7 +21,6 @@
         <empty name="records">
             <p style="margin-top:20px;text-align: center;">暂无维修记录</p>
         <else />
-
             <volist name="records" id="record">
 
                 <!--State:状态开始-->
@@ -46,7 +45,7 @@
                     </section>
                     <footer>
                         <p>维修人：陶炜</p>
-                        <p>删除记录</p>
+                        {:W('RepairRecordMange/showButton',array(array('repair_record_id'=>$record.id,'repair_record_uid'=>$record.uid)))}
                     </footer>
                 </div>
                 <!--State:状态结束-->

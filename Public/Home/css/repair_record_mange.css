@@ -1,0 +1,19 @@
+.record_mange{
+    float:right;
+}
+.record_mange>li{
+    float: left;
+    padding: 3px 5px;
+    background-color: #f0f0f0;
+    margin-left: 5px;
+}
+.record_mange>li>a{
+    color:#555;
+    font-size: 12px;
+}
+.del_repair{
+     background-color: #EB4F38!important;
+ }
+.del_repair>a{
+    color: #fff!important;
+}
