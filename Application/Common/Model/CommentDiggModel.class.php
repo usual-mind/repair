@@ -35,7 +35,6 @@ class CommentDiggModel extends Model
         $data['ctime'] = time();
         $diggId = $this->add($data);
         if($diggId){
-
             $commendModel = M('Comment');
             //获取评论，(需要uid)
             $comment = $commendModel->getCommentById($data['comment_id']);

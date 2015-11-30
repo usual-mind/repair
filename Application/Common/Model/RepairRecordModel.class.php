@@ -109,7 +109,6 @@ class RepairRecordModel extends Model
      * @return 返回插入的id
      */
     public function addRepairRecord($data){
-        p();
         if(empty($data)) E('参数为空');
         if(!isset($GLOBALS['e8']['mid']) || intval($GLOBALS['e8']['mid'])<=0) E('请先登录!');
         empty($data['problem_desc']) && E('问题描述不能为空');
@@ -146,5 +145,9 @@ class RepairRecordModel extends Model
             $config
             );
         return $repairRecordId;//返回插入的维修记录id
+    }
+    public function delRepairRecord($rid){
+        //在这里判断权限???
+        //$this->
     }
 }
