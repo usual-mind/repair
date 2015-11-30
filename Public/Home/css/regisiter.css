@@ -38,6 +38,7 @@
 	height:72px;
 	margin-right:10px;
 	background:url(../img/icon.png) no-repeat -39px 0;
+	margin: 5px;
 }
 .repair-body .upload a>input{
 	opacity: 0;
