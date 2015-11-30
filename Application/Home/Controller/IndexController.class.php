@@ -44,6 +44,7 @@ class IndexController extends  BaseController{
 
             )
              */
-        D('Permission')->loadRule(300);
+        //D('Permission')->loadRule(300);
+            unset($_SESSION);
     }
 }

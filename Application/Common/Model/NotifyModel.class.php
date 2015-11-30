@@ -27,7 +27,6 @@ class NotifyModel extends Model
         $this->_config['site'] = $site['site_name'];
         $this->_config['site_url'] = $site['site_url'];
     }
-
     /**获取消息
      * @param $uid
      * @return mixed
@@ -35,31 +34,55 @@ class NotifyModel extends Model
     public function getMessageList($uid){
         //TODO 缓存处理;分页问题;
         $condition['uid'] = intval($uid);
-        $condition['is_read'] = 0;
-        return M('notify_message')->where($condition)->order('id DESC')->select();
+        $mess = M('notify_message')->where($condition)->order('id DESC')->select();
+        $return = array();
+        foreach($mess as &$v){
+
+            $type = $this->getNode($v['node']);
+            $v['ctime'] = friendlyShowTime($v['ctime']);
+
+            $v['fromUser'] = $v['from_uid']==0?"系统提示":D('User')->getLinkNameByUid($v['from_uid']);
+
+            if($type['type'] == 2){//type为2 系统消息
+                $return['sysMess'][] = $v;
+            }else if($type['type'] == 1){//type为1 与我相关的消息
+                $return['aboutMeMess'][] = $v;
+            }
+        }
+        unset($v);
+        return $return;
     }
     /**
      * 更改指定用户的消息从未读为已读
      * @param integer $uid 用户ID
      * @return mix 更改失败返回false，更改成功返回消息ID
      */
-    public function setRead($uid, $node = null) {
+    public function setRead($uid, $type = null) {
         $map['uid'] = $uid;
         $map['is_read'] = 0;
-        !empty($node) && $map['node'] = $node;
         $data['is_read'] = 1;
-        return M('notify_message')->where($map)->save($data);
+        if(empty($type)){
+            return M('notify_message')->where($map)->save($data);
+        }
+        $map['type'] = $type;
+        return M('notify_message')->join('RIGHT JOIN __NOTIFY_NODE__ ON __NOTIFY_NODE__.node = __NOTIFY_MESSAGE__.node')->where($map)->save($data);
     }
     /**
      * 获取指定用户未读消息的总数
      * @param integer $uid 用户ID
+     * @param $type 0表示所有消息 1表示系统消息 2表示与我相关的消息
      * @return integer 指定用户未读消息的总数
      */
-    public function getUnreadCount($uid){
+    public function getUnreadCount($uid,$type=0)
+    {
         $condition['uid'] = intval($uid);
         $condition['is_read'] = 0;
-        return $this->where($condition)->count();
+        if($type == 0)
+            return M('notify_message')->where($condition)->count();
+        $condition['type'] = 1;
+        return $this->join('LEFT JOIN __NOTIFY_MESSAGE__ ON __NOTIFY_NODE__.node = __NOTIFY_MESSAGE__.node')->where($condition)->count();
     }
+
     /**
      * 获取节点列表
      * @return array 节点列表数据
@@ -86,6 +109,7 @@ class NotifyModel extends Model
      * 获取指定节点信息
      * @param string $node 节点Key值
      * @return array 指定节点信息
+     *
      */
     public function getNode($node){
         $list = $this->getNodeList();

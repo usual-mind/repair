@@ -1,0 +1,76 @@
+html,body{
+	height:100%;
+}
+.menu{
+	margin-top:10px;
+	width:110px;
+	background-color:#fff;
+	position:absolute;
+	left:0;
+	height:91%;
+}
+.menu>li{
+	font-size: 14px;
+	text-align:center;
+	line-height:50px;
+	border-bottom:1px solid #f5f5f5;
+	position: relative;
+}
+.menu>li:hover{
+	background-color:#FCFCFC;
+}
+.menu>li>span{
+	position: absolute;
+	right: 4px;
+	top: 17px;
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FF0000;
+	color:#fff;
+	line-height: normal;
+	border-radius: 20px;
+	font-size: 12px;
+	text-align: center;
+}
+.menu>li:first-child::before{
+	content:"@ ";
+}
+.menu>li:nth-child(2){
+	position:relative;
+}
+.menu>li:nth-child(2)::before{
+	content:"";
+	background:url('../img/icon.png') no-repeat -601px 0;
+	width:15px;
+	height:18px;
+	display:block;
+	position:absolute;
+	top: 15px;
+	left: 7px;
+}
+.menu>.selected{
+	background-color:#fff;
+	width:120px;
+}
+.message{
+	margin-left:120px;
+	margin-top:10px;
+}
+.message>li{
+	background-color:#fff;
+	border-bottom:#EBEBEB 1px solid;
+	font-size:14px;
+	padding:5px;
+}
+.message>li>header>span{
+	color:#336699;
+}
+.message>li>section{
+	color:#666;
+	margin:5px 0;
+}
+.message>li>footer{
+	font-size:12px;
+	color:#999;
+}

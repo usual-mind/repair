@@ -54,9 +54,12 @@
         </empty>
 	</section>
 </div>
+
+<div class="messCount">消息<if condition="($messCount neq 0)"><span id="messCount">{$messCount}</span></if></div>
 {:W('PersonData/personData')}
 <include file= './application/Home/View/Common/footer.html' />
 <script type="text/javascript">
+    var JmessCount = $('#messCount');
     $(function () {
         //点击设置按钮
         $('#setBtn').click(function () {
@@ -74,6 +77,16 @@
         $('#entryDescription').click(function(){
 
         });
-
+        //获取未读的消息总数
+        setInterval(function(){
+            ajaxRequest("{$header['messCount']}",function(data){
+                if(data.messCount == 0){
+                    JmessCount.hide();
+                }else{
+                    JmessCount.show();
+                    JmessCount.html(data.messCount);
+                }
+            },'json')
+        },5000);
     });
 </script>

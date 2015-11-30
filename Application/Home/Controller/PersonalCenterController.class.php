@@ -9,15 +9,23 @@ class PersonalCenterController extends BaseController{
         $this->setHeader('个人中心');
         $header['title'] = '个人中心';
         $header['backUrl'] = '';
+        $header['messCount'] = U('getMessCount');
         $this->assign('header',$header);
-//        if(!D('Passport')->isLogged()){
-//            $this->redirect(U('Login/index'));
-//        }
         $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
         $records = D('RepairRecord')->getUserRepairRecords($GLOBALS['e8']['mid']);
+
+        $this->assign('messCount',D('Notify')->getUnreadCount($GLOBALS['e8']['mid']));
         $this->assign('userInfo',$userInfo);
         $this->assign('records',$records);
         $this->display();
+    }
+
+    /**
+     * 获取未读的消息总数
+     */
+    public function getMessCount(){
+        $data['messCount'] = D('Notify')->getUnreadCount($GLOBALS['e8']['mid']);
+        $this->ajaxReturn($data);
     }
     /**
      * 伪异步上传头像

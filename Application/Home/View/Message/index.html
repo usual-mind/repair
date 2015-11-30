@@ -1,0 +1,62 @@
+<include file= './application/Home/View/Common/header.html' />
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/message.css">
+<ul class="menu">
+    <li class="selected" id="sysMessBtn">系统提示<span id="sysMessCount">{$sysMessCount}</span></li>
+    <li id="aboutMeMessBtn">与我相关<span id="aboutMeMessCount">{$aboutMeMessCount}</span></li>
+</ul>
+
+<ul id="sysMess" class="message">
+    <volist name="mess['sysMess']" id="mes">
+        <li>
+            <header>{$mes.fromUser}：{$mes.title}</header>
+            <section>{$mes.body}</section>
+            <footer>{$mes.ctime}</footer>
+        </li>
+    </volist>
+</ul>
+<ul id="aboutMeMess" style="display: none;" class="message">
+    <volist name="mess['aboutMeMess']" id="mes">
+        <li>
+            <header>{$mes.fromUser}：{$mes.title}</header>
+            <section>{$mes.body}</section>
+            <footer>{$mes.ctime}</footer>
+        </li>
+    </volist>
+</ul>
+<include file= './application/Home/View/Common/footer.html' />
+<script type="text/javascript">
+    var JsysMessBtn = $('#sysMessBtn');
+    var JaboutMessBtn = $('#aboutMeMessBtn');
+    var JsysMess = $('#sysMess');
+    var JaboutMeMess = $('#aboutMeMess');
+    var JsysMessCount = $('#sysMessCount');
+    var JaboutMeMessCount = $('#aboutMeMessCount');
+    $(function () {
+        if(JsysMessCount.html() == '0')
+            JsysMessCount.hide();
+        if(JaboutMeMessCount.html() == '0')
+            JaboutMeMessCount.hide();
+        //点击系统提示按钮
+        JsysMessBtn.click(showSysMess);
+        //点击与我相关按钮
+        JaboutMessBtn.click(showAboutMeMess);
+    });
+    function showSysMess(){
+        JsysMessCount.hide();
+        if(JsysMessCount.html()!='0')
+            ajaxRequest('{$setReadUrl}' + '?type=1',function(){});
+        JsysMessBtn.addClass('selected');
+        JaboutMessBtn.removeClass('selected');
+        JsysMess.show("fast");
+        JaboutMeMess.hide('fast');
+    }
+    function showAboutMeMess(){
+        JaboutMeMessCount.hide();
+        if(JaboutMeMessCount.html()!='0')
+            ajaxRequest('{$setReadUrl}'+'?type=2',function(){});
+        JaboutMessBtn.addClass('selected');
+        JsysMessBtn.removeClass('selected');
+        JaboutMeMess.show("fast");
+        JsysMess.hide('fast');
+    }
+</script>
