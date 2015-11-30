@@ -86,6 +86,7 @@ class UserModel extends Model
     {
 
         $user = $this->where($map)->field($field)->find();
+
         if (! $user) {
             E('用户查询失败！');
             return false;

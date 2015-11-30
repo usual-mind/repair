@@ -250,3 +250,11 @@ function lang($key,$data = array()){
 function path2url($path){
     return __ROOT__ .ltrim($path,'.');
 }
+
+/**
+ * 检查权限
+ */
+function checkPermission($load , $action){
+    $permission = D('Permission')->load($load);
+    return $permission->check($action);
+}

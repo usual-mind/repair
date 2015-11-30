@@ -30,12 +30,11 @@ class LoginController extends BaseController{
         $param = array();
         empty($_GET['returnUrl']) || $param = array('returnUrl'=>$_GET['returnUrl']);
 
-        $this->setTitle("学号");
+        $this->setTitle('学号');
         if(!empty($_GET['errMes'])){
             $errMes = base64_decode($_GET['errMes']);
             $this->assign('showTip',"tipBox('{$errMes}');");
         }
-
         //将下一步按钮URL分配过去
         $this->assign('nextUrl',U('Login/step2',$param));
         $this->display();
@@ -71,7 +70,7 @@ class LoginController extends BaseController{
 
                 //TODO 登录成功
                 if(empty($param['returnUrl'])){
-                    $this->redirect();
+                    $this->redirect('Index/index');
                 }else{
                     //$this->redirect(base64_decode($param['returnUrl']));
                     $returnUrl = base64_decode($param['returnUrl']);
@@ -90,6 +89,7 @@ class LoginController extends BaseController{
         $this->setHeader('完善个人信息');
         //分配给Widget
         $departments = D('Classes')->getAllDepartment();
+
         foreach($departments as &$v){
             $v['url'] = U('SetClass/classInfowidget',array('pid'=>$v['id'],'type'=>'department'));
         }
@@ -124,12 +124,10 @@ class LoginController extends BaseController{
         //注册成功之后登录
         if(D('Passport')->loginLocalWithoutPassword($user['student_id'],true)){
             //TODO 注册成功跳转到注册成功页面
-
+            echo '这里需要跳转到注册成功页面';
         }else{
             $this->error('注册失败!');
         }
-
-
     }
     /**
      * 退出登录
