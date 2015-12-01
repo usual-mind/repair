@@ -82,12 +82,20 @@ class RepairServiceModel
     }
 
     /**
-     * 用户撤销维修 TODO 撤销原因
+     * 用户撤销维修
      * @param $rid 维修记录的id
+     * @param string $reason 撤销原因
      * @param null $uid 撤销维修的用户id 默认为当前登录的id
      */
-    public function revokeRepair($rid , $uid = NULL){;
+    public function revokeRepair($rid , $reason ,$uid = NULL){;
         $repairRecordId = intval($rid);
+        is_null($uid) && $uid = $GLOBALS['e8']['mid'];
+        $uid = intval($uid);
+        if(empty($reason)) {
+            $this->error = '请填写撤销原因!';
+            return false;
+        }
+        $reason = html2Text($reason);
         $repairRecord = D('RepairRecord')->getRepairRecord($repairRecordId);
         if(!$repairRecord){
             $this->error = D('RepairRecord')->getError();
@@ -115,40 +123,56 @@ class RepairServiceModel
             return false;
         }
         //撤销维修
-        if(!D('RepairRecord')->revokeRepair($repairRecordId)){
-            $this->error = '撤销维修失败!';
-            return false;
-        }
+        D('RepairRecord')->setRepairRecordStatus($repairRecordId , 3);
         //添加维修动态
         $stateInfo = array(
             'repair_record_id'=>$repairRecordId,
-            'state_node'=>'cancel_repair',
-            'state_title'=>'维修被撤销',
+            'state_node'=>'revoke_repair',
+            'state_info'=>'撤销原因:'.$reason
         );
         if($repairRecord['uid'] == $uid){
-            $stateInfo['state_info'] = '用户自行撤销';
+            $stateInfo['state_title'] = '用户自行撤销维修';
         }else{
-            $stateInfo['state_info'] = '维修被'.D('User')->getLinkNameByUid($uid).' 撤销';
+            $stateInfo['state_title'] = '维修被'.D('User')->getLinkNameByUid($uid).' 撤销';
         }
         D('RepairState')->addStatue($stateInfo);
         return true;
     }
 
     /**
-     * E8成员取消维修 TODO 取消原因
+     * E8成员取消维修
      * @param $rid 维修记录id
      * @param int $uid 触发取消维修的用户id  默认为当前登录的用户id
      */
-    public function cancelRepair($rid , $uid = NULL){
+    public function cancelRepair($rid , $reason , $uid = NULL){
+        $repairRecordId = intval($rid);
         is_null($uid) && $uid = $GLOBALS['e8']['mid'];
         $uid = intval($uid);
+        if(empty($reason)) {
+            $this->error = '请填写取消维修的原因!';
+            return false;
+        }
+        $reason = html2Text($reason);
         //判断用户是否有有维修的权限
         if(!checkPermission('core_normal','repair',$uid)){
             $this->error = '你并没有权限!';
             return false;
         }
-
+        //取消维修
+        D('RepairRecord')->setRepairRecordStatus($repairRecordId , 0);
         //添加维修动态
-        //发送notify给每个当前正在值班的用户
+        $stateInfo = array(
+            'repair_record_id' => $repairRecordId,
+            'state_node' => 'cancel_repair',
+            'state_title' => D('User')->getLinkNameByUid($uid).' 已取消维修您的电脑',
+            'state_info'=>'正在等待其他人维修'
+        );
+        D('RepairState')->addStatue($stateInfo);
+        /*//发送notify给每个当前正在值班的用户
+        $config = array(
+            'content'=>'您的电脑已经开始维修啦！',
+            'url'=>'#'
+        );
+        D('Notify')->sendNotify($repairRecord['uid'], 'new_state', $config);*/
     }
 }

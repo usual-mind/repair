@@ -206,12 +206,14 @@ class RepairRecordModel extends Model
     }
 
     /**
-     * 撤销维修
+     * 设置维修状态
      * @param $rid
      */
-    public function revokeRepair($rid){
+    public function setRepairRecordStatus($rid,$status){
         $rid = intval($rid);
-        return $this->where('id='.$rid)->setField('status','3');
+        $status = intval($status);
+        $res = $this->where('id='.$rid)->setField('status',$status);
+        if(!$res) E('设置维修状态失败');
+        return $res;
     }
-
 }
