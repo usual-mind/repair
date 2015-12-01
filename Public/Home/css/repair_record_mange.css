@@ -17,3 +17,9 @@
 .del_repair>a{
     color: #fff!important;
 }
+.revoke_repair{
+    background-color: #12B7F5!important;
+}
+.revoke_repair>a{
+    color:#fff!important;
+}

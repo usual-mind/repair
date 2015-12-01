@@ -16,9 +16,7 @@ class UserRepairRecordListWidget extends Controller
         }
 
         $this->assign('userGroupId',$GLOBALS['e8']['user']['user_group']['id']);
-
         $content = $this->fetch ('Widget/user_repair_record_list');
-
         return $content;
     }
 }

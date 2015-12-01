@@ -12,8 +12,7 @@ class PersonalCenterController extends BaseController{
         $header['messCount'] = U('getMessCount');
         $this->assign('header',$header);
         $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
-
-
+        
         $this->assign('RegisterUrl',U('Register/index'));
         $this->assign('messCount',D('Notify')->getUnreadCount($GLOBALS['e8']['mid']));
         $this->assign('userInfo',$userInfo);
