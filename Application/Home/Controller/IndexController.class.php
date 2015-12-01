@@ -32,7 +32,6 @@ class IndexController extends  BaseController{
                     'comment_del'=>1,
                     'message_del'=>1,
                     'admin_login'=>1,
-                    'cancel_repair'=>1,
                     'revoke_repair'=>1
                 )
                 ),
@@ -52,6 +51,6 @@ class IndexController extends  BaseController{
         }else{
             echo 'OK';
         }*/
-        p(D('RepairRecord')->getRepairRecordByRepairmemId());
+        //p(D('RepairRecord')->getRepairRecordByRepairmemId());
     }
 }

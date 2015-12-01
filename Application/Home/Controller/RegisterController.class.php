@@ -162,7 +162,6 @@ class RegisterController extends BaseController{
 
         die('<script>parent.callbackImageDisplay("'.$retImageUrl.'")</script>');*/
         if(!$tempThumbPic = D('UploadPic')->uploadToTemp('pic')){
-
             die('<script>parent.callbackImageDisplay("","图片上传失败")</script>');
         }
         //返回缩略图

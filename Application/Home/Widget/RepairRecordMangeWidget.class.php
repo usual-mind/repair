@@ -24,26 +24,32 @@ class RepairRecordMangeWidget extends Controller
         $repairRecordId = intval ( $data ['repair_record_id'] );
         // 获取提交该维修记录的用户的UID
         $repairRecordUid = intval ( $data ['repair_record_uid'] );
-
+        if(!$repairRecordId || !$repairRecordUid) return '';
         //是否维修
         // 管理员删除维修记录权限
         $adminRepairDel = checkPermission ( 'core_admin', 'repair_record_del' );
 
         //判断用户是否有撤销维修的权限
-        $revokePermission = checkPermission('core_admin','cancel_repair');
+        $revokePermission = checkPermission('core_admin','revoke_repair');
+
         if(!$revokePermission){//先判断admin模块是否有cancel_repair权限
-            $revokePermission = checkPermission('core_normal','cancel_repair');
+            $revokePermission = checkPermission('core_normal','revoke_repair');
             if($revokePermission){
-                //判断提交维修记录的uid是否为$uid 如果不是uid则没有权限取消维修
                 $repairRecord = D('RepairRecord')->getRepairRecord($repairRecordId);
                 if(!$repairRecord){
                     return '';
                 }
+                //判断提交维修记录的uid是不是当前登录的用户id
                 if($repairRecord['uid'] != $GLOBALS['e8']['mid']){
+                    $revokePermission = false;
+                }
+                //判断维修状态是不是未维修状态
+                if($repairRecord['status'] != 0){
                     $revokePermission = false;
                 }
             }
         }
+
         /*
          *自己并不能删除自己的维修记录
          //删除自己维修记录的权限
@@ -95,6 +101,7 @@ class RepairRecordMangeWidget extends Controller
         $this->assign('repair_record_uid',$repairRecordUid);
         //$this->assign('repair_record_del',($adminRepairDel || $selfRepairDel));
         $this->assign('repair_record_del',$adminRepairDel );
+
         $this->assign('revoke_repair',$revokePermission);
         $this->assign('repair',$repair);
         isset($showRepair) && $this->assign('show_repair_btn',$showRepair);

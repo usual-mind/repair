@@ -82,46 +82,73 @@ class RepairServiceModel
     }
 
     /**
-     * 用户撤销维修
+     * 用户撤销维修 TODO 撤销原因
      * @param $rid 维修记录的id
      * @param null $uid 撤销维修的用户id 默认为当前登录的id
      */
     public function revokeRepair($rid , $uid = NULL){;
         $repairRecordId = intval($rid);
+        $repairRecord = D('RepairRecord')->getRepairRecord($repairRecordId);
+        if(!$repairRecord){
+            $this->error = D('RepairRecord')->getError();
+            return false;
+        }
         //判断用户是否有撤销维修的权限
         $revokePermission = checkPermission('core_admin','revoke_repair',$uid);
         if(!$revokePermission){//先判断admin模块是否有cancel_repair权限
             $revokePermission = checkPermission('core_normal','revoke_repair',$uid);
             if($revokePermission){
                 //判断提交维修记录的uid是否为$uid 如果不是uid则没有权限取消维修
-                $repairRecord = D('RepairRecord')->getRepairRecord($repairRecordId);
-                if(!$repairRecord){
-                    $this->error = D('RepairRecord')->getError();
-                    return false;
-                }
                 if($repairRecord['uid'] != $uid){
                     $revokePermission = false;
                 }
             }
             if(!$revokePermission){
-                $this->error = 'Sorry! 您并没有取消维修的权限';
+                $this->error = 'Sorry! 您并没有取消维修的权限！';
                 return false;
             }
+
+        }
+        //判断维修状态是不是未维修
+        if($repairRecord['status'] != 0){
+            $this->error = 'Sorry! 撤销维修失败。您的电脑已经不是未维修状态了!';
+            return false;
         }
         //撤销维修
         if(!D('RepairRecord')->revokeRepair($repairRecordId)){
             $this->error = '撤销维修失败!';
             return false;
         }
+        //添加维修动态
+        $stateInfo = array(
+            'repair_record_id'=>$repairRecordId,
+            'state_node'=>'cancel_repair',
+            'state_title'=>'维修被撤销',
+        );
+        if($repairRecord['uid'] == $uid){
+            $stateInfo['state_info'] = '用户自行撤销';
+        }else{
+            $stateInfo['state_info'] = '维修被'.D('User')->getLinkNameByUid($uid).' 撤销';
+        }
+        D('RepairState')->addStatue($stateInfo);
         return true;
     }
 
     /**
-     * E8成员取消维修
+     * E8成员取消维修 TODO 取消原因
      * @param $rid 维修记录id
      * @param int $uid 触发取消维修的用户id  默认为当前登录的用户id
      */
     public function cancelRepair($rid , $uid = NULL){
+        is_null($uid) && $uid = $GLOBALS['e8']['mid'];
+        $uid = intval($uid);
+        //判断用户是否有有维修的权限
+        if(!checkPermission('core_normal','repair',$uid)){
+            $this->error = '你并没有权限!';
+            return false;
+        }
 
+        //添加维修动态
+        //发送notify给每个当前正在值班的用户
     }
 }
