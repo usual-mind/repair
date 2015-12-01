@@ -52,7 +52,7 @@ class RepairStateModel extends Model
     public function getRepairState($recordId){
         //TODO 缓存处理
         $map['repair_record_id'] = $recordId;
-        $res = $this->_repair_state->field('id',true)->where($map)->select();
+        $res = $this->_repair_state->field('id',true)->where($map)->order('id ASC')->select();
 
 
         foreach($res as &$v){

@@ -28,12 +28,15 @@ class RepairRecordMangeWidget extends Controller
         //是否维修
         // 管理员删除维修记录权限
         $adminRepairDel = checkPermission ( 'core_admin', 'repair_record_del' );
-        //删除自己维修记录的权限
+
+        /*
+         *自己并不能删除自己的维修记录
+         //删除自己维修记录的权限
         if(checkPermission ( 'core_normal', 'repair_record_del' ) && $repairRecordUid==$GLOBALS['e8']['mid']){
             $selfRepairDel = true;
         }else{
             $selfRepairDel = false;
-        }
+        }*/
         //维修权限
         $repair = checkPermission ( 'core_normal', 'repair' );
         if($repair){
@@ -56,7 +59,7 @@ class RepairRecordMangeWidget extends Controller
         //判断需不需显示管理按钮
         $checkShowBtn = array ();
         $checkShowBtn [] = $adminRepairDel;
-        $checkShowBtn [] = $selfRepairDel;
+        //$checkShowBtn [] = $selfRepairDel;
         $checkShowBtn [] = $repair;
         if (! in_array ( true, $checkShowBtn )) {
             return '';
@@ -72,7 +75,8 @@ class RepairRecordMangeWidget extends Controller
         $this->assign('args',$args);*/
         $this->assign('repair_record_id',$repairRecordId);
         $this->assign('repair_record_uid',$repairRecordUid);
-        $this->assign('repair_record_del',($adminRepairDel || $selfRepairDel));
+        //$this->assign('repair_record_del',($adminRepairDel || $selfRepairDel));
+        $this->assign('repair_record_del',$adminRepairDel );
         $this->assign('repair',$repair);
         isset($showRepair) && $this->assign('show_repair_btn',$showRepair);
         //$manageClass = isset ( $data ['manage_class'] ) ? $data ['manage_class'] : 'right hover dp-cs';

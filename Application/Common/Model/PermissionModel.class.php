@@ -35,12 +35,17 @@ class PermissionModel
 
         return self::$permission[$uid];
     }
-    public function check($action){
+    public function check($action,$uid=NULL){
         //验证是否load了
         if(empty($this->option['app']) || empty($this->option['module'])) {
             return false;
         }
-        $permission = $this->loadRule($GLOBALS['e8']['mid']);
+        if(is_null($uid)){
+            //如果没有传入uid默认为当前登录的用户
+            $uid = $GLOBALS['e8']['mid'];
+        }
+        $uid = intval($uid);
+        $permission = $this->loadRule($uid);
 
         return isset($permission[$this->option['app']][$this->option['module']][$action]);
     }

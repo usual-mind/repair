@@ -254,7 +254,7 @@ function path2url($path){
 /**
  * 检查权限
  */
-function checkPermission($load , $action){
+function checkPermission($load , $action , $uid = NULL){
     $permission = D('Permission')->load($load);
-    return $permission->check($action);
+    return $permission->check($action,$uid);
 }
