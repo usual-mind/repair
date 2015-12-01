@@ -147,7 +147,9 @@ class RepairRecordModel extends Model
         return $repairRecordId;//返回插入的维修记录id
     }
     public function delRepairRecord($rid){
+        $rid = intval($rid);
+        if($rid<=0) return false;
         //在这里判断权限???
-        //$this->
+        return $this->where('id='.$rid)->setField('is_del','1');
     }
 }

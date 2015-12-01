@@ -45,11 +45,7 @@ class IndexController extends  BaseController{
             )
 
             )
-<<<<<<< HEAD
-             */
-        //D('Permission')->loadRule(300);
-            unset($_SESSION);
-=======
+
 
              $data = array(
                 'core'=>array(
@@ -70,6 +66,5 @@ class IndexController extends  BaseController{
 
         $this->assign('data' , array('repair_record_id'=>29,'repair_record_uid'=>1));
         $this->display();
->>>>>>> origin/master
     }
 }
