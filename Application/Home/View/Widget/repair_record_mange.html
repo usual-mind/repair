@@ -11,6 +11,6 @@
         <li class="del_repair"><a href="javascript:void(0)" event-node ='del_repair_record' event-args='repair_record_id={$repair_record_id}'>删除记录</a></li>
     </if>
     <if condition="$revoke_repair">
-        <li class="revoke_repair"><a href="javascript:void(0)" event-node ='revoke_repair' event-args='repair_record_id={$repair_record_id}'>撤销维修</a></li>
+        <li class="revoke_repair"><a href="javascript:void(0)" onclick="showSelComputerBox({$repair_record_id})" event-node ='revoke_repair' event-args='repair_record_id={$repair_record_id}'>撤销维修</a></li>
     </if>
 </ul>

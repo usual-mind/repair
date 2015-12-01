@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="{$APP_PUBLIC_URL}css/input_dialog.css">
+<div class="messageBox" id="inputDialog">
+    <div class="mask"></div>
+    <section class="bs1 content">
+        <label>{$tip}</label>
+        <textarea id="info"></textarea>
+        <ul>
+            <li id="selComputerBoxOkBtn">确定</li>
+            <li id="selComputerBoxCancelBtn">取消</li>
+        </ul>
+    </section>
+</div>
+<script type="text/javascript">
+    var JinputDialog = $('#inputDialog');
+
+    function showSelComputerBox(fnOk,fuCancel){
+        JinputDialog.show('fast');
+        $('#selComputerBoxOkBtn').click(function(){
+            JinputDialog.hide('fast');
+            fnOk($('#info').val());
+        });
+        $('#selComputerBoxCancelBtn').click(function(){
+            JinputDialog.hide('fast');
+            fuCancel();
+        });
+    }
+</script>

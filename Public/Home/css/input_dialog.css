@@ -1,0 +1,18 @@
+.messageBox>.content>label{
+    display: block;
+    line-height: 40px;
+    padding-left: 10px;
+    color: #333;
+}
+.messageBox>.content{
+}
+.messageBox>.content textarea{
+    width: 95%;
+    display: block;
+    margin: 0 auto;
+    min-height: 60px;
+    margin-bottom: 50px;
+    padding: 5px;
+    box-sizing: border-box;
+    outline: none;
+}
