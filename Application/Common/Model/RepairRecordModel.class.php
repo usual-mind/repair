@@ -15,17 +15,16 @@ use Think\Model;
 class RepairRecordModel extends Model
 {
     protected $tableName = 'repair_record';
-
-    /**获取某个用户的维修记录列表
+    /**
+     * 获取维修记录列表
      * //TODO 考虑分页
-     * @param $uids
-     * @return array 维修记录列表数组
+     * @param array $map
+     * @param string $field
+     * @return mixed|null
      */
-    public function getUserRepairRecords($uid){
-        //TODO 缓存处理
-        $condition['uid']=intval($uid);
-        $condition['is_del']=0;
-        if(!$records = $this->where($condition)->select()){
+    public function _getRepairRecordList(array $map , $field = '*'){
+
+        if(!$records = $this->field($field)->where($map)->order('start_time DESC')->select()){
             //这个用户还没有维修记录
             return null;
         }
@@ -60,7 +59,56 @@ class RepairRecordModel extends Model
         unset($record);
         return $records;
     }
-    
+
+    /**
+     * 获取所有没有维修任务列表
+     */
+    public function getNotRepairList(){
+        //检查用户是否有维修权限
+        if(!checkPermission('core_normal','repair')){
+            $this->error = '你并没有权限!';
+            return false;
+        }
+        //TODO 缓存处理
+        $condition['status'] = 0;
+        $condition['is_del'] = 0;
+        $records = $this->_getRepairRecordList($condition);
+        return $records;
+    }
+    /**
+     * 获取某个E8成员所有的维修记录
+     * //TODO 考虑分页
+     * @param $repairmemId维修者id 默认为当前登录的id
+     */
+    public function getRepairRecordByRepairmemId($repairmemId = NULL){
+        //检查用户是否有维修权限
+        if(!checkPermission('core_normal','repair')){
+            $this->error = '你并没有权限!';
+            return false;
+        }
+        is_null($repairmemId) && $repairmemId = $GLOBALS['e8']['mid'];
+        $repairmemId = intval($repairmemId);
+        //TODO 缓存处理
+        $condition['repairmem_id'] = $repairmemId;
+        $condition['is_del']       = 0;
+        $records = $this->_getRepairRecordList($condition);
+        return $records;
+
+    }
+    /**获取某个用户的维修记录列表
+     * //TODO 考虑分页
+     * @param $uids
+     * @return array 维修记录列表数组
+     */
+    public function getUserRepairRecords($uid){
+
+        //TODO 缓存处理
+        $condition['uid']=intval($uid);
+        $condition['is_del']=0;
+        $records = $this->_getRepairRecordList($condition);
+        return $records;
+    }
+
     /**获取某个维修记录详情（包括所有的图片和维修状态信息）
      * @param $recordId
      * @return array 维修记录详情数组

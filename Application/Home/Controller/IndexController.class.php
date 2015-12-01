@@ -47,11 +47,11 @@ class IndexController extends  BaseController{
         //$this->display();
         //p(D('SystemConfig')->get('permission:2'));
 
-        if(!D('RepairService')->revokeRepair(29)){
+        /*if(!D('RepairService')->revokeRepair(29)){
             p(D('RepairService')->getError());
         }else{
             echo 'OK';
-        }
-
+        }*/
+        p(D('RepairRecord')->getRepairRecordByRepairmemId());
     }
 }
