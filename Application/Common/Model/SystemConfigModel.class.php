@@ -40,6 +40,7 @@ class SystemConfigModel extends Model
         //获取list和key
         list($list,$key) = explode(':',$key,2);
         if(empty($list) || empty($key)) E('请传入正确的list:key。');
+        if(empty($value)) E('请传入value值。');
         $data['value'] = addslashes( serialize($value) );//将键值序列化处理
         $data['mtime'] = time();
         if($replace){//覆盖配置
