@@ -1,0 +1,31 @@
+<div id="select" class="select">
+    <ul>
+        <li class="selected" id="notRepairList">当前维修任务</li>
+        <li id="myReapirList">我的维修记录</li>
+    </ul>
+</div>
+<script type="text/javascript">
+    var JnotRepairList = $('#notRepairList');
+    var JmyReapirList = $('#myReapirList');
+    $(function () {
+        var JrecordList = $('#recordList');
+        ajaxRequest("{$notRepairListUrl}",function(data){
+            JrecordList.html(data.content);
+        },'json');
+
+        JnotRepairList.click(function(){
+            JnotRepairList.addClass('selected');
+            JmyReapirList.removeClass('selected');
+            ajaxRequest("{$notRepairListUrl}",function(data){
+                JrecordList.html(data.content);
+            },'json');
+        });
+        JmyReapirList.click(function(){
+            JmyReapirList.addClass('selected');
+            JnotRepairList.removeClass('selected');
+            ajaxRequest("{$myReapirListUrl}",function(data){
+                JrecordList.html(data.content);
+            },'json');
+        });
+    });
+</script>

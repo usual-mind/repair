@@ -12,7 +12,7 @@ class PersonalCenterController extends BaseController{
         $header['messCount'] = U('getMessCount');
         $this->assign('header',$header);
         $userInfo = D('User')->getUserInfo($GLOBALS['e8']['mid']);
-        
+
         $this->assign('RegisterUrl',U('Register/index'));
         $this->assign('messCount',D('Notify')->getUnreadCount($GLOBALS['e8']['mid']));
         $this->assign('userInfo',$userInfo);
@@ -21,7 +21,7 @@ class PersonalCenterController extends BaseController{
     }
 
     /**
-     * 获取未读的消息总数
+     * ajax获取未读的消息总数
      */
     public function getMessCount(){
         $data['messCount'] = D('Notify')->getUnreadCount($GLOBALS['e8']['mid']);
@@ -61,4 +61,20 @@ class PersonalCenterController extends BaseController{
         //修改成功 跳转到个人中心
         $this->redirect('index');
     }
+    /**
+     * ajax 获取e8成员的维修记录
+     */
+    public function getRepairRecord(){
+        $param = W('UserRepairRecordList/getRepairRecord',array($GLOBALS['e8']['user']['user_group']['id']));
+        $this->ajaxReturn($param[0],$param[1],$param[2]);
+    }
+
+    /**
+     * ajax 获取当前维修任务
+     */
+    public function getNotRepairList(){
+        $param = W('UserRepairRecordList/getNotRepairList',array($GLOBALS['e8']['user']['user_group']['id']));
+        $this->ajaxReturn($param[0],$param[1],$param[2]);
+    }
 }
+//深圳市微蜂创联科技有限公司
