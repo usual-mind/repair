@@ -49,7 +49,6 @@ class RepairRecordModel extends Model
 
                 $images = D('FaultImageSet')->getImagesBySetId($record['image_set_id']);
                 $record['images'] = array_shift($images);//获取第一张图片
-
             }
             //获取最近的维修状态
             $record['state'] = D('RepairState')->getLastNode($record['id']);
@@ -61,7 +60,7 @@ class RepairRecordModel extends Model
         unset($record);
         return $records;
     }
-
+    
     /**获取某个维修记录详情（包括所有的图片和维修状态信息）
      * @param $recordId
      * @return array 维修记录详情数组
@@ -146,7 +145,6 @@ class RepairRecordModel extends Model
             );
         return $repairRecordId;//返回插入的维修记录id
     }
-
     /**
      * 假删除维修记录
      * @param $rid 维修记录id
@@ -159,6 +157,13 @@ class RepairRecordModel extends Model
         return $this->where('id='.$rid)->setField('is_del','1');
     }
 
-
+    /**
+     * 撤销维修
+     * @param $rid
+     */
+    public function revokeRepair($rid){
+        $rid = intval($rid);
+        return $this->where('id='.$rid)->setField('status','3');
+    }
 
 }

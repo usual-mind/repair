@@ -25,14 +25,15 @@ class IndexController extends  BaseController{
                         'add_repair_record'=>1,
                         'repair_record_comment'=>1,
                         'repair'=>1,
-                        'cancel_repair'=>1
+                        'revoke_repair'=>1
                     ),
                 'admin'=>array(
                     'repair_record_del'=>1,
                     'comment_del'=>1,
                     'message_del'=>1,
                     'admin_login'=>1,
-                    'cancel_repair'=>1
+                    'cancel_repair'=>1,
+                    'revoke_repair'=>1
                 )
                 ),
             );
@@ -46,8 +47,8 @@ class IndexController extends  BaseController{
         //$this->display();
         //p(D('SystemConfig')->get('permission:2'));
 
-        if(!D('RepairService')->cancelRepair(29)){
-            p(D('RepairService')->getError(),'123');
+        if(!D('RepairService')->revokeRepair(29)){
+            p(D('RepairService')->getError());
         }else{
             echo 'OK';
         }

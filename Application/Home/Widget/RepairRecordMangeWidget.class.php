@@ -29,6 +29,21 @@ class RepairRecordMangeWidget extends Controller
         // 管理员删除维修记录权限
         $adminRepairDel = checkPermission ( 'core_admin', 'repair_record_del' );
 
+        //判断用户是否有撤销维修的权限
+        $revokePermission = checkPermission('core_admin','cancel_repair');
+        if(!$revokePermission){//先判断admin模块是否有cancel_repair权限
+            $revokePermission = checkPermission('core_normal','cancel_repair');
+            if($revokePermission){
+                //判断提交维修记录的uid是否为$uid 如果不是uid则没有权限取消维修
+                $repairRecord = D('RepairRecord')->getRepairRecord($repairRecordId);
+                if(!$repairRecord){
+                    return '';
+                }
+                if($repairRecord['uid'] != $GLOBALS['e8']['mid']){
+                    $revokePermission = false;
+                }
+            }
+        }
         /*
          *自己并不能删除自己的维修记录
          //删除自己维修记录的权限
@@ -41,7 +56,9 @@ class RepairRecordMangeWidget extends Controller
         $repair = checkPermission ( 'core_normal', 'repair' );
         if($repair){
             //获取维修记录详情
-            $repairRecord = D('RepairRecord')->getRepairRecord($repairRecordId);
+            if(!isset($repairRecord)){
+                $repairRecord = D('RepairRecord')->getRepairRecord($repairRecordId);
+            }
             //当前的维修状态 0-未维修 1-维修中 2-维修结束
             $repairStatus = intval($repairRecord['status']);
             //如果该维修记录的状态为维修中 且该条维修记录的维修人是本人
@@ -61,6 +78,7 @@ class RepairRecordMangeWidget extends Controller
         $checkShowBtn [] = $adminRepairDel;
         //$checkShowBtn [] = $selfRepairDel;
         $checkShowBtn [] = $repair;
+        $checkShowBtn [] = $revokePermission;
         if (! in_array ( true, $checkShowBtn )) {
             return '';
         }
@@ -77,8 +95,10 @@ class RepairRecordMangeWidget extends Controller
         $this->assign('repair_record_uid',$repairRecordUid);
         //$this->assign('repair_record_del',($adminRepairDel || $selfRepairDel));
         $this->assign('repair_record_del',$adminRepairDel );
+        $this->assign('revoke_repair',$revokePermission);
         $this->assign('repair',$repair);
         isset($showRepair) && $this->assign('show_repair_btn',$showRepair);
+
         //$manageClass = isset ( $data ['manage_class'] ) ? $data ['manage_class'] : 'right hover dp-cs';
         //$var ['manageClass'] = $manageClass;
 

@@ -86,13 +86,13 @@ class RepairServiceModel
      * @param $rid 维修记录的id
      * @param null $uid 撤销维修的用户id 默认为当前登录的id
      */
-    public function cancelRepair($rid , $uid = NULL){;
+    public function revokeRepair($rid , $uid = NULL){;
         $repairRecordId = intval($rid);
         //判断用户是否有撤销维修的权限
-        $canclPermission = checkPermission('core_admin','cancel_repair',$uid);
-        if(!$canclPermission){//先判断admin模块是否有cancel_repair权限
-            $canclPermission = checkPermission('core_normal','cancel_repair',$uid);
-            if($canclPermission){
+        $revokePermission = checkPermission('core_admin','revoke_repair',$uid);
+        if(!$revokePermission){//先判断admin模块是否有cancel_repair权限
+            $revokePermission = checkPermission('core_normal','revoke_repair',$uid);
+            if($revokePermission){
                 //判断提交维修记录的uid是否为$uid 如果不是uid则没有权限取消维修
                 $repairRecord = D('RepairRecord')->getRepairRecord($repairRecordId);
                 if(!$repairRecord){
@@ -100,16 +100,28 @@ class RepairServiceModel
                     return false;
                 }
                 if($repairRecord['uid'] != $uid){
-                    $canclPermission = false;
+                    $revokePermission = false;
                 }
             }
-            if(!$canclPermission){
+            if(!$revokePermission){
                 $this->error = 'Sorry! 您并没有取消维修的权限';
                 return false;
             }
         }
         //撤销维修
-
+        if(!D('RepairRecord')->revokeRepair($repairRecordId)){
+            $this->error = '撤销维修失败!';
+            return false;
+        }
         return true;
+    }
+
+    /**
+     * E8成员取消维修
+     * @param $rid 维修记录id
+     * @param int $uid 触发取消维修的用户id  默认为当前登录的用户id
+     */
+    public function cancelRepair($rid , $uid = NULL){
+
     }
 }
