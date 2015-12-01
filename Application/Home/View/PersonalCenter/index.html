@@ -17,49 +17,8 @@
         <i></i>
     </section>
 
-    <div id="select" class="select">
-        <ul>
-            <li class="selected">当前维修任务</li>
-            <li>我的维修记录</li>
-        </ul>
-    </div>
+    {:W('UserRepairRecordList/recordList')}
 
-    <!----维修记录--->
-	<section class="record-body">
-        <empty name="records">
-            <p style="margin-top:20px;text-align: center;">暂无维修记录</p>
-        <else />
-            <volist name="records" id="record">
-
-                <!--State:状态开始-->
-                <div class="state">
-                    <header>
-
-                        <label>{$record.state.node_info}</label>
-                    </header>
-
-                    <section>
-                        <span><img src="{$record['images']['url_sm']}"/></span>
-                        <div class="description">
-                            <p>
-                                <label>问题描述：</label>
-                                {$record.problem_desc}
-                            </p>
-                        </div>
-                        <footer>
-                            <p>型号：{$record.computer_name}</p>
-                            <p>{$record.start_time}</p>
-                        </footer>
-                    </section>
-                    <footer>
-                        <p>维修人：陶炜</p>
-                        {:W('RepairRecordMange/showButton',array(array('repair_record_id'=>$record.id,'repair_record_uid'=>$record.uid)))}
-                    </footer>
-                </div>
-                <!--State:状态结束-->
-            </volist>
-        </empty>
-	</section>
 </div>
 
 <div class="messCount">消息<if condition="($messCount neq 0)"><span id="messCount">{$messCount}</span></if></div>
