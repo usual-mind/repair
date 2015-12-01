@@ -1,40 +1,40 @@
-.evaluation-body>.prompt{
+.evaluation-body .prompt{
 	background-color:#3EBB2B;
 	height:80px;
 	padding:25px 0;
 }
-.evaluation-body>.prompt>div{
+.evaluation-body .prompt>div{
 	font-size:18px;
 	color:#FFF;
 	margin:0 auto;
 	width:138px;
 }
-.evaluation-body>.prompt>div>i{
+.evaluation-body .prompt>div>i{
 	display:block;
 	float:left;
 	width:30px;
 	height:24px;
 	background:url(../img/icon.png) no-repeat -122px 0;
 }
-.evaluation-body>.receive{
+.evaluation-body .receive{
 	padding:20px 10px 10px;
 	background-color:#FFF;
 	position:relative;
 }
-.evaluation-body>.receive>i{
+.evaluation-body .receive>i{
 	width:25px;
 	margin:0 20px 0 10px;
 	float:left;
 	height:34px;
 	background:url(../img/icon.png) no-repeat -370px 0;
 }
-.evaluation-body>.receive>p{
+.evaluation-body .receive>p{
 	font-size:14px;
 	color:#666;
 	margin-bottom:5px;
 	font-family:'宋体';
 }
-.evaluation-body>.receive>p:last-child{
+.evaluation-body .receive>p:last-child{
 	position:absolute;
 	top:10px;
 	right:10px;
@@ -45,7 +45,7 @@
 	margin-bottom:10px;
 }
 .evaluation-body>.time>ul>li{
-	color:#999;
+	color:#555;
 	font-size:12px;
 	margin-top:5px;
 	
@@ -112,4 +112,12 @@
 	font-family:'宋体';
 	color:#666;
 	font-size:14px;
+}
+.pic{
+	margin: 10px 0;
+	padding:10px;
+}
+.pic>img{
+	width: 100%;
+	margin-bottom: 10px;
 }

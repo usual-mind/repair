@@ -43,7 +43,7 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 /*label*/
 .label{
 	font-size:14px;
-	color:#666;
+	color:#333;
 	display:block;
 	margin:10px;
 }
@@ -419,7 +419,7 @@ html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,em,img,ol,ul,
 	line-height:40px;
 	width:100%;
 	background-color:#FFF;
-	color:#666;
+	color:#333;
 	font-size:14px;
 
 }
