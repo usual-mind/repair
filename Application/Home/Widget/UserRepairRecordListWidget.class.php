@@ -7,7 +7,8 @@ class UserRepairRecordListWidget extends Controller
     public function recordList(){
         if($GLOBALS['e8']['user']['user_group']['id'] == 2){
             //e8成员
-
+            $records = D('RepairRecord')->getUserRepairRecords($GLOBALS['e8']['mid']);
+            $this->assign('records',$records);
         }else if($GLOBALS['e8']['user']['user_group']['id'] == 1){
             //普通用户
             $records = D('RepairRecord')->getUserRepairRecords($GLOBALS['e8']['mid']);
