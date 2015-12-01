@@ -14,10 +14,12 @@ class RegisterController extends BaseController{
         foreach($computerBrand as &$v){
             $v['url'] = U('SetComputer/ComputerInfoWidget',array('pid'=>$v['id'],'type'=>'computerBrand'));
         }
-        /*
+
         $header['title'] = '登记维修记录';
-        $header['backUrl'] = U('Login/index');
+        $header['backUrl'] = $_SERVER['HTTP_REFERER'];
         $this->assign('header',$header);
+        /*
+
         $this->assign('department',array($computerBrand));
         */
 
@@ -30,6 +32,8 @@ class RegisterController extends BaseController{
         $this->assign('searchTipUrl',U('searchModel'));
         //分配添加电脑的url
         $this->assign('addComputer',U('addComputer'));
+        //分配个人中心URL
+        $this->assign('personalUrl',U('PersonalCenter/index'));
         $this->display();
     }
     /**

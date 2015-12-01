@@ -16,7 +16,15 @@
         <p>描述问题进行登记吧...</p>
         <i></i>
     </section>
-        <!----维修记录--->
+
+    <div id="select" class="select">
+        <ul>
+            <li class="selected">当前维修任务</li>
+            <li>我的维修记录</li>
+        </ul>
+    </div>
+
+    <!----维修记录--->
 	<section class="record-body">
         <empty name="records">
             <p style="margin-top:20px;text-align: center;">暂无维修记录</p>
@@ -74,7 +82,7 @@
         });
         //点击开始登记按钮
         $('#entryDescription').click(function(){
-
+            window.location = "{$RegisterUrl}";
         });
         //获取未读的消息总数
         setInterval(function(){

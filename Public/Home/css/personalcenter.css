@@ -7,7 +7,7 @@
 	font-size:14px;
 	color:#999;
 	padding:15px 0 15px 10px;
-	margin-bottom:20px;
+	margin-bottom:10px;
 }
 .entry-description>i{
 	position:absolute;
@@ -100,4 +100,26 @@
 	border-radius: 20px;
 	font-size: 10px;
 	text-align: center;
+}
+
+.select{
+	overflow: hidden;
+	padding:0 40px;
+}
+.select>ul{
+	border-radius: 10px;
+	overflow: hidden;
+	border: 1px solid #12B7F5;
+}
+.select>ul>li{
+	font-size: 14px;
+	text-align: center;
+	line-height: 35px;
+	float: left;
+	width: 50%;
+	color:#12B7F5;
+}
+.select .selected{
+	color: #fff;
+	background-color: #12B7F5;
 }

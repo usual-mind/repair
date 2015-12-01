@@ -19,7 +19,7 @@
                     </form>
                 </div>
             </aside>
-            <label class="label">我的班级和联系方式<span>（可在<a href="#">个人中心</a>修改）</span></label>
+            <label class="label">我的班级和联系方式<span>（可在<a href="{$personalUrl}">个人中心</a>修改）</span></label>
             <div class="sel-class">
                 <p>{$className}</p>
             </div>
@@ -60,6 +60,7 @@
         //提交按钮
         var submitBtn = $("#submit");
     	$(function (){
+            setHeader("{$header['title']}","{$header['backUrl']}");
             $('#model>li').click(function(){
                 $('#model>.selected').removeClass('selected');
                 $(this).addClass('selected');

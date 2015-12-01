@@ -57,6 +57,7 @@ function setHeader(title,backUrl){
 	if(backUrl==null) backUrl='javascript:;';
 	var Jheader = $("#header");
 	Jheader.children(".hidden-text").attr('data-href',backUrl);
+	Jheader.children(".hidden-text").attr('href',backUrl);
 	Jheader.children("h1").html(title);
 }
 /**
