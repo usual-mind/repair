@@ -122,7 +122,24 @@ class UserModel extends Model
         return $formateTelNum;
     }
     public function cleanCache($uids){
-        //TODO 清除用户缓存
+        if (empty ( $uids )) {
+            return false;
+        }
+        ! is_array ( $uids ) && $uids = explode ( ',', $uids );
+        foreach ( $uids as $uid ) {
+            $this->cacheObj->rm ( 'ui_' . $uid );
+            static_cache ( 'user_info_' . $uid, null );
+
+            /*$keys = model ( 'Cache' )->get ( 'getUserDataByCache_keys_' . $uid );
+            foreach ( $keys as $k ) {
+                model ( 'Cache' )->rm ( $k );
+            }
+            model ( 'Cache' )->rm ( 'getUserDataByCache_keys_' . $uid );
+            model ( 'Cache' )->rm ( 'user_info_api_' . $uid );
+            */
+        }
+
+        return true;
     }
 
     /**
