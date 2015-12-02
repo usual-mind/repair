@@ -62,8 +62,9 @@ class UploadPicModel
      * @return mixed
      */
     public function saveAllTempPic($configs,$rootPath,$subPath='',$ext='',$fileName='uniqid'){
+
         $tempFiles = $_SESSION['images'];
-        if(empty($tempFiles)) reutrn;
+        if(empty($tempFiles)) return array();
         //子目录
         empty($subPath) && $subPath = date('Y/m/d/');
         $return = array();

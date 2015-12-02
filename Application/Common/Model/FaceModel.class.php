@@ -38,7 +38,7 @@ class FaceModel
             return $sc;
         }
         $md5 = md5($uid);
-        $sc = '/' . substr($md5, 0, 2) . '/' . substr($md5, 2, 2) . '/' . substr($md5, 4, 2);
+        $sc = '/' . substr($md5, 0, 2) . '/' . substr($md5, 2, 2) . '/' . substr($md5, 4, 2).'/';
         static_cache('face_uidpath_' . $uid, $sc);
         return $sc;
     }
@@ -46,8 +46,12 @@ class FaceModel
      * 判断用户是否上传头像
      */
     public function hasFace(){
-        $originalFileName = $this->savePath.'/original.jpg';
-        return file_exists($originalFileName);
+        $originalFileName = USER_UPLOAD_PATH.$this->savePath.'original.jpg';
+        if(file_exists($originalFileName)){
+            return $originalFileName;
+        }else{
+            return false;
+        }
         /*
         if(file_exists($originalFileName)){
             //$filemtime = filemtime($originalFileName);
@@ -68,8 +72,9 @@ class FaceModel
             'face_tiny' => $empty_url . '/tiny.jpg'
         );
 
-        $original_file_name = $this->savePath.'/original.jpg';
-        if (file_exists($original_file_name)) {
+        $original_file_name = $this->hasFace();
+
+        if ($original_file_name) {
             $filemtime = filemtime( $original_file_name );
             $face_url['face_original'] = $this->getFaceUrl($original_file_name);
             $face_url['face_big'] = $this->getFaceUrl($original_file_name, 200, 200) . '?v' . $filemtime;
@@ -93,8 +98,8 @@ class FaceModel
         $configs['100_100']=array('width'=>100,'height'=>100);
         $configs['50_50']=array('width'=>50,'height'=>50);
         $configs['30_30']=array('width'=>30,'height'=>30);
-        $pic = D('UploadPic')->saveAllTempPic($configs,USER_UPLOAD_PATH,$this->savePath,'jpg','original');
-        print_r($pic);
+        $pic = D('UploadPic')->saveAllTempPic($configs,USER_UPLOAD_PATH,$this->savePath,'.jpg','original');
+        return $pic;
     }
     /**
      * 根据width和height获取头像图片名
@@ -104,9 +109,10 @@ class FaceModel
      * @return string
      */
     public static function getFacePic($original_file_name , $width, $height){
-        $ext = strrchr($original_file_name, '.');//获取扩展名
-        //这里不用rtrim的原因是 rtrim这个函数有个bug 如 echo rtrim('aajj.jpg','.jpg');
-        return basename($original_file_name , $ext).'_'.$width.'_'.$height.$ext;
+        //这里不用rtrim去除扩展名的原因是 rtrim这个函数有个bug 如 echo rtrim('aajj.jpg','.jpg');
+        $pathInfo = pathinfo($original_file_name);
+
+        return "{$pathInfo['dirname']}/{$pathInfo['filename']}_{$width}_{$height}.{$pathInfo['extension']}";
     }
     /**
      * 获取图片的url
@@ -116,11 +122,13 @@ class FaceModel
      * @return string
      */
     public function getFaceUrl($original_file_name , $width='', $height=''){
+
         $original_file_url = path2url($original_file_name);
+
         if(!$width){
             return $original_file_url;
         }
-        $this->getFacePic($original_file_url,$width,$height);
+        return $this->getFacePic($original_file_url,$width,$height);
     }
     public function getError(){
         return $this->error;

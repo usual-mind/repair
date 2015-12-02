@@ -51,6 +51,6 @@ class IndexController extends  BaseController{
         }else{
             echo 'OK';
         }*/
-        //p(D('RepairRecord')->getRepairRecordByRepairmemId());
+        //p(D('Face')->init($GLOBALS['e8']['mid'])->hasFace());
     }
 }

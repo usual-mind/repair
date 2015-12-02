@@ -212,8 +212,10 @@ class UserModel extends Model
 
         if(!empty($group_id))//  把用户添加到用户组
             D('UserGroupLink')->domoveUserGroup($uid, $group_id);
-        if($this->where('id='.$uid)->save($user)) return true;
-        E('修改用户个人信息失败 ');
+
+        $this->where('id='.$uid)->save($user);
+        return true;
+
     }
     /**
      * 通过uid获取带连接的用户姓名

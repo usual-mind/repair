@@ -50,7 +50,7 @@ class PersonalCenterController extends BaseController{
             $this->error("你输入的信息有误，请重新输入！");
         }
         //上传头像
-        D('Face')->saveFace();
+        D('Face')->init($GLOBALS['e8']['mid'])->saveFace();
 
         $user = $user = array(
                     'student_id' =>$studentId,
